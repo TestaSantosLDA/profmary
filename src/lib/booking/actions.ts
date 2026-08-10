@@ -3,7 +3,12 @@
 import { fromZonedTime } from "date-fns-tz";
 import { getLocale } from "next-intl/server";
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
 import { redirect } from "@/i18n/navigation";
+import {
+  notifyRequestReceived,
+  notifyStudentCancelled,
+} from "@/lib/email/notifications";
 import { createClient } from "@/lib/supabase/server";
 import { getAvailableSlots } from "./queries";
 import { estimatePriceCents, LESSON_TIMEZONE, type DaySlots } from "./slots";
@@ -98,7 +103,7 @@ export async function createBookingRequest(
       return { error: data.error };
     }
 
-    // TODO(group 7): request-received email to student + alert to admin.
+    after(() => notifyRequestReceived("series", data.series_id));
 
     revalidatePath("/", "layout");
     const seriesLocale = await getLocale();
@@ -109,29 +114,33 @@ export async function createBookingRequest(
   const startsAt = fromZonedTime(`${date}T${start}:00`, LESSON_TIMEZONE);
   const endsAt = new Date(startsAt.getTime() + duration * 60_000);
 
-  const { error } = await supabase.from("bookings").insert({
-    user_id: user.id,
-    service_id: serviceId,
-    starts_at: startsAt.toISOString(),
-    ends_at: endsAt.toISOString(),
-    // buffered_until is overwritten by the DB trigger; a placeholder keeps
-    // the not-null column satisfied at parse time.
-    buffered_until: endsAt.toISOString(),
-    attendee_names: attendees,
-    address,
-    price_estimate_cents: estimatePriceCents(
-      service.hourly_rate_cents,
-      duration,
-      attendees.length
-    ),
-  });
+  const { data: created, error } = await supabase
+    .from("bookings")
+    .insert({
+      user_id: user.id,
+      service_id: serviceId,
+      starts_at: startsAt.toISOString(),
+      ends_at: endsAt.toISOString(),
+      // buffered_until is overwritten by the DB trigger; a placeholder keeps
+      // the not-null column satisfied at parse time.
+      buffered_until: endsAt.toISOString(),
+      attendee_names: attendees,
+      address,
+      price_estimate_cents: estimatePriceCents(
+        service.hourly_rate_cents,
+        duration,
+        attendees.length
+      ),
+    })
+    .select("id")
+    .single();
 
-  if (error) {
+  if (error || !created) {
     // 23P01 = exclusion constraint: someone soft-held the slot first.
-    return { error: error.code === "23P01" ? "slot_taken" : "save_failed" };
+    return { error: error?.code === "23P01" ? "slot_taken" : "save_failed" };
   }
 
-  // TODO(group 7): request-received email to student + alert to admin.
+  after(() => notifyRequestReceived("booking", created.id));
 
   revalidatePath("/", "layout");
   const locale = await getLocale();
@@ -147,7 +156,7 @@ export async function cancelBooking(formData: FormData): Promise<void> {
   const { data } = await supabase.rpc("cancel_booking", { p_booking_id: id });
 
   if (data === "ok") {
-    // TODO(group 7): cancellation email to admin.
+    after(() => notifyStudentCancelled("booking", id));
     revalidatePath("/", "layout");
   }
 }
@@ -160,7 +169,7 @@ export async function cancelSeries(formData: FormData): Promise<void> {
   const { data } = await supabase.rpc("cancel_series", { p_series_id: id });
 
   if (data === "ok") {
-    // TODO(group 7): cancellation email to admin.
+    after(() => notifyStudentCancelled("series", id));
     revalidatePath("/", "layout");
   }
 }

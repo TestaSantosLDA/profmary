@@ -147,6 +147,41 @@
       "save_failed": "Não foi possível guardar. Tente novamente."
     }
   },
+  "Email": {
+    "greeting": "Olá {name},",
+    "notePrefix": "Nota da professora",
+    "requestReceived": {
+      "subject": "Recebemos o seu pedido de aula",
+      "body": "O seu pedido de {service} para {when} foi recebido e aguarda confirmação da professora.",
+      "next": "Receberá um email assim que o pedido for confirmado."
+    },
+    "adminNewRequest": {
+      "subject": "Novo pedido de aula",
+      "body": "{student} pediu uma aula de {service} para {when}.",
+      "cta": "Abrir pedidos pendentes"
+    },
+    "confirmed": {
+      "subject": "Aula confirmada ✓",
+      "body": "A sua aula de {service} em {when} está confirmada.",
+      "details": "Morada: {address} · Valor estimado: {price} (pagamento em dinheiro ou transferência)."
+    },
+    "declined": {
+      "subject": "Pedido de aula não aceite",
+      "body": "Infelizmente o seu pedido de {service} para {when} não pôde ser aceite."
+    },
+    "adminCancelled": {
+      "subject": "Aula cancelada por um aluno",
+      "body": "{student} cancelou a aula de {service} de {when}."
+    },
+    "cancelledByTeacher": {
+      "subject": "Aula cancelada",
+      "body": "A sua aula de {service} em {when} foi cancelada pela professora."
+    },
+    "reminder": {
+      "subject": "Lembrete: aula amanhã",
+      "body": "Lembrete da sua aula de {service} em {when}. Morada: {address}."
+    }
+  },
   "Dashboard": {
     "title": "As minhas aulas",
     "placeholder": "As suas marcações aparecerão aqui."

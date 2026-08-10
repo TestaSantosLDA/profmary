@@ -147,6 +147,41 @@
       "save_failed": "Could not save. Please try again."
     }
   },
+  "Email": {
+    "greeting": "Hi {name},",
+    "notePrefix": "Note from the teacher",
+    "requestReceived": {
+      "subject": "We received your lesson request",
+      "body": "Your request for {service} on {when} was received and awaits the teacher's confirmation.",
+      "next": "You'll get an email as soon as it's confirmed."
+    },
+    "adminNewRequest": {
+      "subject": "Novo pedido de aula",
+      "body": "{student} pediu uma aula de {service} para {when}.",
+      "cta": "Abrir pedidos pendentes"
+    },
+    "confirmed": {
+      "subject": "Lesson confirmed ✓",
+      "body": "Your {service} lesson on {when} is confirmed.",
+      "details": "Address: {address} · Estimated price: {price} (paid in cash or bank transfer)."
+    },
+    "declined": {
+      "subject": "Lesson request not accepted",
+      "body": "Unfortunately your request for {service} on {when} could not be accepted."
+    },
+    "adminCancelled": {
+      "subject": "Aula cancelada por um aluno",
+      "body": "{student} cancelou a aula de {service} de {when}."
+    },
+    "cancelledByTeacher": {
+      "subject": "Lesson cancelled",
+      "body": "Your {service} lesson on {when} was cancelled by the teacher."
+    },
+    "reminder": {
+      "subject": "Reminder: lesson tomorrow",
+      "body": "Reminder of your {service} lesson on {when}. Address: {address}."
+    }
+  },
   "Dashboard": {
     "title": "My lessons",
     "placeholder": "Your bookings will appear here."

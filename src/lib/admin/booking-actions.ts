@@ -1,6 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
+import {
+  notifyAdminCancelled,
+  notifyDecision,
+} from "@/lib/email/notifications";
 import { createClient } from "@/lib/supabase/server";
 import type { AdminActionState } from "./services-actions";
 
@@ -52,7 +57,7 @@ export async function approveBooking(
     return { error: "save_failed", success: false };
   }
 
-  // TODO(group 7): confirmation email to student.
+  after(() => notifyDecision("booking", id, "confirmed"));
   // TODO(group 8): push event to Google Calendar.
 
   revalidatePath("/", "layout");
@@ -78,7 +83,7 @@ export async function declineBooking(
     return { error: "save_failed", success: false };
   }
 
-  // TODO(group 7): decline email to student with the note.
+  after(() => notifyDecision("booking", id, "declined"));
 
   revalidatePath("/", "layout");
   return { error: null, success: true };
@@ -99,7 +104,7 @@ export async function approveSeries(
     return { error: data ?? "save_failed", success: false };
   }
 
-  // TODO(group 7): one confirmation email for the whole series.
+  after(() => notifyDecision("series", id, "confirmed"));
   // TODO(group 8): calendar events are created by the sync job (gcal_sync_pending).
 
   revalidatePath("/", "layout");
@@ -121,7 +126,7 @@ export async function declineSeries(
     return { error: data ?? "save_failed", success: false };
   }
 
-  // TODO(group 7): decline email to the student.
+  after(() => notifyDecision("series", id, "declined"));
 
   revalidatePath("/", "layout");
   return { error: null, success: true };
@@ -159,7 +164,7 @@ export async function adminCancelBooking(
     return { error: "save_failed", success: false };
   }
 
-  // TODO(group 7): cancellation email to student with the note.
+  after(() => notifyAdminCancelled(id));
   // TODO(group 8): delete Google Calendar event.
 
   revalidatePath("/", "layout");

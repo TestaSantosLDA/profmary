@@ -1,0 +1,16 @@
+name: Hourly cron
+
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+
+jobs:
+  hourly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke cron endpoint
+        run: |
+          curl -fsS -X POST \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            https://profmary.vercel.app/api/cron/hourly

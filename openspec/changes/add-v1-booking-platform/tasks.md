@@ -43,11 +43,11 @@
 
 ## 6. Recurring series
 
-- [ ] 6.1 Series request form (weekday/time from offered slots, duration, optional end date) and pending-series soft-hold of window occurrences
-- [ ] 6.2 Approve-once action materializing confirmed occurrences within the window; series decline releasing all holds
-- [ ] 6.3 Rolling materialization job (idempotent) extending open-ended series as the window advances
-- [ ] 6.4 Blockout precedence: creating a blockout flips overlapping occurrences to `skipped_blockout` (no emails, GCal cleanup)
-- [ ] 6.5 Per-occurrence and whole-series cancellation actions with cutoff rules
+- [x] 6.1 Series request form (weekday/time from offered slots, duration, optional end date) and pending-series soft-hold of window occurrences
+- [x] 6.2 Approve-once action materializing confirmed occurrences within the window; series decline releasing all holds
+- [x] 6.3 Rolling materialization job (idempotent) extending open-ended series as the window advances
+- [x] 6.4 Blockout precedence: creating a blockout flips overlapping occurrences to `skipped_blockout` (no emails, GCal cleanup)
+- [x] 6.5 Per-occurrence and whole-series cancellation actions with cutoff rules
 
 ## 7. Notifications
 
