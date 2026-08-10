@@ -3,10 +3,10 @@
 ## 1. Foundation
 
 - [x] 1.1 Scaffold Next.js app (App Router, TypeScript, Tailwind, ESLint) in this repo; add shadcn/ui
-- [ ] 1.2 Create Supabase project (EU region); set up Supabase CLI with migrations checked into `supabase/migrations`
+- [x] 1.2 Create Supabase project (EU region); set up Supabase CLI with migrations checked into `supabase/migrations`
 - [x] 1.3 Wire `@supabase/ssr` clients (browser, server, middleware) and environment variables (`.env.example` documented)
 - [x] 1.4 Set up next-intl with `/pt` and `/en` routing, locale detection/redirect, and message catalog structure with a completeness check
-- [ ] 1.5 Create Vercel project linked to the GitHub repo (preview on PRs, production on `main`); set `BOOKING_WINDOW_MONTHS` env var
+- [x] 1.5 Create Vercel project linked to the GitHub repo (preview on PRs, production on `main`); set `BOOKING_WINDOW_MONTHS` env var
 - [x] 1.6 App shell: layout, header with language switcher, footer with Privacy Policy link, placeholder theme
 
 ## 2. Database schema & security
@@ -39,7 +39,7 @@
 - [x] 5.3 Create-request Server Action: validation, soft-hold insert handling the exclusion-constraint conflict gracefully
 - [x] 5.4 Approve action (travel-fee toggle, note) and decline action (note) as Server Actions
 - [x] 5.5 Student cancellation action with cutoff enforcement; admin cancellation action without cutoff
-- [ ] 5.6 Lapsed-request handling: queue and slot queries ignore past-dated pending rows
+- [x] 5.6 Lapsed-request handling: queue and slot queries ignore past-dated pending rows
 
 ## 6. Recurring series
 
@@ -64,10 +64,18 @@
 
 ## 9. Dashboards
 
-- [ ] 9.1 Student dashboard: upcoming/past bookings with all statuses (incl. "tutor unavailable"), pending requests, book-again prefill
-- [ ] 9.2 Student series view: definition + occurrence list with statuses and cancellation actions
-- [ ] 9.3 Admin approval queue (mobile-first) with approve/decline inline
-- [ ] 9.4 Admin bookings overview: filterable list + week calendar with addresses
+- [x] 9.1 Student dashboard: upcoming/past bookings with all statuses (incl. "tutor unavailable"), pending requests, book-again prefill
+- [x] 9.2 Student series view: definition + occurrence list with statuses and cancellation actions
+- [x] 9.3 Admin approval queue (mobile-first) with approve/decline inline
+- [x] 9.4 Admin bookings overview: filterable list + week calendar with addresses
+
+## 9b. Design pass (added after group 9 — see DESIGN.md)
+
+- [ ] 9b.1 Theme tokens in Tailwind/shadcn (palette, Fraunces + Inter, radii) per DESIGN.md
+- [ ] 9b.2 Rebuild booking slot picker as a month-grid calendar with time chips
+- [ ] 9b.3 Restyle public pages, auth, dashboards, and admin to the brief (mobile-first)
+- [ ] 9b.4 Restyle transactional email template (tile band header, brief palette)
+- [ ] 9b.5 Sync design-system components to the Claude Design project for Maria's review
 
 ## 10. Public site & launch
 
