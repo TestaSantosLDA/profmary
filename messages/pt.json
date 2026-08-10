@@ -66,6 +66,87 @@
     },
     "requestsPlaceholder": "Os pedidos de marcação pendentes aparecerão aqui."
   },
+  "AdminServices": {
+    "title": "Serviços",
+    "newService": "Novo serviço",
+    "editService": "Editar serviço",
+    "titlePt": "Título (PT)",
+    "titleEn": "Título (EN)",
+    "descriptionPt": "Descrição (PT)",
+    "descriptionEn": "Descrição (EN)",
+    "hourlyRate": "Preço/hora por pessoa (€)",
+    "minDuration": "Duração mínima (min)",
+    "maxDuration": "Duração máxima (min)",
+    "attendeeCap": "Máximo de participantes",
+    "attendeeCapHint": "-1 = sem limite",
+    "active": "Ativo (visível e reservável)",
+    "inactive": "Inativo",
+    "uncapped": "sem limite de participantes",
+    "capped": "máx. {cap} participantes",
+    "empty": "Ainda não há serviços.",
+    "save": "Guardar",
+    "errors": {
+      "missing_title": "O título é obrigatório em ambos os idiomas.",
+      "invalid_rate": "Preço inválido.",
+      "invalid_duration": "As durações devem ser múltiplos de 30 minutos.",
+      "duration_order": "A duração máxima deve ser maior ou igual à mínima.",
+      "invalid_cap": "Limite inválido (use -1 para sem limite).",
+      "save_failed": "Não foi possível guardar. Tente novamente."
+    }
+  },
+  "AdminAvailability": {
+    "title": "Disponibilidade semanal",
+    "weekday": "Dia",
+    "weekdays": {
+      "0": "Domingo",
+      "1": "Segunda",
+      "2": "Terça",
+      "3": "Quarta",
+      "4": "Quinta",
+      "5": "Sexta",
+      "6": "Sábado"
+    },
+    "from": "De",
+    "to": "Até",
+    "addRule": "Adicionar horário",
+    "remove": "Remover",
+    "noRules": "Sem horários definidos.",
+    "blockouts": "Períodos indisponíveis",
+    "blockoutsHint": "Férias ou outros períodos em que não há aulas. Têm prioridade sobre o horário semanal.",
+    "reason": "Motivo (privado)",
+    "reasonHint": "ex.: férias",
+    "addBlockout": "Adicionar período",
+    "noBlockouts": "Sem períodos indisponíveis.",
+    "errors": {
+      "invalid_weekday": "Dia inválido.",
+      "invalid_times": "Horas inválidas.",
+      "overlapping_rule": "Este horário sobrepõe-se a um existente.",
+      "invalid_dates": "Datas inválidas.",
+      "save_failed": "Não foi possível guardar. Tente novamente."
+    }
+  },
+  "AdminSettings": {
+    "title": "Definições",
+    "fields": {
+      "buffer_minutes": "Intervalo entre aulas (minutos)",
+      "cancellation_cutoff_hours": "Antecedência mínima para cancelar (horas)",
+      "booking_notice_hours": "Antecedência mínima para marcar (horas)",
+      "travel_fee_eur": "Taxa de deslocação (€)",
+      "travel_fee_threshold_km": "A partir de (km)"
+    },
+    "hints": {
+      "buffer_minutes": "Tempo de deslocação entre aulas consecutivas.",
+      "cancellation_cutoff_hours": "Depois deste limite, os alunos têm de contactar diretamente.",
+      "booking_notice_hours": "Os pedidos têm de ser feitos com esta antecedência.",
+      "travel_fee": "Aplicada manualmente ao aprovar, para moradas mais distantes."
+    },
+    "saved": "Definições guardadas.",
+    "save": "Guardar",
+    "errors": {
+      "invalid_values": "Valores inválidos.",
+      "save_failed": "Não foi possível guardar. Tente novamente."
+    }
+  },
   "Dashboard": {
     "title": "As minhas aulas",
     "placeholder": "As suas marcações aparecerão aqui."

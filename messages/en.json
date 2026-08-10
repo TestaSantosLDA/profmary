@@ -66,6 +66,87 @@
     },
     "requestsPlaceholder": "Pending booking requests will appear here."
   },
+  "AdminServices": {
+    "title": "Services",
+    "newService": "New service",
+    "editService": "Edit service",
+    "titlePt": "Title (PT)",
+    "titleEn": "Title (EN)",
+    "descriptionPt": "Description (PT)",
+    "descriptionEn": "Description (EN)",
+    "hourlyRate": "Hourly rate per person (€)",
+    "minDuration": "Minimum duration (min)",
+    "maxDuration": "Maximum duration (min)",
+    "attendeeCap": "Attendee cap",
+    "attendeeCapHint": "-1 = no cap",
+    "active": "Active (visible and bookable)",
+    "inactive": "Inactive",
+    "uncapped": "no attendee cap",
+    "capped": "max {cap} attendees",
+    "empty": "No services yet.",
+    "save": "Save",
+    "errors": {
+      "missing_title": "The title is required in both languages.",
+      "invalid_rate": "Invalid rate.",
+      "invalid_duration": "Durations must be multiples of 30 minutes.",
+      "duration_order": "Maximum duration must be greater than or equal to the minimum.",
+      "invalid_cap": "Invalid cap (use -1 for no cap).",
+      "save_failed": "Could not save. Please try again."
+    }
+  },
+  "AdminAvailability": {
+    "title": "Weekly availability",
+    "weekday": "Day",
+    "weekdays": {
+      "0": "Sunday",
+      "1": "Monday",
+      "2": "Tuesday",
+      "3": "Wednesday",
+      "4": "Thursday",
+      "5": "Friday",
+      "6": "Saturday"
+    },
+    "from": "From",
+    "to": "To",
+    "addRule": "Add hours",
+    "remove": "Remove",
+    "noRules": "No hours defined.",
+    "blockouts": "Blocked periods",
+    "blockoutsHint": "Vacation or other periods with no lessons. They take precedence over the weekly schedule.",
+    "reason": "Reason (private)",
+    "reasonHint": "e.g. vacation",
+    "addBlockout": "Add period",
+    "noBlockouts": "No blocked periods.",
+    "errors": {
+      "invalid_weekday": "Invalid day.",
+      "invalid_times": "Invalid times.",
+      "overlapping_rule": "These hours overlap an existing rule.",
+      "invalid_dates": "Invalid dates.",
+      "save_failed": "Could not save. Please try again."
+    }
+  },
+  "AdminSettings": {
+    "title": "Settings",
+    "fields": {
+      "buffer_minutes": "Gap between lessons (minutes)",
+      "cancellation_cutoff_hours": "Minimum notice to cancel (hours)",
+      "booking_notice_hours": "Minimum notice to book (hours)",
+      "travel_fee_eur": "Travel fee (€)",
+      "travel_fee_threshold_km": "Applies beyond (km)"
+    },
+    "hints": {
+      "buffer_minutes": "Travel time between consecutive lessons.",
+      "cancellation_cutoff_hours": "Past this limit, students must contact you directly.",
+      "booking_notice_hours": "Requests must be made at least this far ahead.",
+      "travel_fee": "Applied manually on approval, for more distant addresses."
+    },
+    "saved": "Settings saved.",
+    "save": "Save",
+    "errors": {
+      "invalid_values": "Invalid values.",
+      "save_failed": "Could not save. Please try again."
+    }
+  },
   "Dashboard": {
     "title": "My lessons",
     "placeholder": "Your bookings will appear here."
