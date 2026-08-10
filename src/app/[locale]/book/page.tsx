@@ -4,8 +4,12 @@ import { BookingForm } from "@/components/booking/booking-form";
 import { createClient } from "@/lib/supabase/server";
 import type { BookableService } from "@/lib/booking/queries";
 
-export default async function BookPage({ params }: PageProps<"/[locale]/book">) {
+export default async function BookPage({
+  params,
+  searchParams,
+}: PageProps<"/[locale]/book">) {
   const { locale } = await params;
+  const { again } = await searchParams;
   setRequestLocale(locale);
 
   const supabase = await createClient();
@@ -39,6 +43,29 @@ export default async function BookPage({ params }: PageProps<"/[locale]/book">) 
       }>(),
     ]);
 
+  // "Book again": prefill from one of the student's past bookings (RLS
+  // guarantees ownership).
+  let prefill = null;
+  if (typeof again === "string" && again) {
+    const { data: prev } = await supabase
+      .from("bookings")
+      .select("service_id, starts_at, ends_at, attendee_names, address")
+      .eq("id", again)
+      .single();
+    if (prev) {
+      prefill = {
+        serviceId: prev.service_id as string,
+        durationMinutes: Math.round(
+          (new Date(prev.ends_at).getTime() -
+            new Date(prev.starts_at).getTime()) /
+            60_000
+        ),
+        attendees: prev.attendee_names as string[],
+        address: prev.address as string,
+      };
+    }
+  }
+
   const t = await getTranslations("BookingForm");
 
   return (
@@ -50,8 +77,9 @@ export default async function BookPage({ params }: PageProps<"/[locale]/book">) 
       ) : (
         <BookingForm
           services={services ?? []}
-          defaultAddress={profile?.default_address ?? ""}
+          defaultAddress={prefill?.address ?? profile?.default_address ?? ""}
           settings={settings ?? null}
+          prefill={prefill}
         />
       )}
     </main>

@@ -51,10 +51,10 @@
 
 ## 7. Notifications
 
-- [ ] 7.1 React Email templates in PT and EN: request received, new-request alert, confirmation, decline, cancellation ×2, reminder
-- [ ] 7.2 Resend integration and send helper keyed to recipient profile locale; wire lifecycle emails into booking/series actions
-- [ ] 7.3 Hourly cron endpoint (`CRON_SECRET`-protected) sending 24h reminders idempotently via `reminder_sent_at`
-- [ ] 7.4 GitHub Actions scheduled workflow invoking the cron endpoints hourly
+- [x] 7.1 React Email templates in PT and EN: request received, new-request alert, confirmation, decline, cancellation ×2, reminder
+- [x] 7.2 Resend integration and send helper keyed to recipient profile locale; wire lifecycle emails into booking/series actions
+- [x] 7.3 Hourly cron endpoint (`CRON_SECRET`-protected) sending 24h reminders idempotently via `reminder_sent_at`
+- [x] 7.4 GitHub Actions scheduled workflow invoking the cron endpoints hourly
 
 ## 8. Google Calendar sync
 

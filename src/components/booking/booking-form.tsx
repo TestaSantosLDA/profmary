@@ -21,14 +21,23 @@ type PublicSettings = {
   travel_fee_threshold_km: number;
 };
 
+export type BookingPrefill = {
+  serviceId: string;
+  durationMinutes: number;
+  attendees: string[];
+  address: string;
+} | null;
+
 export function BookingForm({
   services,
   defaultAddress,
   settings,
+  prefill = null,
 }: {
   services: BookableService[];
   defaultAddress: string;
   settings: PublicSettings | null;
+  prefill?: BookingPrefill;
 }) {
   const t = useTranslations("BookingForm");
   const locale = useLocale();
@@ -37,7 +46,11 @@ export function BookingForm({
     initialState
   );
 
-  const [serviceId, setServiceId] = useState(services[0]?.id ?? "");
+  const [serviceId, setServiceId] = useState(
+    (prefill && services.some((s) => s.id === prefill.serviceId)
+      ? prefill.serviceId
+      : services[0]?.id) ?? ""
+  );
   const service = services.find((s) => s.id === serviceId);
 
   const durations = useMemo(() => {
@@ -53,7 +66,11 @@ export function BookingForm({
     return list;
   }, [service]);
 
-  const [duration, setDuration] = useState<number>(durations[0] ?? 60);
+  const [duration, setDuration] = useState<number>(
+    prefill && durations.includes(prefill.durationMinutes)
+      ? prefill.durationMinutes
+      : (durations[0] ?? 60)
+  );
   useEffect(() => {
     if (durations.length > 0 && !durations.includes(duration)) {
       setDuration(durations[0]);
@@ -76,7 +93,9 @@ export function BookingForm({
     });
   }, [serviceId, duration]);
 
-  const [attendees, setAttendees] = useState<string[]>([""]);
+  const [attendees, setAttendees] = useState<string[]>(
+    prefill && prefill.attendees.length > 0 ? prefill.attendees : [""]
+  );
   const [recurring, setRecurring] = useState(false);
 
   const filledAttendees = attendees.filter((a) => a.trim());

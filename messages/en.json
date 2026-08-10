@@ -63,8 +63,39 @@
       "services": "Services",
       "availability": "Availability",
       "settings": "Settings"
-    },
-    "requestsPlaceholder": "Pending booking requests will appear here."
+    }
+  },
+  "AdminRequests": {
+    "title": "Pending requests",
+    "empty": "No pending requests. 🎉",
+    "weekly": "Weekly",
+    "details": "{attendees, plural, =1 {1 attendee} other {# attendees}} · {estimate}",
+    "notePlaceholder": "Note to the student (optional)",
+    "travelFee": "Travel fee",
+    "approve": "Approve",
+    "decline": "Decline",
+    "errors": {
+      "not_pending": "This request is no longer pending.",
+      "in_past": "This request is in the past.",
+      "forbidden": "No permission.",
+      "save_failed": "Could not save. Please try again."
+    }
+  },
+  "AdminBookings": {
+    "weekTitle": "Next 7 days",
+    "weekEmpty": "No confirmed lessons this week.",
+    "allTitle": "All bookings",
+    "allStatuses": "All statuses",
+    "filter": "Filter",
+    "withTravelFee": "with travel fee",
+    "listEmpty": "No bookings.",
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "cancelled_student": "Cancelled by student",
+      "cancelled_admin": "Cancelled by teacher",
+      "skipped_blockout": "Unavailability"
+    }
   },
   "AdminServices": {
     "title": "Services",
@@ -182,9 +213,38 @@
       "body": "Reminder of your {service} lesson on {when}. Address: {address}."
     }
   },
+  "Status": {
+    "pending": "Awaiting confirmation",
+    "confirmed": "Confirmed",
+    "declined": "Not accepted",
+    "cancelled_student": "Cancelled by you",
+    "cancelled_admin": "Cancelled by the teacher",
+    "skipped_blockout": "Cancelled — teacher unavailable"
+  },
   "Dashboard": {
     "title": "My lessons",
-    "placeholder": "Your bookings will appear here."
+    "requested": "Request sent! You'll get an email once it's confirmed.",
+    "pendingRequests": "Pending requests",
+    "upcoming": "Upcoming lessons",
+    "series": "Weekly lessons",
+    "past": "Past lessons",
+    "empty": "No lessons yet. Send your first request!",
+    "bookLesson": "Book a lesson",
+    "bookAgain": "Book again",
+    "cancel": "Cancel",
+    "cancelConfirm": "Cancel this lesson?",
+    "cancelSeriesConfirm": "Cancel the whole series? Future lessons will be cancelled.",
+    "insideCutoff": "To cancel this lesson, contact the teacher directly.",
+    "seriesLabel": "{weekday} at {time}, weekly",
+    "seriesUntil": "until {date}",
+    "seriesOpenEnded": "open-ended",
+    "viewSeries": "View series",
+    "cancelSeries": "Cancel series",
+    "attendees": "{count, plural, =1 {1 attendee} other {# attendees}}",
+    "weekdays": {
+      "0": "Sunday", "1": "Monday", "2": "Tuesday", "3": "Wednesday",
+      "4": "Thursday", "5": "Friday", "6": "Saturday"
+    }
   },
   "About": {
     "title": "About the teacher",

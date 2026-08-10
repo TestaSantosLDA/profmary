@@ -63,8 +63,39 @@
       "services": "Serviços",
       "availability": "Disponibilidade",
       "settings": "Definições"
-    },
-    "requestsPlaceholder": "Os pedidos de marcação pendentes aparecerão aqui."
+    }
+  },
+  "AdminRequests": {
+    "title": "Pedidos pendentes",
+    "empty": "Sem pedidos pendentes. 🎉",
+    "weekly": "Semanal",
+    "details": "{attendees, plural, =1 {1 participante} other {# participantes}} · {estimate}",
+    "notePlaceholder": "Nota para o aluno (opcional)",
+    "travelFee": "Taxa de deslocação",
+    "approve": "Aprovar",
+    "decline": "Recusar",
+    "errors": {
+      "not_pending": "Este pedido já não está pendente.",
+      "in_past": "Este pedido já passou.",
+      "forbidden": "Sem permissões.",
+      "save_failed": "Não foi possível guardar. Tente novamente."
+    }
+  },
+  "AdminBookings": {
+    "weekTitle": "Próximos 7 dias",
+    "weekEmpty": "Sem aulas confirmadas esta semana.",
+    "allTitle": "Todas as marcações",
+    "allStatuses": "Todos os estados",
+    "filter": "Filtrar",
+    "withTravelFee": "com taxa de deslocação",
+    "listEmpty": "Sem marcações.",
+    "statuses": {
+      "pending": "Pendentes",
+      "confirmed": "Confirmadas",
+      "cancelled_student": "Canceladas pelo aluno",
+      "cancelled_admin": "Canceladas pela professora",
+      "skipped_blockout": "Indisponibilidade"
+    }
   },
   "AdminServices": {
     "title": "Serviços",
@@ -182,9 +213,38 @@
       "body": "Lembrete da sua aula de {service} em {when}. Morada: {address}."
     }
   },
+  "Status": {
+    "pending": "Aguarda confirmação",
+    "confirmed": "Confirmada",
+    "declined": "Não aceite",
+    "cancelled_student": "Cancelada por si",
+    "cancelled_admin": "Cancelada pela professora",
+    "skipped_blockout": "Cancelada — professora indisponível"
+  },
   "Dashboard": {
     "title": "As minhas aulas",
-    "placeholder": "As suas marcações aparecerão aqui."
+    "requested": "Pedido enviado! Receberá um email quando for confirmado.",
+    "pendingRequests": "Pedidos pendentes",
+    "upcoming": "Próximas aulas",
+    "series": "Aulas semanais",
+    "past": "Aulas anteriores",
+    "empty": "Ainda não tem aulas. Faça o seu primeiro pedido!",
+    "bookLesson": "Marcar aula",
+    "bookAgain": "Marcar novamente",
+    "cancel": "Cancelar",
+    "cancelConfirm": "Cancelar esta aula?",
+    "cancelSeriesConfirm": "Cancelar a série toda? As aulas futuras serão canceladas.",
+    "insideCutoff": "Para cancelar esta aula contacte diretamente a professora.",
+    "seriesLabel": "{weekday} às {time}, semanalmente",
+    "seriesUntil": "até {date}",
+    "seriesOpenEnded": "sem data de fim",
+    "viewSeries": "Ver série",
+    "cancelSeries": "Cancelar série",
+    "attendees": "{count, plural, =1 {1 participante} other {# participantes}}",
+    "weekdays": {
+      "0": "Domingo", "1": "Segunda", "2": "Terça", "3": "Quarta",
+      "4": "Quinta", "5": "Sexta", "6": "Sábado"
+    }
   },
   "About": {
     "title": "Sobre a professora",
