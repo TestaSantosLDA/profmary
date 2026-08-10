@@ -84,6 +84,49 @@ export async function declineBooking(
   return { error: null, success: true };
 }
 
+export async function approveSeries(
+  _prev: AdminActionState,
+  formData: FormData
+): Promise<AdminActionState> {
+  const id = String(formData.get("id") ?? "");
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.rpc("approve_series", {
+    p_series_id: id,
+  });
+
+  if (error || data !== "ok") {
+    return { error: data ?? "save_failed", success: false };
+  }
+
+  // TODO(group 7): one confirmation email for the whole series.
+  // TODO(group 8): calendar events are created by the sync job (gcal_sync_pending).
+
+  revalidatePath("/", "layout");
+  return { error: null, success: true };
+}
+
+export async function declineSeries(
+  _prev: AdminActionState,
+  formData: FormData
+): Promise<AdminActionState> {
+  const id = String(formData.get("id") ?? "");
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.rpc("decline_series", {
+    p_series_id: id,
+  });
+
+  if (error || data !== "ok") {
+    return { error: data ?? "save_failed", success: false };
+  }
+
+  // TODO(group 7): decline email to the student.
+
+  revalidatePath("/", "layout");
+  return { error: null, success: true };
+}
+
 export async function adminCancelBooking(
   _prev: AdminActionState,
   formData: FormData

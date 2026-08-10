@@ -34,11 +34,11 @@
 
 ## 5. Slot engine & booking flow
 
-- [ ] 5.1 Slot-generation function (rules − blockouts − held bookings − buffer, grid, notice, window) with unit tests covering the spec scenarios
-- [ ] 5.2 Booking form: service → date/slot picker → duration → attendees (cap enforced) → address (autofill + override) → live price estimate with travel-fee notice
-- [ ] 5.3 Create-request Server Action: validation, soft-hold insert handling the exclusion-constraint conflict gracefully
-- [ ] 5.4 Approve action (travel-fee toggle, note) and decline action (note) as Server Actions
-- [ ] 5.5 Student cancellation action with cutoff enforcement; admin cancellation action without cutoff
+- [x] 5.1 Slot-generation function (rules − blockouts − held bookings − buffer, grid, notice, window) with unit tests covering the spec scenarios
+- [x] 5.2 Booking form: service → date/slot picker → duration → attendees (cap enforced) → address (autofill + override) → live price estimate with travel-fee notice
+- [x] 5.3 Create-request Server Action: validation, soft-hold insert handling the exclusion-constraint conflict gracefully
+- [x] 5.4 Approve action (travel-fee toggle, note) and decline action (note) as Server Actions
+- [x] 5.5 Student cancellation action with cutoff enforcement; admin cancellation action without cutoff
 - [ ] 5.6 Lapsed-request handling: queue and slot queries ignore past-dated pending rows
 
 ## 6. Recurring series

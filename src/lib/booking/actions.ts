@@ -73,6 +73,39 @@ export async function createBookingRequest(
     return { error: "slot_taken" };
   }
 
+  // Weekly recurring: the series function inserts every occurrence
+  // atomically — any slot conflict in the window rejects the whole request.
+  if (formData.get("recurring") === "on") {
+    const endDate = String(formData.get("end_date") ?? "").trim();
+    const { data, error: rpcError } = await supabase.rpc(
+      "create_booking_series",
+      {
+        p_service_id: serviceId,
+        p_first_date: date,
+        p_start_time: start,
+        p_duration_minutes: duration,
+        p_attendee_names: attendees,
+        p_address: address,
+        p_end_date: endDate || null,
+        p_window_months: Number(process.env.BOOKING_WINDOW_MONTHS ?? 3),
+      }
+    );
+
+    if (rpcError) {
+      return { error: "save_failed" };
+    }
+    if (data?.error) {
+      return { error: data.error };
+    }
+
+    // TODO(group 7): request-received email to student + alert to admin.
+
+    revalidatePath("/", "layout");
+    const seriesLocale = await getLocale();
+    redirect({ href: "/dashboard?requested=1", locale: seriesLocale });
+    return { error: null }; // unreachable — redirect throws
+  }
+
   const startsAt = fromZonedTime(`${date}T${start}:00`, LESSON_TIMEZONE);
   const endsAt = new Date(startsAt.getTime() + duration * 60_000);
 

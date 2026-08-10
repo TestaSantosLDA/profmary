@@ -77,6 +77,7 @@ export function BookingForm({
   }, [serviceId, duration]);
 
   const [attendees, setAttendees] = useState<string[]>([""]);
+  const [recurring, setRecurring] = useState(false);
 
   const filledAttendees = attendees.filter((a) => a.trim());
   const estimate = service
@@ -224,6 +225,34 @@ export function BookingForm({
           >
             {t("addAttendee")}
           </Button>
+        )}
+      </div>
+
+      <div className="space-y-2 rounded-md border p-4">
+        <label className="flex items-center gap-2 text-sm font-medium">
+          <input
+            type="checkbox"
+            name="recurring"
+            checked={recurring}
+            onChange={(e) => setRecurring(e.target.checked)}
+            className="h-4 w-4"
+          />
+          {t("recurring")}
+        </label>
+        <p className="text-xs text-muted-foreground">{t("recurringHint")}</p>
+        {recurring && (
+          <div className="space-y-1 pt-2">
+            <Label htmlFor="end_date">{t("recurringEnd")}</Label>
+            <Input
+              id="end_date"
+              name="end_date"
+              type="date"
+              min={date || undefined}
+            />
+            <p className="text-xs text-muted-foreground">
+              {t("recurringEndHint")}
+            </p>
+          </div>
         )}
       </div>
 

@@ -191,6 +191,10 @@
     "travelFeeNote": "Addresses beyond {km} km may carry a €{amount} travel fee.",
     "submit": "Send request",
     "noServices": "No services available right now.",
+    "recurring": "Repeat weekly",
+    "recurringHint": "The same lesson every week at the same day and time. The teacher confirms the whole series at once.",
+    "recurringEnd": "End date (optional)",
+    "recurringEndHint": "Without an end date, the series continues until cancelled.",
     "errors": {
       "not_authenticated": "Session expired. Please sign in again.",
       "missing_fields": "Choose the service, day, and time.",
@@ -201,6 +205,7 @@
       "too_many_attendees": "Too many attendees for this service.",
       "slot_taken": "That time is no longer available. Please pick another.",
       "unavailable": "Booking is temporarily unavailable. Please try later.",
+      "invalid_end_date": "The end date must be after the first lesson.",
       "save_failed": "Could not send the request. Please try again."
     }
   },
