@@ -27,10 +27,10 @@
 
 ## 4. Service catalog & availability admin
 
-- [ ] 4.1 Admin services CRUD UI: bilingual fields, hourly rate, duration bounds (30-min validation), attendee cap, active toggle
-- [ ] 4.2 Admin weekly availability editor with overlap validation
-- [ ] 4.3 Admin blockouts editor (create/delete date ranges)
-- [ ] 4.4 Admin settings editor: buffer, cancellation cutoff, booking notice, travel-fee amount and threshold
+- [x] 4.1 Admin services CRUD UI: bilingual fields, hourly rate, duration bounds (30-min validation), attendee cap, active toggle
+- [x] 4.2 Admin weekly availability editor with overlap validation
+- [x] 4.3 Admin blockouts editor (create/delete date ranges)
+- [x] 4.4 Admin settings editor: buffer, cancellation cutoff, booking notice, travel-fee amount and threshold
 
 ## 5. Slot engine & booking flow
 
