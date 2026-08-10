@@ -35,6 +35,37 @@
       "oauth": "Could not sign in with Google."
     }
   },
+  "Profile": {
+    "title": "My profile",
+    "name": "Name",
+    "phone": "Phone",
+    "language": "Language",
+    "locales": { "pt": "Portuguese", "en": "English" },
+    "defaultAddress": "Lesson address",
+    "defaultAddressHint": "Address where lessons usually take place",
+    "save": "Save",
+    "saved": "Changes saved.",
+    "changePassword": "Change password",
+    "newPassword": "New password",
+    "passwordChanged": "Password changed.",
+    "errors": {
+      "not_authenticated": "Session expired. Please sign in again.",
+      "missing_name": "Name is required.",
+      "invalid_locale": "Invalid language.",
+      "update_failed": "Could not save. Please try again.",
+      "password_too_short": "Password must be at least 8 characters."
+    }
+  },
+  "Admin": {
+    "nav": {
+      "requests": "Requests",
+      "bookings": "Lessons",
+      "services": "Services",
+      "availability": "Availability",
+      "settings": "Settings"
+    },
+    "requestsPlaceholder": "Pending booking requests will appear here."
+  },
   "Dashboard": {
     "title": "My lessons",
     "placeholder": "Your bookings will appear here."

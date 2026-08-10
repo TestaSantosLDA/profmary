@@ -35,6 +35,37 @@
       "oauth": "Não foi possível iniciar sessão com o Google."
     }
   },
+  "Profile": {
+    "title": "O meu perfil",
+    "name": "Nome",
+    "phone": "Telefone",
+    "language": "Idioma",
+    "locales": { "pt": "Português", "en": "Inglês" },
+    "defaultAddress": "Morada das aulas",
+    "defaultAddressHint": "Morada onde as aulas decorrem habitualmente",
+    "save": "Guardar",
+    "saved": "Alterações guardadas.",
+    "changePassword": "Alterar palavra-passe",
+    "newPassword": "Nova palavra-passe",
+    "passwordChanged": "Palavra-passe alterada.",
+    "errors": {
+      "not_authenticated": "Sessão expirada. Inicie sessão novamente.",
+      "missing_name": "O nome é obrigatório.",
+      "invalid_locale": "Idioma inválido.",
+      "update_failed": "Não foi possível guardar. Tente novamente.",
+      "password_too_short": "A palavra-passe deve ter pelo menos 8 caracteres."
+    }
+  },
+  "Admin": {
+    "nav": {
+      "requests": "Pedidos",
+      "bookings": "Aulas",
+      "services": "Serviços",
+      "availability": "Disponibilidade",
+      "settings": "Definições"
+    },
+    "requestsPlaceholder": "Os pedidos de marcação pendentes aparecerão aqui."
+  },
   "Dashboard": {
     "title": "As minhas aulas",
     "placeholder": "As suas marcações aparecerão aqui."

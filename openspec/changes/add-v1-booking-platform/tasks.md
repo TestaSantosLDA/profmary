@@ -22,8 +22,8 @@
 - [x] 3.1 Registration and sign-in pages (email+password) with locale captured on the profile
 - [ ] 3.2 Google OAuth provider configured in Supabase and wired into the sign-in page
 - [ ] 3.3 Email confirmation + password reset flows (Supabase built-ins, localized templates)
-- [ ] 3.4 Profile page: edit name, phone, locale, default address, password; registration copy stating the parent/16+ account-holder rule
-- [ ] 3.5 Route protection middleware: student area requires auth, admin area requires `is_admin` (enforced by RLS as well)
+- [x] 3.4 Profile page: edit name, phone, locale, default address, password; registration copy stating the parent/16+ account-holder rule
+- [x] 3.5 Route protection middleware: student area requires auth, admin area requires `is_admin` (enforced by RLS as well)
 
 ## 4. Service catalog & availability admin
 
