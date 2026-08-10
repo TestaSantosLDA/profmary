@@ -2,12 +2,12 @@
 
 ## 1. Foundation
 
-- [ ] 1.1 Scaffold Next.js app (App Router, TypeScript, Tailwind, ESLint) in this repo; add shadcn/ui
+- [x] 1.1 Scaffold Next.js app (App Router, TypeScript, Tailwind, ESLint) in this repo; add shadcn/ui
 - [ ] 1.2 Create Supabase project (EU region); set up Supabase CLI with migrations checked into `supabase/migrations`
-- [ ] 1.3 Wire `@supabase/ssr` clients (browser, server, middleware) and environment variables (`.env.example` documented)
-- [ ] 1.4 Set up next-intl with `/pt` and `/en` routing, locale detection/redirect, and message catalog structure with a completeness check
+- [x] 1.3 Wire `@supabase/ssr` clients (browser, server, middleware) and environment variables (`.env.example` documented)
+- [x] 1.4 Set up next-intl with `/pt` and `/en` routing, locale detection/redirect, and message catalog structure with a completeness check
 - [ ] 1.5 Create Vercel project linked to the GitHub repo (preview on PRs, production on `main`); set `BOOKING_WINDOW_MONTHS` env var
-- [ ] 1.6 App shell: layout, header with language switcher, footer with Privacy Policy link, placeholder theme
+- [x] 1.6 App shell: layout, header with language switcher, footer with Privacy Policy link, placeholder theme
 
 ## 2. Database schema & security
 

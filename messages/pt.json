@@ -1,0 +1,46 @@
+{
+  "Common": {
+    "appName": "ProfMary",
+    "bookLesson": "Marcar aula",
+    "signIn": "Entrar",
+    "signOut": "Sair",
+    "language": "Idioma"
+  },
+  "Nav": {
+    "home": "Início",
+    "about": "Sobre",
+    "pricing": "Preços",
+    "contact": "Contacto",
+    "dashboard": "As minhas aulas"
+  },
+  "Footer": {
+    "privacyPolicy": "Política de Privacidade",
+    "copyright": "© {year} ProfMary — Aulas de Português"
+  },
+  "About": {
+    "title": "Sobre a professora",
+    "placeholder": "Conteúdo em preparação."
+  },
+  "Pricing": {
+    "title": "Preços",
+    "placeholder": "Conteúdo em preparação."
+  },
+  "Contact": {
+    "title": "Contacto",
+    "placeholder": "Conteúdo em preparação."
+  },
+  "Privacy": {
+    "title": "Política de Privacidade",
+    "placeholder": "Conteúdo em preparação."
+  },
+  "Book": {
+    "title": "Marcar aula",
+    "placeholder": "A marcação de aulas estará disponível em breve."
+  },
+  "Home": {
+    "title": "Aulas particulares de Português",
+    "subtitle": "Com a professora Maria Martins — ao domicílio, para todos os níveis",
+    "ctaPrimary": "Marcar a primeira aula",
+    "ctaSecondary": "Ver preços"
+  }
+}

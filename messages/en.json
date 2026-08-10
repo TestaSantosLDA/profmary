@@ -1,0 +1,46 @@
+{
+  "Common": {
+    "appName": "ProfMary",
+    "bookLesson": "Book a lesson",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "language": "Language"
+  },
+  "Nav": {
+    "home": "Home",
+    "about": "About",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "dashboard": "My lessons"
+  },
+  "Footer": {
+    "privacyPolicy": "Privacy Policy",
+    "copyright": "© {year} ProfMary — Portuguese Lessons"
+  },
+  "About": {
+    "title": "About the teacher",
+    "placeholder": "Content coming soon."
+  },
+  "Pricing": {
+    "title": "Pricing",
+    "placeholder": "Content coming soon."
+  },
+  "Contact": {
+    "title": "Contact",
+    "placeholder": "Content coming soon."
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "placeholder": "Content coming soon."
+  },
+  "Book": {
+    "title": "Book a lesson",
+    "placeholder": "Online booking is coming soon."
+  },
+  "Home": {
+    "title": "Private Portuguese lessons",
+    "subtitle": "With Maria Martins — at your home, for every level",
+    "ctaPrimary": "Book your first lesson",
+    "ctaSecondary": "See pricing"
+  }
+}
