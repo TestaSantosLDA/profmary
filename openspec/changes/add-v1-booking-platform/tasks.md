@@ -11,15 +11,15 @@
 
 ## 2. Database schema & security
 
-- [ ] 2.1 Migration: `profiles` (with `is_admin`, locale, default_address) + trigger creating a profile on auth signup
-- [ ] 2.2 Migration: `services`, `availability_rules`, `blockouts`, `settings` singleton (seed defaults: buffer 10, cutoff 24h, notice 24h)
-- [ ] 2.3 Migration: `booking_series` and `bookings` with status enums and the exclusion constraint on `tstzrange(starts_at, ends_at + buffer)` for pending/confirmed rows
-- [ ] 2.4 RLS policies: students access own rows only; admin flag grants full read/write; service-role bypass for cron
-- [ ] 2.5 Seed script: placeholder services (one per audience segment) and Maria's initial weekly availability
+- [x] 2.1 Migration: `profiles` (with `is_admin`, locale, default_address) + trigger creating a profile on auth signup
+- [x] 2.2 Migration: `services`, `availability_rules`, `blockouts`, `settings` singleton (seed defaults: buffer 10, cutoff 24h, notice 24h)
+- [x] 2.3 Migration: `booking_series` and `bookings` with status enums and the exclusion constraint on `tstzrange(starts_at, ends_at + buffer)` for pending/confirmed rows
+- [x] 2.4 RLS policies: students access own rows only; admin flag grants full read/write; service-role bypass for cron
+- [x] 2.5 Seed script: placeholder services (one per audience segment) and Maria's initial weekly availability
 
 ## 3. Accounts
 
-- [ ] 3.1 Registration and sign-in pages (email+password) with locale captured on the profile
+- [x] 3.1 Registration and sign-in pages (email+password) with locale captured on the profile
 - [ ] 3.2 Google OAuth provider configured in Supabase and wired into the sign-in page
 - [ ] 3.3 Email confirmation + password reset flows (Supabase built-ins, localized templates)
 - [ ] 3.4 Profile page: edit name, phone, locale, default address, password; registration copy stating the parent/16+ account-holder rule

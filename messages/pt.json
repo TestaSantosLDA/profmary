@@ -17,6 +17,28 @@
     "privacyPolicy": "Política de Privacidade",
     "copyright": "© {year} ProfMary — Aulas de Português"
   },
+  "Auth": {
+    "signIn": "Entrar",
+    "createAccount": "Criar conta",
+    "name": "Nome",
+    "email": "Email",
+    "password": "Palavra-passe",
+    "continueWithGoogle": "Continuar com o Google",
+    "noAccount": "Ainda não tem conta?",
+    "haveAccount": "Já tem conta?",
+    "accountHolderNotice": "A conta deve ser criada por um encarregado de educação ou por um estudante com 16 anos ou mais.",
+    "errors": {
+      "missing_fields": "Preencha todos os campos.",
+      "invalid_credentials": "Email ou palavra-passe incorretos.",
+      "signup_failed": "Não foi possível criar a conta. Tente novamente.",
+      "auth_callback": "A autenticação falhou. Tente novamente.",
+      "oauth": "Não foi possível iniciar sessão com o Google."
+    }
+  },
+  "Dashboard": {
+    "title": "As minhas aulas",
+    "placeholder": "As suas marcações aparecerão aqui."
+  },
   "About": {
     "title": "Sobre a professora",
     "placeholder": "Conteúdo em preparação."
