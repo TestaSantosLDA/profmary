@@ -62,8 +62,25 @@
       "bookings": "Lessons",
       "services": "Services",
       "availability": "Availability",
+      "about": "About page",
       "settings": "Settings"
     }
+  },
+  "AdminAbout": {
+    "title": "About page",
+    "subtitle": "What students see on the \"About the teacher\" page.",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "uploading": "Uploading…",
+    "uploadFailed": "Could not upload the image.",
+    "taglinePt": "Tagline (PT)",
+    "taglineEn": "Tagline (EN)",
+    "introPt": "Introduction (PT)",
+    "introEn": "Introduction (EN)",
+    "save": "Save",
+    "saved": "Changes saved.",
+    "saveFailed": "Could not save. Please try again.",
+    "viewPage": "View page →"
   },
   "AdminRequests": {
     "title": "Pending requests",
@@ -139,19 +156,19 @@
     },
     "from": "From",
     "to": "To",
-    "addRule": "Add hours",
+    "add": "+ Add",
     "remove": "Remove",
-    "noRules": "No hours defined.",
+    "unavailable": "Unavailable",
+    "selectRange": "Pick the dates on the calendar",
     "blockouts": "Blocked periods",
     "blockoutsHint": "Vacation or other periods with no lessons. They take precedence over the weekly schedule.",
     "reason": "Reason (private)",
     "reasonHint": "e.g. vacation",
     "addBlockout": "Add period",
-    "noBlockouts": "No blocked periods.",
     "errors": {
-      "invalid_weekday": "Invalid day.",
       "invalid_times": "Invalid times.",
       "overlapping_rule": "These hours overlap an existing rule.",
+      "no_space": "No free window left that day — adjust the existing hours.",
       "invalid_dates": "Invalid dates.",
       "save_failed": "Could not save. Please try again."
     }

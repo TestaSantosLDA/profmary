@@ -27,7 +27,7 @@ export default async function AdminServicesPage({
         </Button>
       </div>
 
-      <ul className="divide-y rounded-md border">
+      <ul className="divide-y rounded-xl border border-border bg-card">
         {(services ?? []).map((s) => (
           <li key={s.id}>
             <Link
@@ -38,7 +38,7 @@ export default async function AdminServicesPage({
                 <p className="font-medium">
                   {locale === "pt" ? s.title_pt : s.title_en}
                   {!s.active && (
-                    <span className="ml-2 rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground">
+                    <span className="ml-2 rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
                       {t("inactive")}
                     </span>
                   )}

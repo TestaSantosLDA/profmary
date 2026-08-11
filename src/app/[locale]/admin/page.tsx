@@ -75,7 +75,7 @@ export default async function AdminRequestsPage({
       {items.length === 0 ? (
         <p className="text-muted-foreground">{t("empty")}</p>
       ) : (
-        <ul className="divide-y rounded-md border">
+        <ul className="space-y-4">
           {items.map((item) => (
             <RequestCard key={`${item.kind}-${item.id}`} item={item} />
           ))}

@@ -12,6 +12,7 @@ Apply in order — each file is an independent PR-sized chunk:
 | 4 | `04-website.md` | Public pages | header/footer, Home, Pricing, About, Contact + new `site_content` table |
 | 5 | `05-admin.md` | Admin restyle + availability editor + "Página Sobre" tab | `src/app/[locale]/admin/*`, `src/components/admin/*`, 1 migration |
 | 6 | `06-email.md` | Email layout | `src/lib/email/send.ts` |
+| 7 | `07-emails-declined-reminder.md` | Email layout Extras | `src/lib/email/send.ts` |
 
 ## Design rules (the short version)
 

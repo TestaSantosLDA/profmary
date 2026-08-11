@@ -40,7 +40,10 @@ export function SettingsForm({ settings }: { settings: Settings }) {
   ] as const;
 
   return (
-    <form action={formAction} className="max-w-md space-y-4">
+    <form
+      action={formAction}
+      className="max-w-[480px] space-y-4 rounded-xl border border-border bg-card p-5"
+    >
       {fields.map((f) => (
         <div key={f.name} className="space-y-2">
           <Label htmlFor={f.name}>{t(`fields.${f.name}`)}</Label>
@@ -90,7 +93,7 @@ export function SettingsForm({ settings }: { settings: Settings }) {
       {state.error && (
         <p className="text-sm text-destructive">{t(`errors.${state.error}`)}</p>
       )}
-      {state.success && <p className="text-sm text-green-600">{t("saved")}</p>}
+      {state.success && <p className="text-sm text-positive">{t("saved")}</p>}
 
       <Button type="submit" disabled={pending}>
         {t("save")}

@@ -83,15 +83,17 @@ export default async function AdminBookingsPage({
         <div className="space-y-4">
           {[...byDay.entries()].map(([day, lessons]) => (
             <div key={day}>
-              <h2 className="mb-2 font-semibold capitalize">{day}</h2>
-              <ul className="divide-y rounded-md border">
+              <h2 className="mb-2 font-heading text-[1.05rem] font-semibold">
+                {day.charAt(0).toUpperCase() + day.slice(1)}
+              </h2>
+              <ul className="divide-y rounded-xl border border-border bg-card">
                 {lessons.map((b) => {
                   const service = b.services as unknown as { title_pt: string };
                   const profile = b.profiles as unknown as { name: string };
                   return (
-                    <li key={b.id} className="px-4 py-2 text-sm">
-                      <span className="font-medium">{time(b.starts_at)}</span> ·{" "}
-                      {profile.name} · {service.title_pt} ·{" "}
+                    <li key={b.id} className="px-4 py-2.5 text-sm">
+                      <span className="font-semibold">{time(b.starts_at)}</span>{" "}
+                      · {profile.name} · {service.title_pt} ·{" "}
                       <span className="text-muted-foreground">{b.address}</span>
                     </li>
                   );
@@ -109,7 +111,7 @@ export default async function AdminBookingsPage({
             <select
               name="status"
               defaultValue={typeof status === "string" ? status : ""}
-              className="border-input h-9 rounded-md border bg-transparent px-3"
+              className="border-input h-9 rounded-[10px] border bg-card px-3"
             >
               {STATUSES.map((s) => (
                 <option key={s} value={s}>
@@ -117,12 +119,15 @@ export default async function AdminBookingsPage({
                 </option>
               ))}
             </select>
-            <button type="submit" className="rounded-md border px-3 py-1.5">
+            <button
+              type="submit"
+              className="h-9 rounded-[10px] border border-border bg-card px-3.5 font-medium transition-colors hover:bg-muted"
+            >
               {t("filter")}
             </button>
           </form>
         </div>
-        <ul className="divide-y rounded-md border">
+        <ul className="divide-y rounded-xl border border-border bg-card">
           {(list ?? []).map((b) => {
             const service = b.services as unknown as { title_pt: string };
             const profile = b.profiles as unknown as {

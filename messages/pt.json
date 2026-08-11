@@ -62,8 +62,25 @@
       "bookings": "Aulas",
       "services": "Serviços",
       "availability": "Disponibilidade",
+      "about": "Página Sobre",
       "settings": "Definições"
     }
+  },
+  "AdminAbout": {
+    "title": "Página Sobre",
+    "subtitle": "O que os alunos veem na página \"Sobre a professora\".",
+    "photo": "Fotografia",
+    "uploadPhoto": "Carregar fotografia",
+    "uploading": "A carregar…",
+    "uploadFailed": "Não foi possível carregar a imagem.",
+    "taglinePt": "Subtítulo (PT)",
+    "taglineEn": "Subtítulo (EN)",
+    "introPt": "Apresentação (PT)",
+    "introEn": "Apresentação (EN)",
+    "save": "Guardar",
+    "saved": "Alterações guardadas.",
+    "saveFailed": "Não foi possível guardar. Tente novamente.",
+    "viewPage": "Ver página →"
   },
   "AdminRequests": {
     "title": "Pedidos pendentes",
@@ -139,19 +156,19 @@
     },
     "from": "De",
     "to": "Até",
-    "addRule": "Adicionar horário",
+    "add": "+ Adicionar",
     "remove": "Remover",
-    "noRules": "Sem horários definidos.",
+    "unavailable": "Indisponível",
+    "selectRange": "Escolha as datas no calendário",
     "blockouts": "Períodos indisponíveis",
     "blockoutsHint": "Férias ou outros períodos em que não há aulas. Têm prioridade sobre o horário semanal.",
     "reason": "Motivo (privado)",
     "reasonHint": "ex.: férias",
     "addBlockout": "Adicionar período",
-    "noBlockouts": "Sem períodos indisponíveis.",
     "errors": {
-      "invalid_weekday": "Dia inválido.",
       "invalid_times": "Horas inválidas.",
       "overlapping_rule": "Este horário sobrepõe-se a um existente.",
+      "no_space": "Não há espaço livre nesse dia — ajuste os horários existentes.",
       "invalid_dates": "Datas inválidas.",
       "save_failed": "Não foi possível guardar. Tente novamente."
     }

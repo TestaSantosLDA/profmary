@@ -32,7 +32,10 @@ export function ServiceForm({ service }: { service?: ServiceRow }) {
   const [state, formAction, pending] = useActionState(saveService, initialState);
 
   return (
-    <form action={formAction} className="max-w-xl space-y-4">
+    <form
+      action={formAction}
+      className="max-w-xl space-y-4 rounded-xl border border-border bg-card p-5"
+    >
       {service && <input type="hidden" name="id" value={service.id} />}
 
       <div className="grid gap-4 sm:grid-cols-2">

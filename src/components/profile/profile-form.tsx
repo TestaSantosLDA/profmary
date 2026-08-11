@@ -77,7 +77,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
           <p className="text-sm text-destructive">{t(`errors.${state.error}`)}</p>
         )}
         {state.success && (
-          <p className="text-sm text-green-600">{t("saved")}</p>
+          <p className="text-sm text-positive">{t("saved")}</p>
         )}
         <Button type="submit" disabled={pending}>
           {t("save")}
@@ -103,7 +103,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
           </p>
         )}
         {pwState.success && (
-          <p className="text-sm text-green-600">{t("passwordChanged")}</p>
+          <p className="text-sm text-positive">{t("passwordChanged")}</p>
         )}
         <Button type="submit" variant="outline" disabled={pwPending}>
           {t("changePassword")}

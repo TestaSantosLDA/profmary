@@ -43,12 +43,12 @@ export function RequestCard({ item }: { item: RequestItem }) {
   const error = approveState.error ?? declineState.error;
 
   return (
-    <li className="space-y-3 p-4">
+    <li className="space-y-3 rounded-xl border border-border bg-card p-4">
       <div>
-        <p className="font-medium">
+        <p className="text-[15px] font-semibold">
           {item.studentName} · {item.serviceTitle}
           {item.kind === "series" && (
-            <span className="ml-2 rounded-full bg-secondary px-3 py-1 text-[13px] font-medium text-primary">
+            <span className="ml-2 rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-primary">
               {t("weekly")}
             </span>
           )}
