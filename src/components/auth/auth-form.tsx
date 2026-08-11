@@ -15,13 +15,31 @@ import { Link } from "@/i18n/navigation";
 
 const initialState: AuthActionState = { error: null };
 
-export function AuthForm({ mode }: { mode: "login" | "register" }) {
+export function AuthForm({
+  mode,
+  notice,
+  urlError,
+}: {
+  mode: "login" | "register";
+  /** One-shot info banner from a redirect (e.g. "confirm your email"). */
+  notice?: string | null;
+  /** One-shot error from a redirect (e.g. a failed auth callback). */
+  urlError?: string | null;
+}) {
   const t = useTranslations("Auth");
   const action = mode === "login" ? signIn : signUp;
   const [state, formAction, pending] = useActionState(action, initialState);
 
   return (
     <div className="mx-auto w-full max-w-sm space-y-6">
+      {notice && (
+        <div className="rounded-[10px] bg-positive-tint px-4 py-3 text-sm text-positive">
+          {t(`notices.${notice}`)}
+        </div>
+      )}
+      {urlError && (
+        <p className="text-sm text-destructive">{t(`errors.${urlError}`)}</p>
+      )}
       <form action={formAction} className="space-y-4">
         {mode === "register" && (
           <div className="space-y-2">
@@ -50,6 +68,16 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
             autoComplete={mode === "login" ? "current-password" : "new-password"}
           />
         </div>
+        {mode === "login" && (
+          <p className="text-right text-sm">
+            <Link
+              href="/forgot-password"
+              className="text-muted-foreground underline underline-offset-4 hover:text-foreground"
+            >
+              {t("forgotPassword")}
+            </Link>
+          </p>
+        )}
         {state.error && (
           <p className="text-sm text-destructive">{t(`errors.${state.error}`)}</p>
         )}

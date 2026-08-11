@@ -10,12 +10,18 @@ export async function GET(
   const { locale } = await params;
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
+  // Explicit allowlist — `next` comes from the URL and must never become
+  // an open redirect.
+  const next =
+    searchParams.get("next") === "/reset-password"
+      ? "/reset-password"
+      : "/dashboard";
 
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(`${origin}/${locale}/dashboard`);
+      return NextResponse.redirect(`${origin}/${locale}${next}`);
     }
   }
 

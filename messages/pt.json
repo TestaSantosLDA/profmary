@@ -37,7 +37,23 @@
       "invalid_credentials": "Email ou palavra-passe incorretos.",
       "signup_failed": "Não foi possível criar a conta. Tente novamente.",
       "auth_callback": "A autenticação falhou. Tente novamente.",
-      "oauth": "Não foi possível iniciar sessão com o Google."
+      "oauth": "Não foi possível iniciar sessão com o Google.",
+      "email_not_confirmed": "Confirme o seu email antes de entrar. Verifique a caixa de entrada.",
+      "password_too_short": "A palavra-passe deve ter pelo menos 8 caracteres.",
+      "reset_failed": "Não foi possível alterar a palavra-passe. Tente novamente.",
+      "reset_link_expired": "O link expirou. Peça um novo link de reposição."
+    },
+    "forgotPassword": "Esqueceu a palavra-passe?",
+    "forgotTitle": "Repor palavra-passe",
+    "forgotHint": "Indique o email da sua conta e enviamos-lhe um link para repor a palavra-passe.",
+    "sendResetLink": "Enviar link",
+    "resetEmailSent": "Se existir uma conta com esse email, enviámos um link para repor a palavra-passe. Verifique a caixa de entrada.",
+    "backToLogin": "Voltar a entrar",
+    "resetTitle": "Nova palavra-passe",
+    "newPassword": "Nova palavra-passe",
+    "resetSubmit": "Repor palavra-passe",
+    "notices": {
+      "confirm_email": "Conta criada! Verifique o seu email e clique no link de confirmação antes de entrar."
     }
   },
   "Profile": {

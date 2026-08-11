@@ -37,7 +37,23 @@
       "invalid_credentials": "Incorrect email or password.",
       "signup_failed": "Could not create the account. Please try again.",
       "auth_callback": "Authentication failed. Please try again.",
-      "oauth": "Could not sign in with Google."
+      "oauth": "Could not sign in with Google.",
+      "email_not_confirmed": "Confirm your email before signing in. Check your inbox.",
+      "password_too_short": "The password must be at least 8 characters.",
+      "reset_failed": "Couldn't change the password. Try again.",
+      "reset_link_expired": "The link expired. Request a new reset link."
+    },
+    "forgotPassword": "Forgot your password?",
+    "forgotTitle": "Reset password",
+    "forgotHint": "Enter your account email and we'll send you a link to reset your password.",
+    "sendResetLink": "Send link",
+    "resetEmailSent": "If an account exists with that email, we've sent a link to reset the password. Check your inbox.",
+    "backToLogin": "Back to sign in",
+    "resetTitle": "New password",
+    "newPassword": "New password",
+    "resetSubmit": "Reset password",
+    "notices": {
+      "confirm_email": "Account created! Check your email and click the confirmation link before signing in."
     }
   },
   "Profile": {
