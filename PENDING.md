@@ -15,8 +15,19 @@ que depende deles está pronto ou anotado.
 
 ## Conteúdo (Maria)
 
-- [ ] `/pt/admin/about` — foto, nome, profissão, descrição + listas
-      "Com quem trabalho" e "Como funcionam as aulas".
+- [ ] `/pt/admin/content` — o novo separador **Conteúdo** edita as páginas
+      Início e Sobre (textos PT/EN + fotografias). O antigo "Página Sobre"
+      foi substituído; o que lá estava foi migrado.
+- [ ] **Fotografias reais** para os 6 espaços (retrato ×2, mesa de aula,
+      3 quadrados da página Sobre) — até lá as páginas mostram molduras
+      cinzentas com sugestões de pesquisa de stock. Regras: luz natural,
+      sem olhar para a câmara, ambiente português, sem texto em ecrãs.
+- [ ] **Testemunho**: o da página inicial ("Ana, holandesa") é inventado e
+      está marcado como provisório — substituir por um real dos alunos da
+      Maria no separador Conteúdo, ou ocultar a secção.
+- [ ] **Números da página Sobre**: "10+ anos", "1 para 1 ou grupos
+      pequenos", "PT · EN · ES" foram inferidos — a Maria deve confirmar
+      (ou corrigir no separador Conteúdo) antes do lançamento.
 - [ ] `/pt/admin/services` — preços e descrições reais.
 - [ ] `/pt/admin/availability` — horário semanal real.
 - [ ] Email e telefone de contacto públicos → dar ao Claude para preencher em
