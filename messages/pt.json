@@ -129,7 +129,7 @@
     "weekly": "Semanal",
     "details": "{attendees, plural, =1 {1 participante} other {# participantes}} · {estimate}",
     "notePlaceholder": "Nota para o aluno (opcional)",
-    "travelFee": "Taxa de deslocação",
+    "travelFee": "Taxa extra de distância (+{amount})",
     "approve": "Aprovar",
     "decline": "Recusar",
     "errors": {
@@ -137,7 +137,11 @@
       "in_past": "Este pedido já passou.",
       "forbidden": "Sem permissões.",
       "save_failed": "Não foi possível guardar. Tente novamente."
-    }
+    },
+    "modeOnline": "Online",
+    "modeOnsite": "Domicílio",
+    "onlineAddress": "Link enviado na confirmação",
+    "includesFee": "inclui {fee} de deslocação"
   },
   "AdminBookings": {
     "weekTitle": "Próximos 7 dias",
@@ -180,8 +184,23 @@
       "invalid_duration": "As durações devem ser múltiplos de 30 minutos.",
       "duration_order": "A duração máxima deve ser maior ou igual à mínima.",
       "invalid_cap": "Limite inválido (use -1 para sem limite).",
-      "save_failed": "Não foi possível guardar. Tente novamente."
-    }
+      "save_failed": "Não foi possível guardar. Tente novamente.",
+      "no_mode": "Pelo menos uma modalidade tem de estar ativa.",
+      "invalid_fee": "Taxa de deslocação inválida."
+    },
+    "modes": "Modalidades",
+    "modeOnline": "Online",
+    "modeOnlineHint": "Aula por videochamada. O link é enviado na confirmação.",
+    "modeOnsite": "Ao domicílio",
+    "modeOnsiteHint": "A professora desloca-se à morada do aluno.",
+    "onsiteFee": "Taxa de deslocação (€)",
+    "onsiteFeeHint": "Deixar vazio usa a taxa predefinida em Definições ({fee}).",
+    "modesHint": "O aluno escolhe entre as modalidades ativas ao marcar. Pelo menos uma tem de estar ativa.",
+    "modesBoth": "Online + domicílio",
+    "modesOnline": "Só online",
+    "modesOnsite": "Só ao domicílio",
+    "feePerLesson": "{amount} por aula",
+    "feePerHour": "{amount} por hora"
   },
   "AdminAvailability": {
     "title": "Disponibilidade semanal",
@@ -220,14 +239,16 @@
       "buffer_minutes": "Intervalo entre aulas (minutos)",
       "cancellation_cutoff_hours": "Antecedência mínima para cancelar (horas)",
       "booking_notice_hours": "Antecedência mínima para marcar (horas)",
-      "travel_fee_eur": "Taxa de deslocação (€)",
-      "travel_fee_threshold_km": "A partir de (km)"
+      "travel_fee_eur": "Taxa extra de distância (€)",
+      "travel_fee_threshold_km": "A partir de (km)",
+      "onsite_fee_eur": "Taxa de deslocação (€)",
+      "onsite_fee_mode": "Cobrança"
     },
     "hints": {
       "buffer_minutes": "Tempo de deslocação entre aulas consecutivas.",
       "cancellation_cutoff_hours": "Depois deste limite, os alunos têm de contactar diretamente.",
       "booking_notice_hours": "Os pedidos têm de ser feitos com esta antecedência.",
-      "travel_fee": "Aplicada manualmente ao aprovar, para moradas mais distantes."
+      "travel_fee": "Para moradas mais distantes, aplicada manualmente ao aprovar o pedido."
     },
     "saved": "Definições guardadas.",
     "save": "Guardar",
@@ -249,6 +270,14 @@
         "connect_failed": "Não foi possível ligar ao Google Calendar. Tente novamente."
       },
       "disconnected": "Google Calendar desligado."
+    },
+    "onsite": {
+      "title": "Aulas ao domicílio",
+      "intro": "Taxa predefinida somada à estimativa quando o aluno escolhe aula ao domicílio. Cada serviço pode ter uma taxa própria."
+    },
+    "feeModes": {
+      "per_lesson": "Por aula",
+      "per_hour": "Por hora"
     }
   },
   "Email": {
@@ -267,7 +296,8 @@
     "confirmed": {
       "subject": "Aula confirmada ✓",
       "body": "A sua aula de {service} em {when} está confirmada.",
-      "details": "Morada: {address} · Valor estimado: {price} (pagamento em dinheiro ou transferência)."
+      "details": "Morada: {address} · Valor estimado: {price} (pagamento em dinheiro ou transferência).",
+      "detailsOnline": "Aula online — enviamos o link da videochamada por email antes da aula · Valor estimado: {price} (pagamento em dinheiro ou transferência)."
     },
     "declined": {
       "subject": "Pedido de aula não aceite",
@@ -283,7 +313,8 @@
     },
     "reminder": {
       "subject": "Lembrete: aula amanhã",
-      "body": "Lembrete da sua aula de {service} em {when}. Morada: {address}."
+      "body": "Lembrete da sua aula de {service} em {when}. Morada: {address}.",
+      "bodyOnline": "Lembrete da sua aula de {service} em {when}. Aula online — enviamos o link da videochamada por email."
     }
   },
   "Status": {
@@ -322,7 +353,9 @@
       "4": "Quinta",
       "5": "Sexta",
       "6": "Sábado"
-    }
+    },
+    "modeOnline": "Online",
+    "modeOnsite": "Domicílio"
   },
   "AboutPage": {
     "title": "Sobre a professora",
@@ -366,7 +399,12 @@
     "maxAttendees": "máx. {cap} participantes",
     "cta": "Marcar aula",
     "empty": "Os serviços serão publicados em breve.",
-    "travelFeeNote": "Para moradas a mais de {km} km pode acrescer uma taxa de deslocação de {amount}€."
+    "travelFeeNote": "Para moradas a mais de {km} km pode acrescer uma taxa de deslocação de {amount}€.",
+    "modesBoth": "Online ou ao domicílio",
+    "modesOnline": "Apenas online",
+    "modesOnsite": "Apenas ao domicílio",
+    "onsiteFeePerLesson": "+{amount} de deslocação por aula",
+    "onsiteFeePerHour": "+{amount} de deslocação por hora"
   },
   "ContactPage": {
     "title": "Contacto",
@@ -472,8 +510,22 @@
       "slot_taken": "Este horário já não está disponível. Escolha outro.",
       "unavailable": "De momento não é possível marcar. Tente mais tarde.",
       "invalid_end_date": "A data de fim tem de ser depois da primeira aula.",
-      "save_failed": "Não foi possível enviar o pedido. Tente novamente."
-    }
+      "save_failed": "Não foi possível enviar o pedido. Tente novamente.",
+      "invalid_mode": "Modalidade inválida para este serviço."
+    },
+    "mode": "Modalidade",
+    "online": "Online",
+    "onlineDesc": "Videochamada. O link é enviado na confirmação.",
+    "onsite": "Ao domicílio",
+    "onsiteDesc": "A professora desloca-se à sua morada.",
+    "included": "Incluído",
+    "onlyOnsite": "Este serviço é dado apenas ao domicílio.",
+    "onlyOnline": "Este serviço é dado apenas online.",
+    "base": "Aula ({minutes} min)",
+    "travel": "Taxa de deslocação",
+    "total": "Total estimado",
+    "link": "Link da videochamada",
+    "linkHint": "Enviamos o link por email quando a aula for confirmada."
   },
   "Home": {
     "title": "Aulas particulares de Português",

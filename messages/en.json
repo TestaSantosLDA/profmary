@@ -129,7 +129,7 @@
     "weekly": "Weekly",
     "details": "{attendees, plural, =1 {1 attendee} other {# attendees}} · {estimate}",
     "notePlaceholder": "Note to the student (optional)",
-    "travelFee": "Travel fee",
+    "travelFee": "Extra distance fee (+{amount})",
     "approve": "Approve",
     "decline": "Decline",
     "errors": {
@@ -137,7 +137,11 @@
       "in_past": "This request is in the past.",
       "forbidden": "No permission.",
       "save_failed": "Could not save. Please try again."
-    }
+    },
+    "modeOnline": "Online",
+    "modeOnsite": "At home",
+    "onlineAddress": "Link sent on confirmation",
+    "includesFee": "includes {fee} travel fee"
   },
   "AdminBookings": {
     "weekTitle": "Next 7 days",
@@ -180,8 +184,23 @@
       "invalid_duration": "Durations must be multiples of 30 minutes.",
       "duration_order": "Maximum duration must be greater than or equal to the minimum.",
       "invalid_cap": "Invalid cap (use -1 for no cap).",
-      "save_failed": "Could not save. Please try again."
-    }
+      "save_failed": "Could not save. Please try again.",
+      "no_mode": "At least one format must be active.",
+      "invalid_fee": "Invalid travel fee."
+    },
+    "modes": "Formats",
+    "modeOnline": "Online",
+    "modeOnlineHint": "Video call lesson. The link is sent on confirmation.",
+    "modeOnsite": "At the student's home",
+    "modeOnsiteHint": "The teacher travels to the student's address.",
+    "onsiteFee": "Travel fee (€)",
+    "onsiteFeeHint": "Leave empty to use the default fee from Settings ({fee}).",
+    "modesHint": "Students choose between the active formats when booking. At least one must be active.",
+    "modesBoth": "Online + at home",
+    "modesOnline": "Online only",
+    "modesOnsite": "At home only",
+    "feePerLesson": "{amount} per lesson",
+    "feePerHour": "{amount} per hour"
   },
   "AdminAvailability": {
     "title": "Weekly availability",
@@ -220,14 +239,16 @@
       "buffer_minutes": "Gap between lessons (minutes)",
       "cancellation_cutoff_hours": "Minimum notice to cancel (hours)",
       "booking_notice_hours": "Minimum notice to book (hours)",
-      "travel_fee_eur": "Travel fee (€)",
-      "travel_fee_threshold_km": "Applies beyond (km)"
+      "travel_fee_eur": "Extra distance fee (€)",
+      "travel_fee_threshold_km": "Applies beyond (km)",
+      "onsite_fee_eur": "Travel fee (€)",
+      "onsite_fee_mode": "Charged"
     },
     "hints": {
       "buffer_minutes": "Travel time between consecutive lessons.",
       "cancellation_cutoff_hours": "Past this limit, students must contact you directly.",
       "booking_notice_hours": "Requests must be made at least this far ahead.",
-      "travel_fee": "Applied manually on approval, for more distant addresses."
+      "travel_fee": "For farther addresses, applied manually when approving the request."
     },
     "saved": "Settings saved.",
     "save": "Save",
@@ -249,6 +270,14 @@
         "connect_failed": "Couldn't connect to Google Calendar. Try again."
       },
       "disconnected": "Google Calendar disconnected."
+    },
+    "onsite": {
+      "title": "At-home lessons",
+      "intro": "Default fee added to the estimate when the student picks an at-home lesson. Each service can override it."
+    },
+    "feeModes": {
+      "per_lesson": "Per lesson",
+      "per_hour": "Per hour"
     }
   },
   "Email": {
@@ -267,7 +296,8 @@
     "confirmed": {
       "subject": "Lesson confirmed ✓",
       "body": "Your {service} lesson on {when} is confirmed.",
-      "details": "Address: {address} · Estimated price: {price} (paid in cash or bank transfer)."
+      "details": "Address: {address} · Estimated price: {price} (paid in cash or bank transfer).",
+      "detailsOnline": "Online lesson — we'll email the video call link before the lesson · Estimated price: {price} (paid in cash or bank transfer)."
     },
     "declined": {
       "subject": "Lesson request not accepted",
@@ -283,7 +313,8 @@
     },
     "reminder": {
       "subject": "Reminder: lesson tomorrow",
-      "body": "Reminder of your {service} lesson on {when}. Address: {address}."
+      "body": "Reminder of your {service} lesson on {when}. Address: {address}.",
+      "bodyOnline": "Reminder of your {service} lesson on {when}. Online lesson — we'll email the video call link."
     }
   },
   "Status": {
@@ -322,7 +353,9 @@
       "4": "Thursday",
       "5": "Friday",
       "6": "Saturday"
-    }
+    },
+    "modeOnline": "Online",
+    "modeOnsite": "At home"
   },
   "AboutPage": {
     "title": "About the teacher",
@@ -366,7 +399,12 @@
     "maxAttendees": "max {cap} attendees",
     "cta": "Book a lesson",
     "empty": "Services will be published soon.",
-    "travelFeeNote": "Addresses beyond {km} km may carry a €{amount} travel fee."
+    "travelFeeNote": "Addresses beyond {km} km may carry a €{amount} travel fee.",
+    "modesBoth": "Online or at your home",
+    "modesOnline": "Online only",
+    "modesOnsite": "At your home only",
+    "onsiteFeePerLesson": "+{amount} travel fee per lesson",
+    "onsiteFeePerHour": "+{amount} travel fee per hour"
   },
   "ContactPage": {
     "title": "Contact",
@@ -472,8 +510,22 @@
       "slot_taken": "That time is no longer available. Please pick another.",
       "unavailable": "Booking is temporarily unavailable. Please try later.",
       "invalid_end_date": "The end date must be after the first lesson.",
-      "save_failed": "Could not send the request. Please try again."
-    }
+      "save_failed": "Could not send the request. Please try again.",
+      "invalid_mode": "Invalid format for this service."
+    },
+    "mode": "Format",
+    "online": "Online",
+    "onlineDesc": "Video call. The link is sent on confirmation.",
+    "onsite": "At your home",
+    "onsiteDesc": "The teacher travels to your address.",
+    "included": "Included",
+    "onlyOnsite": "This service is taught at your home only.",
+    "onlyOnline": "This service is taught online only.",
+    "base": "Lesson ({minutes} min)",
+    "travel": "Travel fee",
+    "total": "Estimated total",
+    "link": "Video call link",
+    "linkHint": "We email the link once the lesson is confirmed."
   },
   "Home": {
     "title": "Private Portuguese lessons",

@@ -14,6 +14,7 @@ type BookingRow = {
   starts_at: string;
   status: string;
   address: string;
+  mode: "online" | "onsite";
   price_estimate_cents: number;
   attendee_names: string[];
   series_id: string | null;
@@ -53,7 +54,7 @@ export default async function DashboardPage({
       supabase
         .from("bookings")
         .select(
-          "id, starts_at, status, address, price_estimate_cents, attendee_names, series_id, services(title_pt, title_en)"
+          "id, starts_at, status, address, mode, price_estimate_cents, attendee_names, series_id, services(title_pt, title_en)"
         )
         .eq("user_id", user.id)
         .order("starts_at", { ascending: true })
@@ -94,6 +95,18 @@ export default async function DashboardPage({
     (b.status === "confirmed" &&
       new Date(b.starts_at).getTime() - Date.now() > cutoffMs);
 
+  const modePill = (b: BookingRow) => (
+    <span
+      className={`ml-2 rounded-full px-2 py-0.5 text-[11px] font-medium ${
+        b.mode === "onsite"
+          ? "bg-accent-tint text-accent"
+          : "bg-muted text-muted-foreground"
+      }`}
+    >
+      {t(b.mode === "onsite" ? "modeOnsite" : "modeOnline")}
+    </span>
+  );
+
   const bookingLine = (b: BookingRow, showCancel: boolean) => (
     <li
       key={b.id}
@@ -105,10 +118,12 @@ export default async function DashboardPage({
           <span className="text-muted-foreground">
             · {formatLessonDate(locale, b.starts_at)}
           </span>
+          {modePill(b)}
         </p>
         <p className="text-sm text-muted-foreground">
           {t("attendees", { count: b.attendee_names.length })} ·{" "}
-          {euros(b.price_estimate_cents)} · {b.address}
+          {euros(b.price_estimate_cents)}
+          {b.mode === "onsite" && ` · ${b.address}`}
         </p>
       </div>
       <div className="flex items-center gap-2">

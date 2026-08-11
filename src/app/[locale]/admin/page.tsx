@@ -13,12 +13,12 @@ export default async function AdminRequestsPage({
   const nowIso = new Date().toISOString();
 
   // Lapsed pending requests (start time passed) are ignored, per spec.
-  const [{ data: pendingBookings }, { data: pendingSeries }] =
+  const [{ data: pendingBookings }, { data: pendingSeries }, { data: settings }] =
     await Promise.all([
       supabase
         .from("bookings")
         .select(
-          "id, starts_at, attendee_names, address, price_estimate_cents, services(title_pt, title_en), profiles(name)"
+          "id, starts_at, attendee_names, address, price_estimate_cents, mode, onsite_fee_applied_cents, services(title_pt, title_en), profiles(name)"
         )
         .eq("status", "pending")
         .is("series_id", null)
@@ -27,13 +27,22 @@ export default async function AdminRequestsPage({
       supabase
         .from("booking_series")
         .select(
-          "id, weekday, start_time, attendee_names, address, services(title_pt, title_en), profiles(name)"
+          "id, weekday, start_time, attendee_names, address, mode, onsite_fee_applied_cents, services(title_pt, title_en), profiles(name)"
         )
         .eq("status", "pending"),
+    supabase.from("settings").select("travel_fee_cents").single(),
     ]);
 
   const t = await getTranslations("AdminRequests");
   const tDash = await getTranslations("Dashboard");
+
+  const travelFeeLabel = t("travelFee", {
+    amount: euros(settings?.travel_fee_cents ?? 0),
+  });
+  const estimateLine = (priceCents: number, feeCents: number) =>
+    feeCents > 0
+      ? `${euros(priceCents)} (${t("includesFee", { fee: euros(feeCents) })})`
+      : euros(priceCents);
 
   const items: RequestItem[] = [
     ...(pendingSeries ?? []).map((s) => {
@@ -49,8 +58,10 @@ export default async function AdminRequestsPage({
           time: s.start_time.slice(0, 5),
         }),
         attendees: (s.attendee_names as string[]).length,
+        mode: s.mode as "online" | "onsite",
         address: s.address,
         estimate: "—",
+        travelFeeLabel,
       };
     }),
     ...(pendingBookings ?? []).map((b) => {
@@ -63,8 +74,13 @@ export default async function AdminRequestsPage({
         serviceTitle: service.title_pt,
         when: formatLessonDate(locale, b.starts_at),
         attendees: (b.attendee_names as string[]).length,
+        mode: b.mode as "online" | "onsite",
         address: b.address,
-        estimate: euros(b.price_estimate_cents),
+        estimate: estimateLine(
+          b.price_estimate_cents,
+          b.onsite_fee_applied_cents
+        ),
+        travelFeeLabel,
       };
     }),
   ];

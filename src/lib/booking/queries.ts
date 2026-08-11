@@ -13,6 +13,9 @@ export type BookableService = {
   min_duration_minutes: number;
   max_duration_minutes: number;
   attendee_cap: number;
+  allows_online: boolean;
+  allows_onsite: boolean;
+  onsite_fee_override_cents: number | null;
 };
 
 /**

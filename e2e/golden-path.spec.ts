@@ -40,6 +40,10 @@ async function rest(path: string, init: RequestInit = {}): Promise<Response> {
 
 async function bookFirstAvailableSlot(page: Page, address: string) {
   await page.goto("/pt/book");
+  // At-home lesson: shows the address field and adds the travel fee.
+  await page.getByRole("button", { name: /Ao domicílio/ }).click();
+  await expect(page.getByText("Taxa de deslocação")).toBeVisible();
+  await expect(page.getByText("Total estimado")).toBeVisible();
   // Wait for slots to load, then pick the first available day and time chip.
   const day = page
     .locator("button:enabled")
@@ -101,11 +105,18 @@ test("golden path: register → request → approve → reminder → cancel", as
     await bookFirstAvailableSlot(page, "Rua de Teste 1, Lisboa");
     await bookFirstAvailableSlot(page, "Rua de Teste 1, Lisboa");
     const res = await rest(
-      "bookings?select=id,status&order=starts_at.asc"
+      "bookings?select=id,status,mode,onsite_fee_applied_cents&order=starts_at.asc"
     );
-    const rows = (await res.json()) as { status: string }[];
+    const rows = (await res.json()) as {
+      status: string;
+      mode: string;
+      onsite_fee_applied_cents: number;
+    }[];
     expect(rows).toHaveLength(2);
     expect(rows.every((r) => r.status === "pending")).toBeTruthy();
+    // At-home mode snapshots the default 5€ travel fee on each request.
+    expect(rows.every((r) => r.mode === "onsite")).toBeTruthy();
+    expect(rows.every((r) => r.onsite_fee_applied_cents === 500)).toBeTruthy();
   });
 
   await test.step("admin approves both requests", async () => {

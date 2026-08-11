@@ -15,6 +15,9 @@ type ServiceRow = {
   min_duration_minutes: number;
   max_duration_minutes: number;
   attendee_cap: number;
+  allows_online: boolean;
+  allows_onsite: boolean;
+  onsite_fee_override_cents: number | null;
 };
 
 export default async function PricingPage({
@@ -29,14 +32,14 @@ export default async function PricingPage({
     supabase
       .from("services")
       .select(
-        "id, title_pt, title_en, description_pt, description_en, hourly_rate_cents, min_duration_minutes, max_duration_minutes, attendee_cap"
+        "id, title_pt, title_en, description_pt, description_en, hourly_rate_cents, min_duration_minutes, max_duration_minutes, attendee_cap, allows_online, allows_onsite, onsite_fee_override_cents"
       )
       .eq("active", true)
       .order("sort_order")
       .returns<ServiceRow[]>(),
     supabase
       .from("settings")
-      .select("travel_fee_cents, travel_fee_threshold_km")
+      .select("travel_fee_cents, travel_fee_threshold_km, onsite_fee_cents, onsite_fee_mode")
       .single(),
   ]);
 
@@ -70,6 +73,26 @@ export default async function PricingPage({
                 {" "}
                 {t("perHourPerPerson")}
               </span>
+            </p>
+            <p className="text-[13px] font-semibold text-accent">
+              {s.allows_online && s.allows_onsite
+                ? t("modesBoth")
+                : s.allows_online
+                  ? t("modesOnline")
+                  : t("modesOnsite")}
+              {s.allows_onsite &&
+                ` · ${t(
+                  settings?.onsite_fee_mode === "per_hour"
+                    ? "onsiteFeePerHour"
+                    : "onsiteFeePerLesson",
+                  {
+                    amount: `${rate(
+                      s.onsite_fee_override_cents ??
+                        settings?.onsite_fee_cents ??
+                        0
+                    )}€`,
+                  }
+                )}`}
             </p>
             <p className="text-[13px] text-muted-foreground">
               {t("durationRange", {

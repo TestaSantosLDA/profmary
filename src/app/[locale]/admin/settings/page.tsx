@@ -15,7 +15,7 @@ export default async function AdminSettingsPage({
   const { data: settings } = await supabase
     .from("settings")
     .select(
-      "buffer_minutes, cancellation_cutoff_hours, booking_notice_hours, travel_fee_cents, travel_fee_threshold_km, gcal_refresh_token, gcal_sync_error"
+      "buffer_minutes, cancellation_cutoff_hours, booking_notice_hours, travel_fee_cents, travel_fee_threshold_km, onsite_fee_cents, onsite_fee_mode, gcal_refresh_token, gcal_sync_error"
     )
     .single();
 
@@ -33,6 +33,8 @@ export default async function AdminSettingsPage({
             booking_notice_hours: settings.booking_notice_hours,
             travel_fee_cents: settings.travel_fee_cents,
             travel_fee_threshold_km: settings.travel_fee_threshold_km,
+            onsite_fee_cents: settings.onsite_fee_cents,
+            onsite_fee_mode: settings.onsite_fee_mode,
           }}
         />
       )}

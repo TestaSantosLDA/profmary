@@ -13,9 +13,14 @@ export async function updateSettings(
   const notice = Number(formData.get("booking_notice_hours"));
   const travelFee = Math.round(Number(formData.get("travel_fee_eur") ?? 0) * 100);
   const thresholdKm = Number(formData.get("travel_fee_threshold_km") ?? 0);
+  const onsiteFee = Math.round(Number(formData.get("onsite_fee_eur") ?? 0) * 100);
+  const onsiteFeeMode = String(formData.get("onsite_fee_mode") ?? "per_lesson");
 
-  const values = [buffer, cutoff, notice, travelFee, thresholdKm];
-  if (values.some((v) => !Number.isFinite(v) || v < 0)) {
+  const values = [buffer, cutoff, notice, travelFee, thresholdKm, onsiteFee];
+  if (
+    values.some((v) => !Number.isFinite(v) || v < 0) ||
+    !["per_lesson", "per_hour"].includes(onsiteFeeMode)
+  ) {
     return { error: "invalid_values", success: false };
   }
 
@@ -28,6 +33,8 @@ export async function updateSettings(
       booking_notice_hours: notice,
       travel_fee_cents: travelFee,
       travel_fee_threshold_km: thresholdKm,
+      onsite_fee_cents: onsiteFee,
+      onsite_fee_mode: onsiteFeeMode,
     })
     .eq("id", true);
 

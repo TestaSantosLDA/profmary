@@ -12,7 +12,14 @@ import {
 import { syncPendingBookings } from "@/lib/gcal/sync";
 import { createClient } from "@/lib/supabase/server";
 import { getAvailableSlots } from "./queries";
-import { estimatePriceCents, LESSON_TIMEZONE, type DaySlots } from "./slots";
+import {
+  estimatePriceCents,
+  LESSON_TIMEZONE,
+  onsiteFeeCents,
+  type DaySlots,
+  type LessonMode,
+  type OnsiteFeeSettings,
+} from "./slots";
 
 export type BookingActionState = { error: string | null };
 
@@ -40,7 +47,10 @@ export async function createBookingRequest(
   const date = String(formData.get("date") ?? "");
   const start = String(formData.get("start") ?? "");
   const duration = Number(formData.get("duration") ?? 0);
-  const address = String(formData.get("address") ?? "").trim();
+  const mode = String(formData.get("mode") ?? "") as LessonMode;
+  // Online lessons have no address; the meeting link is emailed on approval.
+  const address =
+    mode === "onsite" ? String(formData.get("address") ?? "").trim() : "";
   const attendees = formData
     .getAll("attendee_names")
     .map((n) => String(n).trim())
@@ -49,7 +59,10 @@ export async function createBookingRequest(
   if (!serviceId || !date || !start || !duration) {
     return { error: "missing_fields" };
   }
-  if (!address) {
+  if (mode !== "online" && mode !== "onsite") {
+    return { error: "invalid_mode" };
+  }
+  if (mode === "onsite" && !address) {
     return { error: "missing_address" };
   }
   if (attendees.length === 0) {
@@ -58,12 +71,20 @@ export async function createBookingRequest(
 
   const { data: service } = await supabase
     .from("services")
-    .select("hourly_rate_cents, attendee_cap, active")
+    .select(
+      "hourly_rate_cents, attendee_cap, active, allows_online, allows_onsite, onsite_fee_override_cents"
+    )
     .eq("id", serviceId)
     .single();
 
   if (!service || !service.active) {
     return { error: "unknown_service" };
+  }
+  if (
+    (mode === "online" && !service.allows_online) ||
+    (mode === "onsite" && !service.allows_onsite)
+  ) {
+    return { error: "invalid_mode" };
   }
   if (service.attendee_cap !== -1 && attendees.length > service.attendee_cap) {
     return { error: "too_many_attendees" };
@@ -92,6 +113,7 @@ export async function createBookingRequest(
         p_duration_minutes: duration,
         p_attendee_names: attendees,
         p_address: address,
+        p_mode: mode,
         p_end_date: endDate || null,
         p_window_months: Number(process.env.BOOKING_WINDOW_MONTHS ?? 3),
       }
@@ -115,6 +137,15 @@ export async function createBookingRequest(
   const startsAt = fromZonedTime(`${date}T${start}:00`, LESSON_TIMEZONE);
   const endsAt = new Date(startsAt.getTime() + duration * 60_000);
 
+  // Fee snapshot at request time; later settings changes never touch it.
+  const { data: feeSettings } = await supabase
+    .rpc("get_public_settings")
+    .single<OnsiteFeeSettings>();
+  const fee =
+    mode === "onsite"
+      ? onsiteFeeCents(service.onsite_fee_override_cents, feeSettings, duration)
+      : 0;
+
   const { data: created, error } = await supabase
     .from("bookings")
     .insert({
@@ -127,11 +158,14 @@ export async function createBookingRequest(
       buffered_until: endsAt.toISOString(),
       attendee_names: attendees,
       address,
-      price_estimate_cents: estimatePriceCents(
-        service.hourly_rate_cents,
-        duration,
-        attendees.length
-      ),
+      mode,
+      onsite_fee_applied_cents: fee,
+      price_estimate_cents:
+        estimatePriceCents(
+          service.hourly_rate_cents,
+          duration,
+          attendees.length
+        ) + fee,
     })
     .select("id")
     .single();

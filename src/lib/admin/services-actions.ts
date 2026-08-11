@@ -17,6 +17,9 @@ type ServiceInput = {
   max_duration_minutes: number;
   attendee_cap: number;
   active: boolean;
+  allows_online: boolean;
+  allows_onsite: boolean;
+  onsite_fee_override_cents: number | null;
 };
 
 function parseServiceForm(formData: FormData): ServiceInput | string {
@@ -35,7 +38,22 @@ function parseServiceForm(formData: FormData): ServiceInput | string {
   const cap = Number(formData.get("attendee_cap") ?? -1);
   if (!Number.isInteger(cap) || (cap !== -1 && cap <= 0)) return "invalid_cap";
 
+  const allowsOnline = formData.get("allows_online") === "on";
+  const allowsOnsite = formData.get("allows_onsite") === "on";
+  if (!allowsOnline && !allowsOnsite) return "no_mode";
+
+  // Empty override falls back to the global fee in settings.
+  const feeRaw = String(formData.get("onsite_fee_override_eur") ?? "").trim();
+  let feeOverride: number | null = null;
+  if (allowsOnsite && feeRaw !== "") {
+    feeOverride = Math.round(Number(feeRaw) * 100);
+    if (!Number.isFinite(feeOverride) || feeOverride < 0) return "invalid_fee";
+  }
+
   return {
+    allows_online: allowsOnline,
+    allows_onsite: allowsOnsite,
+    onsite_fee_override_cents: feeOverride,
     title_pt: titlePt,
     title_en: titleEn,
     description_pt: String(formData.get("description_pt") ?? "").trim(),

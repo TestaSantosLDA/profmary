@@ -27,7 +27,7 @@ export default async function BookPage({
       supabase
         .from("services")
         .select(
-          "id, title_pt, title_en, description_pt, description_en, hourly_rate_cents, min_duration_minutes, max_duration_minutes, attendee_cap"
+          "id, title_pt, title_en, description_pt, description_en, hourly_rate_cents, min_duration_minutes, max_duration_minutes, attendee_cap, allows_online, allows_onsite, onsite_fee_override_cents"
         )
         .eq("active", true)
         .order("sort_order")
@@ -40,6 +40,8 @@ export default async function BookPage({
       supabase.rpc("get_public_settings").single<{
         travel_fee_cents: number;
         travel_fee_threshold_km: number;
+        onsite_fee_cents: number;
+        onsite_fee_mode: "per_lesson" | "per_hour";
       }>(),
     ]);
 
@@ -49,7 +51,7 @@ export default async function BookPage({
   if (typeof again === "string" && again) {
     const { data: prev } = await supabase
       .from("bookings")
-      .select("service_id, starts_at, ends_at, attendee_names, address")
+      .select("service_id, starts_at, ends_at, attendee_names, address, mode")
       .eq("id", again)
       .single();
     if (prev) {
@@ -62,6 +64,7 @@ export default async function BookPage({
         ),
         attendees: prev.attendee_names as string[],
         address: prev.address as string,
+        mode: prev.mode as "online" | "onsite",
       };
     }
   }

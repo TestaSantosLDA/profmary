@@ -44,6 +44,7 @@ type LoadedBooking = {
   when: string;
   serviceTitle: (locale: string) => string;
   address: string;
+  mode: "online" | "onsite";
   price: number;
   note: string | null;
   student: Recipient;
@@ -54,7 +55,7 @@ async function loadBooking(id: string): Promise<LoadedBooking | null> {
   const { data } = await supabase
     .from("bookings")
     .select(
-      "starts_at, address, price_estimate_cents, admin_note, services(title_pt, title_en), profiles(name, email, locale)"
+      "starts_at, address, mode, price_estimate_cents, admin_note, services(title_pt, title_en), profiles(name, email, locale)"
     )
     .eq("id", id)
     .single();
@@ -67,6 +68,7 @@ async function loadBooking(id: string): Promise<LoadedBooking | null> {
     when: data.starts_at,
     serviceTitle: (locale) => (locale === "pt" ? service.title_pt : service.title_en),
     address: data.address,
+    mode: data.mode,
     price: data.price_estimate_cents,
     note: data.admin_note,
     student: profile,
@@ -204,12 +206,19 @@ export async function notifyDecision(
             (loaded as LoadedSeries).time
           );
 
+    // Online lessons have no address — the meeting link is sent separately.
     const details =
       kind === "booking" && decision === "confirmed"
-        ? `<p class="details">${ts("confirmed.details", {
-            address: (loaded as LoadedBooking).address,
-            price: euros((loaded as LoadedBooking).price),
-          })}</p>`
+        ? `<p class="details">${
+            (loaded as LoadedBooking).mode === "onsite"
+              ? ts("confirmed.details", {
+                  address: (loaded as LoadedBooking).address,
+                  price: euros((loaded as LoadedBooking).price),
+                })
+              : ts("confirmed.detailsOnline", {
+                  price: euros((loaded as LoadedBooking).price),
+                })
+          }</p>`
         : "";
     const note =
       kind === "booking" && (loaded as LoadedBooking).note
@@ -308,16 +317,23 @@ export async function sendReminder(bookingId: string): Promise<void> {
 
     const { student } = loaded;
     const ts = await t(student.locale);
+    const body =
+      loaded.mode === "onsite"
+        ? ts("reminder.body", {
+            service: strong(loaded.serviceTitle(student.locale)),
+            when: strong(formatWhen(student.locale, loaded.when)),
+            address: loaded.address,
+          })
+        : ts("reminder.bodyOnline", {
+            service: strong(loaded.serviceTitle(student.locale)),
+            when: strong(formatWhen(student.locale, loaded.when)),
+          });
     await sendEmail(
       student.email,
       ts("reminder.subject"),
       emailLayout(
         `<p>${ts("greeting", { name: student.name })}</p>
-         <p>${ts("reminder.body", {
-           service: strong(loaded.serviceTitle(student.locale)),
-           when: strong(formatWhen(student.locale, loaded.when)),
-           address: loaded.address,
-         })}</p>`
+         <p>${body}</p>`
       )
     );
   } catch (err) {

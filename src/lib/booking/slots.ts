@@ -146,3 +146,22 @@ export function estimatePriceCents(
 ): number {
   return Math.round((hourlyRateCents * durationMinutes * attendees) / 60);
 }
+
+export type LessonMode = "online" | "onsite";
+
+export type OnsiteFeeSettings = {
+  onsite_fee_cents: number;
+  onsite_fee_mode: "per_lesson" | "per_hour";
+};
+
+/** Effective at-home travel fee: service override ?? global, ×hours when per_hour. */
+export function onsiteFeeCents(
+  overrideCents: number | null,
+  settings: OnsiteFeeSettings | null,
+  durationMinutes: number
+): number {
+  const base = overrideCents ?? settings?.onsite_fee_cents ?? 0;
+  return settings?.onsite_fee_mode === "per_hour"
+    ? Math.round((base * durationMinutes) / 60)
+    : base;
+}

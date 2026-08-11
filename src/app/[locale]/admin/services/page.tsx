@@ -12,9 +12,16 @@ export default async function AdminServicesPage({
   const supabase = await createClient();
   const { data: services } = await supabase
     .from("services")
-    .select("id, title_pt, title_en, hourly_rate_cents, min_duration_minutes, max_duration_minutes, attendee_cap, active")
+    .select("id, title_pt, title_en, hourly_rate_cents, min_duration_minutes, max_duration_minutes, attendee_cap, active, allows_online, allows_onsite")
     .order("sort_order")
     .order("created_at");
+
+  const modesLabel = (s: { allows_online: boolean; allows_onsite: boolean }) =>
+    s.allows_online && s.allows_onsite
+      ? "modesBoth"
+      : s.allows_online
+        ? "modesOnline"
+        : "modesOnsite";
 
   const t = await getTranslations("AdminServices");
 
@@ -49,6 +56,9 @@ export default async function AdminServicesPage({
                   {s.attendee_cap === -1
                     ? t("uncapped")
                     : t("capped", { cap: s.attendee_cap })}
+                </p>
+                <p className="text-xs font-semibold text-accent">
+                  {t(modesLabel(s))}
                 </p>
               </div>
             </Link>

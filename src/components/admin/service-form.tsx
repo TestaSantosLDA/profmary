@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { CheckboxField } from "@/components/ui/checkbox-field";
@@ -25,11 +25,23 @@ export type ServiceRow = {
   max_duration_minutes: number;
   attendee_cap: number;
   active: boolean;
+  allows_online: boolean;
+  allows_onsite: boolean;
+  onsite_fee_override_cents: number | null;
 };
 
-export function ServiceForm({ service }: { service?: ServiceRow }) {
+export function ServiceForm({
+  service,
+  globalFeeLabel,
+}: {
+  service?: ServiceRow;
+  /** Preformatted global travel fee ("5,00€ por aula") for the override hint. */
+  globalFeeLabel: string;
+}) {
   const t = useTranslations("AdminServices");
   const [state, formAction, pending] = useActionState(saveService, initialState);
+  const [allowsOnline, setAllowsOnline] = useState(service?.allows_online ?? true);
+  const [allowsOnsite, setAllowsOnsite] = useState(service?.allows_onsite ?? true);
 
   return (
     <form
@@ -108,6 +120,54 @@ export function ServiceForm({ service }: { service?: ServiceRow }) {
           required
         />
         <p className="text-xs text-muted-foreground">{t("attendeeCapHint")}</p>
+      </div>
+
+      <div className="space-y-2">
+        <Label>{t("modes")}</Label>
+        <div
+          className={`rounded-xl border border-border p-3 ${allowsOnline ? "bg-card" : "bg-muted"}`}
+        >
+          <CheckboxField
+            name="allows_online"
+            checked={allowsOnline}
+            onChange={(e) => setAllowsOnline(e.target.checked)}
+            label={t("modeOnline")}
+            hint={t("modeOnlineHint")}
+          />
+        </div>
+        <div
+          className={`rounded-xl border border-border p-3 ${allowsOnsite ? "bg-card" : "bg-muted"}`}
+        >
+          <CheckboxField
+            name="allows_onsite"
+            checked={allowsOnsite}
+            onChange={(e) => setAllowsOnsite(e.target.checked)}
+            label={t("modeOnsite")}
+            hint={t("modeOnsiteHint")}
+          />
+          {allowsOnsite && (
+            <div className="mt-3 space-y-2 pl-6">
+              <Label htmlFor="onsite_fee_override_eur">{t("onsiteFee")}</Label>
+              <Input
+                id="onsite_fee_override_eur"
+                name="onsite_fee_override_eur"
+                type="number"
+                step="0.01"
+                min="0"
+                placeholder="5.00"
+                defaultValue={
+                  service?.onsite_fee_override_cents != null
+                    ? (service.onsite_fee_override_cents / 100).toFixed(2)
+                    : ""
+                }
+              />
+              <p className="text-xs text-muted-foreground">
+                {t("onsiteFeeHint", { fee: globalFeeLabel })}
+              </p>
+            </div>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">{t("modesHint")}</p>
       </div>
 
       <CheckboxField

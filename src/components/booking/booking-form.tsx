@@ -14,13 +14,20 @@ import {
   type BookingActionState,
 } from "@/lib/booking/actions";
 import type { BookableService } from "@/lib/booking/queries";
-import { estimatePriceCents, type DaySlots } from "@/lib/booking/slots";
+import {
+  estimatePriceCents,
+  onsiteFeeCents,
+  type DaySlots,
+  type LessonMode,
+} from "@/lib/booking/slots";
 
 const initialState: BookingActionState = { error: null };
 
 type PublicSettings = {
   travel_fee_cents: number;
   travel_fee_threshold_km: number;
+  onsite_fee_cents: number;
+  onsite_fee_mode: "per_lesson" | "per_hour";
 };
 
 export type BookingPrefill = {
@@ -28,7 +35,16 @@ export type BookingPrefill = {
   durationMinutes: number;
   attendees: string[];
   address: string;
+  mode: LessonMode;
 } | null;
+
+function serviceModes(service: BookableService | undefined): LessonMode[] {
+  if (!service) return [];
+  return [
+    ...(service.allows_online ? (["online"] as const) : []),
+    ...(service.allows_onsite ? (["onsite"] as const) : []),
+  ];
+}
 
 export function BookingForm({
   services,
@@ -79,6 +95,17 @@ export function BookingForm({
     }
   }, [durations, duration]);
 
+  const modes = serviceModes(service);
+  const [mode, setMode] = useState<LessonMode>(
+    prefill && modes.includes(prefill.mode) ? prefill.mode : (modes[0] ?? "onsite")
+  );
+  // Changing the service re-resolves the mode when the current one drops out.
+  useEffect(() => {
+    if (modes.length > 0 && !modes.includes(mode)) {
+      setMode(modes[0]);
+    }
+  }, [modes, mode]);
+
   const [days, setDays] = useState<DaySlots[] | null>(null);
   const [date, setDate] = useState("");
   const [start, setStart] = useState("");
@@ -101,13 +128,23 @@ export function BookingForm({
   const [recurring, setRecurring] = useState(false);
 
   const filledAttendees = attendees.filter((a) => a.trim());
-  const estimate = service
+  const base = service
     ? estimatePriceCents(
         service.hourly_rate_cents,
         duration,
         Math.max(filledAttendees.length, 1)
       )
     : 0;
+  const serviceOnsiteFee = service
+    ? onsiteFeeCents(service.onsite_fee_override_cents, settings, duration)
+    : 0;
+  const fee = mode === "onsite" ? serviceOnsiteFee : 0;
+  const estimate = base + fee;
+
+  const money = (cents: number) => {
+    const value = (cents / 100).toFixed(2);
+    return locale === "pt" ? `${value.replace(".", ",")}€` : `€${value}`;
+  };
 
   const capReached =
     service && service.attendee_cap !== -1
@@ -120,6 +157,7 @@ export function BookingForm({
       <input type="hidden" name="date" value={date} />
       <input type="hidden" name="start" value={start} />
       <input type="hidden" name="duration" value={duration} />
+      <input type="hidden" name="mode" value={mode} />
 
       <div className="grid gap-x-8 gap-y-6 min-[880px]:grid-cols-2">
       <div className="space-y-6">
@@ -138,6 +176,56 @@ export function BookingForm({
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="space-y-2">
+        <Label>{t("mode")}</Label>
+        {modes.length > 1 ? (
+          <div className="grid gap-2.5">
+            {modes.map((m) => {
+              const selected = mode === m;
+              const tag =
+                m === "online" ? t("included") : `+${money(serviceOnsiteFee)}`;
+              return (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setMode(m)}
+                  className={`min-h-11 w-full rounded-xl px-3.5 py-3 text-left transition-colors ${
+                    selected
+                      ? "border-2 border-accent bg-accent-tint shadow-sm"
+                      : "border border-border bg-card"
+                  }`}
+                >
+                  <span className="flex items-baseline justify-between gap-2">
+                    <span className="text-[15px] font-bold">{t(m)}</span>
+                    <span
+                      className={`text-xs ${selected ? "text-accent" : "text-muted-foreground"}`}
+                    >
+                      {tag}
+                    </span>
+                  </span>
+                  <span className="mt-0.5 block text-[13px] text-muted-foreground">
+                    {t(`${m}Desc`)}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="rounded-xl bg-muted px-3.5 py-3 text-[13px] text-muted-foreground">
+            {mode === "onsite" ? (
+              <>
+                {t("onlyOnsite")}{" "}
+                <strong className="text-foreground">
+                  +{money(serviceOnsiteFee)}
+                </strong>
+              </>
+            ) : (
+              t("onlyOnline")
+            )}
+          </p>
+        )}
       </div>
 
       <div className="space-y-2">
@@ -244,23 +332,43 @@ export function BookingForm({
         )}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="address">{t("address")}</Label>
-        <Textarea
-          id="address"
-          name="address"
-          defaultValue={defaultAddress}
-          required
-          placeholder={t("addressHint")}
-        />
-      </div>
+      {mode === "onsite" ? (
+        <div className="space-y-2">
+          <Label htmlFor="address">{t("address")}</Label>
+          <Textarea
+            id="address"
+            name="address"
+            defaultValue={defaultAddress}
+            required
+            placeholder={t("addressHint")}
+          />
+        </div>
+      ) : (
+        <div className="space-y-2">
+          <Label>{t("link")}</Label>
+          <p className="rounded-[10px] border border-dashed border-border px-3.5 py-3 text-[13px] text-muted-foreground">
+            {t("linkHint")}
+          </p>
+        </div>
+      )}
 
       <div className="rounded-md border bg-muted/30 p-4 text-sm">
-        <p className="font-medium">
-          {t("estimate", { amount: (estimate / 100).toFixed(2) })}
-        </p>
-        <p className="mt-1 text-muted-foreground">{t("estimateNote")}</p>
-        {settings && settings.travel_fee_cents > 0 && (
+        <div className="flex justify-between text-muted-foreground">
+          <span>{t("base", { minutes: duration })}</span>
+          <span>{money(base)}</span>
+        </div>
+        {fee > 0 && (
+          <div className="mt-1 flex justify-between text-muted-foreground">
+            <span>{t("travel")}</span>
+            <span>{money(fee)}</span>
+          </div>
+        )}
+        <div className="mt-2 flex justify-between border-t border-border pt-1.5 text-[15px] font-bold">
+          <span>{t("total")}</span>
+          <span>{money(estimate)}</span>
+        </div>
+        <p className="mt-2 text-muted-foreground">{t("estimateNote")}</p>
+        {mode === "onsite" && settings && settings.travel_fee_cents > 0 && (
           <p className="mt-1 text-muted-foreground">
             {t("travelFeeNote", {
               amount: (settings.travel_fee_cents / 100).toFixed(2),

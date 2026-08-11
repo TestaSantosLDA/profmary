@@ -22,8 +22,11 @@ export type RequestItem = {
   serviceTitle: string;
   when: string; // preformatted
   attendees: number;
+  mode: "online" | "onsite";
   address: string;
-  estimate: string; // preformatted
+  estimate: string; // preformatted, includes the travel-fee note when applied
+  /** Preformatted label for the manual distance-surcharge checkbox. */
+  travelFeeLabel: string;
 };
 
 export function RequestCard({ item }: { item: RequestItem }) {
@@ -52,12 +55,23 @@ export function RequestCard({ item }: { item: RequestItem }) {
               {t("weekly")}
             </span>
           )}
+          <span
+            className={`ml-2 rounded-full px-2.5 py-0.5 text-xs font-medium ${
+              item.mode === "onsite"
+                ? "bg-accent-tint text-accent"
+                : "bg-muted text-muted-foreground"
+            }`}
+          >
+            {t(item.mode === "onsite" ? "modeOnsite" : "modeOnline")}
+          </span>
         </p>
         <p className="text-sm text-muted-foreground">{item.when}</p>
         <p className="text-sm text-muted-foreground">
           {t("details", { attendees: item.attendees, estimate: item.estimate })}
         </p>
-        <p className="text-sm text-muted-foreground">{item.address}</p>
+        <p className="text-sm text-muted-foreground">
+          {item.mode === "onsite" ? item.address : t("onlineAddress")}
+        </p>
       </div>
 
       <Input
@@ -70,8 +84,8 @@ export function RequestCard({ item }: { item: RequestItem }) {
         <form action={approveAction} className="flex items-center gap-3">
           <input type="hidden" name="id" value={item.id} />
           <input type="hidden" name="note" value={note} />
-          {item.kind === "booking" && (
-            <CheckboxField name="travel_fee" label={t("travelFee")} />
+          {item.kind === "booking" && item.mode === "onsite" && (
+            <CheckboxField name="travel_fee" label={item.travelFeeLabel} />
           )}
           <Button type="submit" size="sm" disabled={approving || declining}>
             {t("approve")}
