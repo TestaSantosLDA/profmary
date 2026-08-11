@@ -58,9 +58,9 @@
 
 ## 8. Google Calendar sync
 
-- [ ] 8.1 Google Cloud project, Calendar API, OAuth consent (testing mode, Maria as test user); admin "Connect" flow storing the encrypted refresh token
-- [ ] 8.2 Push on transitions: confirm → insert event, cancel/skip → delete, storing `gcal_event_id`
-- [ ] 8.3 Failure isolation + retry from the hourly cron; disconnected-state banner in the admin panel
+- [x] 8.1 Google Cloud project, Calendar API, OAuth consent; admin "Connect" flow storing the encrypted refresh token
+- [x] 8.2 Push on transitions: confirm → insert event, cancel/skip → delete, storing `gcal_event_id`
+- [x] 8.3 Failure isolation + retry from the hourly cron; disconnected-state banner in the admin panel
 
 ## 9. Dashboards
 
@@ -82,5 +82,5 @@
 - [x] 10.1 Home, About, Contact pages in both locales (done by the design pass, handoff 04)
 - [x] 10.2 Pricing page driven by active services with travel-fee notice (done by the design pass)
 - [x] 10.3 Privacy Policy page (PT/EN) covering minors' data, addresses, and data minimization
-- [ ] 10.4 E2E smoke test of the golden path: register → request → approve → confirmation email → reminder → cancel
+- [x] 10.4 E2E smoke test of the golden path: register → request → approve → confirmation email → reminder → cancel
 - [ ] 10.5 Launch checklist: buy domain, verify on Resend, point DNS at Vercel, switch email sender, create Maria's admin + support admin accounts, seed real services and availability
