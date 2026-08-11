@@ -7,6 +7,7 @@ import { CheckboxField } from "@/components/ui/checkbox-field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { BookingCalendar } from "@/components/booking/booking-calendar";
 import {
   createBookingRequest,
   fetchSlots,
@@ -108,26 +109,20 @@ export function BookingForm({
       )
     : 0;
 
-  const selectedDay = days?.find((d) => d.date === date);
   const capReached =
     service && service.attendee_cap !== -1
       ? attendees.length >= service.attendee_cap
       : false;
 
-  const dateLabel = (iso: string) =>
-    new Date(`${iso}T12:00:00`).toLocaleDateString(locale, {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-    });
-
   return (
-    <form action={formAction} className="max-w-xl space-y-6">
+    <form action={formAction} className="max-w-[880px] space-y-6">
       <input type="hidden" name="service_id" value={serviceId} />
       <input type="hidden" name="date" value={date} />
       <input type="hidden" name="start" value={start} />
       <input type="hidden" name="duration" value={duration} />
 
+      <div className="grid gap-x-8 gap-y-6 min-[880px]:grid-cols-2">
+      <div className="space-y-6">
       <div className="space-y-2">
         <Label htmlFor="service">{t("service")}</Label>
         <select
@@ -170,44 +165,21 @@ export function BookingForm({
           <p className="text-sm text-muted-foreground">{t("noSlots")}</p>
         )}
         {days && days.length > 0 && (
-          <>
-            <select
-              value={date}
-              onChange={(e) => {
-                setDate(e.target.value);
-                setStart("");
-              }}
-              className="border-input h-9 w-full rounded-md border bg-transparent px-3 text-sm"
-            >
-              <option value="">{t("chooseDate")}</option>
-              {days.map((d) => (
-                <option key={d.date} value={d.date}>
-                  {dateLabel(d.date)}
-                </option>
-              ))}
-            </select>
-            {selectedDay && (
-              <div className="flex flex-wrap gap-2 pt-1">
-                {selectedDay.starts.map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => setStart(s)}
-                    className={
-                      s === start
-                        ? "rounded-md bg-foreground px-3 py-1.5 text-sm font-medium text-background"
-                        : "rounded-md border px-3 py-1.5 text-sm hover:bg-accent"
-                    }
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            )}
-          </>
+          <BookingCalendar
+            days={days}
+            date={date}
+            start={start}
+            locale={locale}
+            onPick={({ date: d, start: s }) => {
+              setDate(d);
+              setStart(s ?? "");
+            }}
+          />
         )}
       </div>
+      </div>
 
+      <div className="space-y-6">
       <div className="space-y-2">
         <Label>{t("attendees")}</Label>
         {attendees.map((name, i) => (
@@ -296,6 +268,8 @@ export function BookingForm({
             })}
           </p>
         )}
+      </div>
+      </div>
       </div>
 
       {state.error && (
