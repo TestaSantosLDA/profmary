@@ -231,7 +231,8 @@
       "errors": {
         "missing_key": "The encryption key (GCAL_TOKEN_KEY) is missing on the server.",
         "connect_failed": "Couldn't connect to Google Calendar. Try again."
-      }
+      },
+      "disconnected": "Google Calendar disconnected."
     }
   },
   "Email": {

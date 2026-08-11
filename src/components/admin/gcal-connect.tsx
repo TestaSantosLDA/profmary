@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -28,6 +29,7 @@ export function GcalConnect({
   callbackError,
 }: Props) {
   const t = useTranslations("AdminSettings.gcal");
+  const router = useRouter();
   const [connectState, connectAction, connecting] = useActionState(
     connectGoogleCalendar,
     initialState
@@ -37,10 +39,20 @@ export function GcalConnect({
     initialState
   );
 
+  // The OAuth callback feedback arrives as one-shot query params: keep it
+  // for this mount and strip the URL so refresh/disconnect don't replay it.
+  const [feedback] = useState({ justConnected, callbackError });
+  useEffect(() => {
+    if (justConnected || callbackError) {
+      router.replace("/admin/settings");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const error =
     connectState.error === "missing_key"
       ? t("errors.missing_key")
-      : connectState.error || disconnectState.error || callbackError
+      : connectState.error || disconnectState.error || feedback.callbackError
         ? t("errors.connect_failed")
         : null;
 
@@ -54,8 +66,11 @@ export function GcalConnect({
       </div>
 
       {broken && <p className="text-sm text-destructive">{t("expired")}</p>}
-      {justConnected && !broken && (
+      {connected && feedback.justConnected && !broken && (
         <p className="text-sm text-positive">{t("justConnected")}</p>
+      )}
+      {!connected && disconnectState.success && (
+        <p className="text-sm text-positive">{t("disconnected")}</p>
       )}
       <p className="text-xs text-muted-foreground">
         {connected ? t("connectedHint") : t("notConnected")}

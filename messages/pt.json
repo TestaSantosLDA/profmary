@@ -231,7 +231,8 @@
       "errors": {
         "missing_key": "Falta configurar a chave de encriptação (GCAL_TOKEN_KEY) no servidor.",
         "connect_failed": "Não foi possível ligar ao Google Calendar. Tente novamente."
-      }
+      },
+      "disconnected": "Google Calendar desligado."
     }
   },
   "Email": {
