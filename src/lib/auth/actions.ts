@@ -54,7 +54,10 @@ export async function signIn(
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   if (error) {
     return {
@@ -65,8 +68,15 @@ export async function signIn(
     };
   }
 
+  // Maria lands straight on her admin area, not the client dashboard.
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("is_admin")
+    .eq("id", data.user.id)
+    .single();
+
   revalidatePath("/", "layout");
-  redirect({ href: "/dashboard", locale });
+  redirect({ href: profile?.is_admin ? "/admin" : "/dashboard", locale });
   return { error: null }; // unreachable — redirect throws
 }
 

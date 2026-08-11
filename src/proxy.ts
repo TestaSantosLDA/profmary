@@ -1,4 +1,4 @@
-import { createServerClient } from "@supabase/ssr";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import createMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "./i18n/routing";
@@ -19,10 +19,17 @@ function stripLocale(pathname: string): string {
 }
 
 export default async function proxy(request: NextRequest) {
-  const response = intlMiddleware(request);
+  // Refresh the Supabase session BEFORE building the intl response, mutating
+  // request.cookies so the render sees the fresh token. Otherwise every
+  // Server Component retries the refresh with the already-consumed token,
+  // which can trip Supabase's reuse detection and revoke the whole session —
+  // phones always arrive with an expired token, so they get hit hardest.
+  const refreshedCookies: {
+    name: string;
+    value: string;
+    options: CookieOptions;
+  }[] = [];
 
-  // Refresh the Supabase session on every request so Server Components
-  // never see an expired token.
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -35,9 +42,7 @@ export default async function proxy(request: NextRequest) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
-          );
+          refreshedCookies.push(...cookiesToSet);
         },
       },
     }
@@ -60,9 +65,19 @@ export default async function proxy(request: NextRequest) {
           request.nextUrl.pathname.startsWith(`/${l}/`)
       ) ?? routing.defaultLocale;
     const loginUrl = new URL(`/${locale}/login`, request.url);
-    return NextResponse.redirect(loginUrl);
+    const redirectResponse = NextResponse.redirect(loginUrl);
+    refreshedCookies.forEach(({ name, value, options }) =>
+      redirectResponse.cookies.set(name, value, options)
+    );
+    return redirectResponse;
   }
 
+  // Built from the already-updated request, so the forwarded headers carry
+  // the refreshed token into the render.
+  const response = intlMiddleware(request);
+  refreshedCookies.forEach(({ name, value, options }) =>
+    response.cookies.set(name, value, options)
+  );
   return response;
 }
 

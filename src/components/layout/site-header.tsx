@@ -34,11 +34,14 @@ export function SiteHeader({ role }: { role: SessionRole }) {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          {/* On mobile the BottomNav covers the session entries. */}
-          <span className="hidden items-center gap-4 text-sm min-[720px]:flex">
-            {role === "guest" && (
+          {/* Guests keep a sign-in entry at every width — the mobile
+              BottomNav only covers the signed-in session entries. */}
+          {role === "guest" && (
+            <span className="text-sm">
               <NavLink href="/login">{tAuth("signIn")}</NavLink>
-            )}
+            </span>
+          )}
+          <span className="hidden items-center gap-4 text-sm min-[720px]:flex">
             {role === "client" && (
               <NavLink href="/dashboard">{t("dashboard")}</NavLink>
             )}
