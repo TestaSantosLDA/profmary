@@ -82,12 +82,16 @@ export function emailLayout(body: string): string {
       <tr>
         <td align="center" style="padding:32px 12px;">
           <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:100%;">
+            <!-- Rule band as table rows: Outlook mangles absolute positioning, and gets
+                 no CSS variables or reliable opacity — the colors are the blue rules
+                 flattened over white (0.4 and 0.2). No terracotta margin line in email. -->
+            <tr><td height="10" style="height:10px;line-height:10px;font-size:0;">&nbsp;</td></tr>
+            <tr><td height="1" bgcolor="#A9BEDC" style="height:1px;line-height:1px;font-size:0;">&nbsp;</td></tr>
+            <tr><td height="6" style="height:6px;line-height:6px;font-size:0;">&nbsp;</td></tr>
+            <tr><td height="1" bgcolor="#D3DEEE" style="height:1px;line-height:1px;font-size:0;">&nbsp;</td></tr>
+            <tr><td height="6" style="height:6px;line-height:6px;font-size:0;">&nbsp;</td></tr>
             <tr>
-              <!-- Tile band: solid azulejo until the pattern PNG is hosted; Outlook needs the bgcolor fallback either way. -->
-              <td height="10" bgcolor="#2456A6" style="height:10px;line-height:10px;font-size:0;border-radius:12px 12px 0 0;">&nbsp;</td>
-            </tr>
-            <tr>
-              <td bgcolor="#173A75" style="padding:20px 28px;">
+              <td bgcolor="#173A75" style="padding:20px 28px;border-radius:12px 12px 0 0;">
                 <span style="font-family:Lora,Georgia,serif;font-weight:600;font-size:22px;color:#ffffff;">ProfMary</span>
               </td>
             </tr>

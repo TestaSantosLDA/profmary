@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import type { ContentItem } from "@/components/admin/about-editor";
 import { Photo } from "@/components/media/photo";
 import { Button } from "@/components/ui/button";
-import { TileBand } from "@/components/ui/tile-band";
+import { RuleBand } from "@/components/ui/rule-band";
 import { createServiceClient } from "@/lib/supabase/server";
 
 export const revalidate = 300;
@@ -136,7 +136,7 @@ export default async function AboutPage({
         </p>
       </section>
 
-      <TileBand height={12} />
+      <RuleBand height={24} />
 
       {/* CTA pair */}
       <section className={`${WRAP} py-14 text-center`}>

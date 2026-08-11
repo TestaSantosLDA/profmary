@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import type { ContentItem } from "@/components/admin/about-editor";
 import { Photo } from "@/components/media/photo";
 import { Button } from "@/components/ui/button";
-import { TileBand } from "@/components/ui/tile-band";
+import { RuleBand } from "@/components/ui/rule-band";
 import { createServiceClient } from "@/lib/supabase/server";
 
 export const revalidate = 300;
@@ -76,7 +76,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
   return (
     <main className="flex flex-1 flex-col">
-      <TileBand height={12} />
+      <RuleBand height={24} />
 
       {/* Hero */}
       <section className={`${WRAP} py-14 min-[880px]:py-20`}>
@@ -232,6 +232,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
+      <RuleBand height={24} />
+
       {/* Close */}
       <section className={`${WRAP} py-16 text-center`}>
         <h2 className="text-balance text-[1.7rem]">{t("closeTitle")}</h2>
@@ -241,8 +243,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           </Link>
         </Button>
       </section>
-
-      <TileBand height={12} />
     </main>
   );
 }
