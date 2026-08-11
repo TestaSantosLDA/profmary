@@ -114,6 +114,10 @@ async function t(locale: string) {
   return getTranslations({ locale, namespace: "Email" });
 }
 
+// {service}/{when} render bold in every body. Tags can't live in the
+// messages (plain t() rejects rich text), so emphasis wraps the values.
+const strong = (s: string) => `<strong>${s}</strong>`;
+
 const SITE = () => process.env.NEXT_PUBLIC_SITE_URL ?? "";
 
 /** Request submitted: acknowledgement to the student + alert to admins. */
@@ -143,8 +147,8 @@ export async function notifyRequestReceived(
       emailLayout(
         `<p>${ts("greeting", { name: student.name })}</p>
          <p>${ts("requestReceived.body", {
-           service: loaded.serviceTitle(student.locale),
-           when,
+           service: strong(loaded.serviceTitle(student.locale)),
+           when: strong(when),
          })}</p>
          <p>${ts("requestReceived.next")}</p>`
       )
@@ -166,8 +170,8 @@ export async function notifyRequestReceived(
         emailLayout(
           `<p>${ta("adminNewRequest.body", {
             student: student.name,
-            service: loaded.serviceTitle("pt"),
-            when: whenPt,
+            service: strong(loaded.serviceTitle("pt")),
+            when: strong(whenPt),
           })}</p>
            <p><a href="${SITE()}/pt/admin">${ta("adminNewRequest.cta")}</a></p>`
         )
@@ -202,7 +206,7 @@ export async function notifyDecision(
 
     const details =
       kind === "booking" && decision === "confirmed"
-        ? `<p>${ts("confirmed.details", {
+        ? `<p class="details">${ts("confirmed.details", {
             address: (loaded as LoadedBooking).address,
             price: euros((loaded as LoadedBooking).price),
           })}</p>`
@@ -218,8 +222,8 @@ export async function notifyDecision(
       emailLayout(
         `<p>${ts("greeting", { name: student.name })}</p>
          <p>${ts(`${decision}.body`, {
-           service: loaded.serviceTitle(student.locale),
-           when,
+           service: strong(loaded.serviceTitle(student.locale)),
+           when: strong(when),
          })}</p>
          ${details}${note}`
       )
@@ -256,8 +260,8 @@ export async function notifyStudentCancelled(
         emailLayout(
           `<p>${ta("adminCancelled.body", {
             student: loaded.student.name,
-            service: loaded.serviceTitle("pt"),
-            when,
+            service: strong(loaded.serviceTitle("pt")),
+            when: strong(when),
           })}</p>`
         )
       );
@@ -285,8 +289,8 @@ export async function notifyAdminCancelled(bookingId: string): Promise<void> {
       emailLayout(
         `<p>${ts("greeting", { name: student.name })}</p>
          <p>${ts("cancelledByTeacher.body", {
-           service: loaded.serviceTitle(student.locale),
-           when: formatWhen(student.locale, loaded.when),
+           service: strong(loaded.serviceTitle(student.locale)),
+           when: strong(formatWhen(student.locale, loaded.when)),
          })}</p>
          ${note}`
       )
@@ -310,8 +314,8 @@ export async function sendReminder(bookingId: string): Promise<void> {
       emailLayout(
         `<p>${ts("greeting", { name: student.name })}</p>
          <p>${ts("reminder.body", {
-           service: loaded.serviceTitle(student.locale),
-           when: formatWhen(student.locale, loaded.when),
+           service: strong(loaded.serviceTitle(student.locale)),
+           when: strong(formatWhen(student.locale, loaded.when)),
            address: loaded.address,
          })}</p>`
       )
