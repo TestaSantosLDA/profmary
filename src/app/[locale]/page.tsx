@@ -125,7 +125,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <RuleBand height={56} lines={5} />
 
       {/* Hero */}
-      <section className={`${WRAP} py-14 min-[880px]:py-20`}>
+      <section className={`${WRAP} py-14 min-[880px]:pt-10 min-[880px]:pb-20`}>
         <div className="grid items-center gap-12 min-[880px]:grid-cols-[1.15fr_0.85fr]">
           <div>
             <h1 className="max-w-[18ch] text-balance text-[2.2rem] leading-[1.08] min-[880px]:text-[3.1rem]">
