@@ -40,14 +40,6 @@ que depende deles está pronto ou anotado.
       de partida — a Maria deve revê-las/editá-las no construtor. Quatro a
       seis perguntas é o limite prático.
 
-## Base de dados (cloud)
-
-- [ ] Correr `supabase db push` para aplicar as migrações
-      `20260811220000_students_questionnaire.sql` (alunos + questionário) e
-      `20260811230000_packs.sql` (packs de aulas) no projeto Supabase cloud —
-      ambas testadas no stack local; o push foi bloqueado pelas permissões
-      do Claude. Sem elas, os separadores Alunos/packs dão erro em produção.
-
 ## Packs (Maria)
 
 - [ ] Criar os packs reais em `/pt/admin/services` (por serviço: nº de
