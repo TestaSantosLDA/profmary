@@ -71,10 +71,10 @@
 
 ## 9b. Design pass (added after group 9 — see DESIGN.md)
 
-- [ ] 9b.1 Theme tokens in Tailwind/shadcn (palette, Fraunces + Inter, radii) per DESIGN.md
-- [ ] 9b.2 Rebuild booking slot picker as a month-grid calendar with time chips
-- [ ] 9b.3 Restyle public pages, auth, dashboards, and admin to the brief (mobile-first)
-- [ ] 9b.4 Restyle transactional email template (tile band header, brief palette)
+- [x] 9b.1 Theme tokens in Tailwind/shadcn (palette, Lora + Source Sans 3 per the final handoff, radii)
+- [x] 9b.2 Rebuild booking slot picker as a month-grid calendar with time chips
+- [x] 9b.3 Restyle public pages, auth, dashboards, and admin to the brief (mobile-first)
+- [x] 9b.4 Restyle transactional email template (tile band header, brief palette)
 - [ ] 9b.5 Sync design-system components to the Claude Design project for Maria's review
 
 ## 10. Public site & launch
