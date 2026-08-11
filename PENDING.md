@@ -5,20 +5,13 @@ que depende deles está pronto ou anotado.
 
 ## Google Cloud (para o Calendar sync funcionar)
 
-- [ ] Ativar a **Google Calendar API** no projeto (APIs & Services → Library).
-- [ ] Adicionar redirect URIs ao OAuth client:
-      `https://profmary.vercel.app/api/gcal/callback` e
-      `http://localhost:3000/api/gcal/callback`.
-- [ ] Criar `GCAL_TOKEN_KEY` e adicionar à Vercel + `.env.local` (no teu terminal):
-      ```
-      KEY=$(openssl rand -hex 32)
-      echo "GCAL_TOKEN_KEY=$KEY" >> .env.local
-      for e in production preview development; do printf "$KEY" | vercel env add GCAL_TOKEN_KEY $e; done
-      ```
-- [ ] Redeploy na Vercel (as envs só entram no próximo deploy).
-- [ ] `/pt/admin/settings` → **Ligar Google Calendar** (a conta ligada é o alvo
-      do sync; na troca definitiva para a conta da Maria, pedir ao Claude o
-      re-sync das aulas futuras).
+- [x] OAuth client, redirect URIs, `GCAL_TOKEN_KEY`, redeploy, app publicada —
+      tudo confirmado a funcionar (o Ligar/Desligar foi testado com sucesso).
+- [ ] **Voltar a ligar** o calendário em `/pt/admin/settings` (ficou desligado
+      após o teste) — idealmente já com a conta Google da Maria. Na troca
+      definitiva, pedir ao Claude o re-sync das aulas futuras confirmadas.
+- [ ] Teste ponta-a-ponta: aprovar uma marcação e ver o evento aparecer no
+      calendário; cancelar e vê-lo desaparecer.
 
 ## Conteúdo (Maria)
 
