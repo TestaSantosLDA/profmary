@@ -11,9 +11,10 @@ const NAV_ITEMS = [
   { href: "/contact", key: "contact" },
 ] as const;
 
-export function SiteHeader() {
+export function SiteHeader({ loggedIn }: { loggedIn: boolean }) {
   const t = useTranslations("Nav");
   const tCommon = useTranslations("Common");
+  const tAuth = useTranslations("Auth");
 
   return (
     <header className="border-b bg-background">
@@ -32,6 +33,14 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
+          {/* On mobile the BottomNav covers the session entry. */}
+          <span className="hidden text-sm min-[720px]:inline">
+            {loggedIn ? (
+              <NavLink href="/dashboard">{t("dashboard")}</NavLink>
+            ) : (
+              <NavLink href="/login">{tAuth("signIn")}</NavLink>
+            )}
+          </span>
           <LanguageSwitcher />
           <Button asChild size="sm">
             <Link href="/book" className="no-underline hover:no-underline">

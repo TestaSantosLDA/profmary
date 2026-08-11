@@ -11,7 +11,8 @@
     "about": "About",
     "pricing": "Pricing",
     "contact": "Contact",
-    "dashboard": "My lessons"
+    "dashboard": "My lessons",
+    "dashboardShort": "Lessons"
   },
   "Footer": {
     "privacyPolicy": "Privacy Policy",

@@ -11,7 +11,8 @@
     "about": "Sobre",
     "pricing": "Preços",
     "contact": "Contacto",
-    "dashboard": "As minhas aulas"
+    "dashboard": "As minhas aulas",
+    "dashboardShort": "Aulas"
   },
   "Footer": {
     "privacyPolicy": "Política de Privacidade",
