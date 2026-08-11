@@ -79,8 +79,8 @@
 
 ## 10. Public site & launch
 
-- [ ] 10.1 Home, About, Contact pages in both locales (placeholder brand, real structure)
-- [ ] 10.2 Pricing page driven by active services with travel-fee notice
-- [ ] 10.3 Privacy Policy page (PT/EN) covering minors' data, addresses, and data minimization
+- [x] 10.1 Home, About, Contact pages in both locales (done by the design pass, handoff 04)
+- [x] 10.2 Pricing page driven by active services with travel-fee notice (done by the design pass)
+- [x] 10.3 Privacy Policy page (PT/EN) covering minors' data, addresses, and data minimization
 - [ ] 10.4 E2E smoke test of the golden path: register → request → approve → confirmation email → reminder → cancel
 - [ ] 10.5 Launch checklist: buy domain, verify on Resend, point DNS at Vercel, switch email sender, create Maria's admin + support admin accounts, seed real services and availability

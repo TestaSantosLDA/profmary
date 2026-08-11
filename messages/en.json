@@ -388,7 +388,50 @@
   },
   "Privacy": {
     "title": "Privacy Policy",
-    "placeholder": "Content coming soon."
+    "updated": "Last updated: 11 August 2026",
+    "intro": "ProfMary is a private at-home Portuguese lessons service. This policy explains, in plain language, what personal data we collect, why, and what your rights are. We collect only the minimum needed to book and teach lessons.",
+    "sections": {
+      "controller": {
+        "title": "Who is responsible for your data",
+        "body": "The data controller is the teacher, Maria Martins (ProfMary). For any question about your data, use the form on the Contact page."
+      },
+      "data": {
+        "title": "What data we collect",
+        "body": "Account: name, email, phone (optional) and preferred language.\nBookings: service, date and time, the address where the lesson takes place, participant names and any notes you choose to share.\nMessages: the content of the contact form.\nWe do not ask for birth dates, identity documents or payment details — payment is made directly to the teacher, outside the site."
+      },
+      "minors": {
+        "title": "Children's data",
+        "body": "Accounts are created by a parent or guardian, or by students aged 16 or over. For younger students we store only a first name, provided by the guardian, and use it exclusively to organise lessons. We collect no other data about minors."
+      },
+      "addresses": {
+        "title": "Addresses",
+        "body": "The lesson address is used exclusively so the teacher knows where the lesson takes place and can plan her travel. It is visible only to the teacher and is never shared, published or used for any other purpose."
+      },
+      "use": {
+        "title": "How we use the data",
+        "body": "We use the data to manage requests and bookings, send transactional emails (confirmations, reminders and cancellations) and keep the teacher's calendar in sync. We send no marketing, build no profiles and sell no data to third parties."
+      },
+      "processors": {
+        "title": "Where the data lives",
+        "body": "Data is stored in Supabase (database in the European Union). The site is hosted on Vercel, emails are sent through Resend, and confirmed lessons are added to the teacher's Google Calendar (only service, date, time, address and participant names). These providers process data on our behalf under their GDPR commitments."
+      },
+      "retention": {
+        "title": "For how long",
+        "body": "We keep data for as long as the account exists. You can request deletion of the account and associated data at any time; booking history is deleted or anonymised unless we are legally required to keep it."
+      },
+      "rights": {
+        "title": "Your rights",
+        "body": "Under the GDPR you can access your data, correct it, request its deletion or portability, and object to processing. You can exercise these rights via the Contact page. You also have the right to lodge a complaint with the Portuguese supervisory authority, CNPD (cnpd.pt)."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": "We use only strictly necessary cookies: the authentication session and your language preference. No advertising, analytics or tracking cookies."
+      },
+      "changes": {
+        "title": "Changes to this policy",
+        "body": "If this policy changes, the new version is published on this page with its update date. Significant changes are announced by email to account holders."
+      }
+    }
   },
   "Book": {
     "title": "Book a lesson",

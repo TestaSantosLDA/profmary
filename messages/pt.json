@@ -388,7 +388,50 @@
   },
   "Privacy": {
     "title": "Política de Privacidade",
-    "placeholder": "Conteúdo em preparação."
+    "updated": "Última atualização: 11 de agosto de 2026",
+    "intro": "A ProfMary é um serviço de aulas particulares de Português ao domicílio. Esta política explica, em linguagem simples, que dados pessoais recolhemos, porquê, e quais são os seus direitos. Recolhemos apenas o mínimo necessário para marcar e dar as aulas.",
+    "sections": {
+      "controller": {
+        "title": "Quem é responsável pelos dados",
+        "body": "A responsável pelo tratamento dos dados é a professora Maria Martins (ProfMary). Para qualquer questão sobre os seus dados, use o formulário da página de Contacto."
+      },
+      "data": {
+        "title": "Que dados recolhemos",
+        "body": "Conta: nome, email, telefone (opcional) e idioma preferido.\nMarcações: serviço, data e hora, morada onde a aula decorre, nomes dos participantes e notas que decida partilhar.\nMensagens: o conteúdo do formulário de contacto.\nNão pedimos datas de nascimento, documentos de identificação nem dados de pagamento — o pagamento é feito diretamente à professora, fora do site."
+      },
+      "minors": {
+        "title": "Dados de menores",
+        "body": "As contas são criadas por um encarregado de educação ou por estudantes com 16 anos ou mais. Para alunos menores guardamos apenas o nome próprio, indicado pelo encarregado de educação, e usamo-lo exclusivamente para organizar as aulas. Não recolhemos qualquer outro dado sobre menores."
+      },
+      "addresses": {
+        "title": "Moradas",
+        "body": "A morada das aulas serve exclusivamente para a professora saber onde a aula decorre e planear a deslocação. É visível apenas para a professora e nunca é partilhada, publicada ou usada para outro fim."
+      },
+      "use": {
+        "title": "Como usamos os dados",
+        "body": "Usamos os dados para gerir pedidos e marcações, enviar emails transacionais (confirmações, lembretes e cancelamentos) e manter a agenda da professora sincronizada. Não enviamos marketing, não criamos perfis e não vendemos dados a terceiros."
+      },
+      "processors": {
+        "title": "Onde ficam os dados",
+        "body": "Os dados são guardados na Supabase (base de dados na União Europeia). O site é alojado na Vercel, os emails são enviados através da Resend e as aulas confirmadas são inscritas no Google Calendar da professora (apenas serviço, data, hora, morada e nomes dos participantes). Estes fornecedores tratam os dados por nossa conta e segundo as suas garantias RGPD."
+      },
+      "retention": {
+        "title": "Durante quanto tempo",
+        "body": "Guardamos os dados enquanto a conta existir. Pode pedir a eliminação da conta e dos dados associados a qualquer momento; o histórico de marcações é eliminado ou anonimizado, salvo obrigação legal de conservação."
+      },
+      "rights": {
+        "title": "Os seus direitos",
+        "body": "Nos termos do RGPD, pode aceder aos seus dados, corrigi-los, pedir a sua eliminação ou portabilidade, e opor-se ao tratamento. Pode exercer estes direitos através da página de Contacto. Tem também o direito de apresentar reclamação à CNPD (Comissão Nacional de Proteção de Dados — cnpd.pt)."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": "Usamos apenas cookies estritamente necessários: sessão de autenticação e preferência de idioma. Não usamos cookies de publicidade, análise ou rastreamento."
+      },
+      "changes": {
+        "title": "Alterações a esta política",
+        "body": "Se esta política mudar, a nova versão é publicada nesta página com a data de atualização. Alterações relevantes são comunicadas por email aos titulares de conta."
+      }
+    }
   },
   "Book": {
     "title": "Marcar aula",
