@@ -218,7 +218,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {(page?.show_steps ?? true) && (
         <section className={`${WRAP} pb-14`}>
           <div className="grid items-center gap-12 min-[880px]:grid-cols-2">
-            <div>
+            {/* Photo left on desktop to alternate with the hero; text stays first on mobile. */}
+            <div className="min-[880px]:order-last">
               <h2 className="text-2xl">
                 {pick(content.steps.title_pt, content.steps.title_en) || t("howTitle")}
               </h2>
