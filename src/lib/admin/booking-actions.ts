@@ -7,6 +7,7 @@ import {
   notifyDecision,
 } from "@/lib/email/notifications";
 import { syncPendingBookings } from "@/lib/gcal/sync";
+import { refundPackCredit } from "@/lib/packs/refund";
 import { createClient } from "@/lib/supabase/server";
 import type { AdminActionState } from "./services-actions";
 
@@ -22,7 +23,7 @@ export async function approveBooking(
 
   const { data: booking } = await supabase
     .from("bookings")
-    .select("id, status, starts_at, price_estimate_cents")
+    .select("id, status, starts_at, price_estimate_cents, paid_with_pack_purchase_id")
     .eq("id", id)
     .single();
 
@@ -34,7 +35,8 @@ export async function approveBooking(
   }
 
   let price = booking.price_estimate_cents;
-  if (applyTravelFee) {
+  // Pack lessons stay at 0 whatever the distance — travel is included.
+  if (applyTravelFee && !booking.paid_with_pack_purchase_id) {
     const { data: settings } = await supabase
       .from("settings")
       .select("travel_fee_cents")
@@ -46,7 +48,7 @@ export async function approveBooking(
     .from("bookings")
     .update({
       status: "confirmed",
-      travel_fee_applied: applyTravelFee,
+      travel_fee_applied: applyTravelFee && !booking.paid_with_pack_purchase_id,
       admin_note: note || null,
       price_estimate_cents: price,
       gcal_sync_pending: true,
@@ -74,14 +76,20 @@ export async function declineBooking(
 
   const supabase = await createClient();
 
-  const { error } = await supabase
+  const { error, data } = await supabase
     .from("bookings")
     .update({ status: "declined", admin_note: note || null })
     .eq("id", id)
-    .eq("status", "pending");
+    .eq("status", "pending")
+    .select("paid_with_pack_purchase_id");
 
-  if (error) {
+  if (error || !data || data.length === 0) {
     return { error: "save_failed", success: false };
+  }
+
+  // A declined request was never a lesson: the credit returns automatically.
+  if (data[0].paid_with_pack_purchase_id) {
+    await refundPackCredit(id, "pedido recusado");
   }
 
   after(() => notifyDecision("booking", id, "declined"));
@@ -144,7 +152,7 @@ export async function adminCancelBooking(
 
   const { data: booking } = await supabase
     .from("bookings")
-    .select("id, status, gcal_event_id")
+    .select("id, status, gcal_event_id, paid_with_pack_purchase_id")
     .eq("id", id)
     .single();
 
@@ -163,6 +171,12 @@ export async function adminCancelBooking(
 
   if (error) {
     return { error: "save_failed", success: false };
+  }
+
+  // Pending pack requests refund automatically; a cancelled *confirmed*
+  // pack lesson goes to the resolution panel — Maria's call, every time.
+  if (booking.status === "pending" && booking.paid_with_pack_purchase_id) {
+    await refundPackCredit(id, "pedido cancelado");
   }
 
   after(() => notifyAdminCancelled(id));

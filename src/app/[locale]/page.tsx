@@ -121,7 +121,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
   return (
     <main className="flex flex-1 flex-col">
-      <RuleBand height={24} />
+      {/* The "sheet of paper" band under the header: five ruled lines. */}
+      <RuleBand height={56} lines={5} />
 
       {/* Hero */}
       <section className={`${WRAP} py-14 min-[880px]:py-20`}>

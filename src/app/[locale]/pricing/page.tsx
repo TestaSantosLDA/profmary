@@ -28,20 +28,35 @@ export default async function PricingPage({
 
   // Service client: the public pricing page must render without a session.
   const supabase = createServiceClient();
-  const [{ data: services }, { data: settings }] = await Promise.all([
-    supabase
-      .from("services")
-      .select(
-        "id, title_pt, title_en, description_pt, description_en, hourly_rate_cents, min_duration_minutes, max_duration_minutes, attendee_cap, allows_online, allows_onsite, onsite_fee_override_cents"
-      )
-      .eq("active", true)
-      .order("sort_order")
-      .returns<ServiceRow[]>(),
-    supabase
-      .from("settings")
-      .select("travel_fee_cents, travel_fee_threshold_km, onsite_fee_cents, onsite_fee_mode")
-      .single(),
-  ]);
+  const [{ data: services }, { data: settings }, { data: packs }] =
+    await Promise.all([
+      supabase
+        .from("services")
+        .select(
+          "id, title_pt, title_en, description_pt, description_en, hourly_rate_cents, min_duration_minutes, max_duration_minutes, attendee_cap, allows_online, allows_onsite, onsite_fee_override_cents"
+        )
+        .eq("active", true)
+        .order("sort_order")
+        .returns<ServiceRow[]>(),
+      supabase
+        .from("settings")
+        .select("travel_fee_cents, travel_fee_threshold_km, onsite_fee_cents, onsite_fee_mode")
+        .single(),
+      supabase
+        .from("packs")
+        .select("id, service_id, lessons, price_per_lesson_cents, validity_months")
+        .eq("active", true)
+        .order("lessons"),
+    ]);
+
+  const packsByService = new Map<string, NonNullable<typeof packs>>();
+  for (const p of packs ?? []) {
+    packsByService.set(p.service_id, [
+      ...(packsByService.get(p.service_id) ?? []),
+      p,
+    ]);
+  }
+  const hasPacks = (packs ?? []).length > 0;
 
   const t = await getTranslations("PricingPage");
 
@@ -107,9 +122,66 @@ export default async function PricingPage({
                 {t("cta")}
               </Link>
             </Button>
+            {(packsByService.get(s.id) ?? []).length > 0 && (
+              <div className="mt-2">
+                <p className="mb-1 text-xs font-semibold tracking-[0.08em] text-muted-foreground uppercase">
+                  {t("packsEyebrow")}
+                </p>
+                <div className="divide-y divide-border">
+                  {(packsByService.get(s.id) ?? []).map((p) => {
+                    const saving =
+                      (s.hourly_rate_cents - p.price_per_lesson_cents) *
+                      p.lessons;
+                    return (
+                      <div
+                        key={p.id}
+                        className="flex items-center justify-between gap-3 py-2.5"
+                      >
+                        <div>
+                          <p className="text-sm font-medium">
+                            {t("packRow", {
+                              lessons: p.lessons,
+                              price: rate(p.price_per_lesson_cents),
+                            })}
+                          </p>
+                          <p className="text-[13px] text-muted-foreground">
+                            {saving > 0 && (
+                              <>
+                                <span className="font-bold text-accent">
+                                  {t("packSaving", { amount: rate(saving) })}
+                                </span>
+                                {" · "}
+                              </>
+                            )}
+                            {t("packTravelIncluded")}
+                            {p.validity_months !== null &&
+                              ` · ${t("packValidity", { months: p.validity_months })}`}
+                          </p>
+                        </div>
+                        <Button asChild variant="secondary" size="sm">
+                          <Link
+                            href={`/packs?pack=${p.id}`}
+                            className="no-underline hover:no-underline"
+                          >
+                            {t("packCta")}
+                          </Link>
+                        </Button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
+
+      {hasPacks && (
+        <div className="mt-6 space-y-1 text-[13px] text-muted-foreground">
+          <p>{t("packsNote1")}</p>
+          <p>{t("packsNote2")}</p>
+        </div>
+      )}
 
       {(services ?? []).length === 0 && (
         <p className="mt-8 text-muted-foreground">{t("empty")}</p>

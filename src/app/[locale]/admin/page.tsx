@@ -1,4 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import {
+  PackRequestCard,
+  type PackRequestItem,
+} from "@/components/admin/pack-request-card";
 import { RequestCard, type RequestItem } from "@/components/admin/request-card";
 import { euros, formatLessonDate } from "@/lib/booking/format";
 import { createClient } from "@/lib/supabase/server";
@@ -13,25 +17,36 @@ export default async function AdminRequestsPage({
   const nowIso = new Date().toISOString();
 
   // Lapsed pending requests (start time passed) are ignored, per spec.
-  const [{ data: pendingBookings }, { data: pendingSeries }, { data: settings }] =
-    await Promise.all([
-      supabase
-        .from("bookings")
-        .select(
-          "id, starts_at, attendee_names, address, price_estimate_cents, mode, onsite_fee_applied_cents, services(title_pt, title_en), profiles(name)"
-        )
-        .eq("status", "pending")
-        .is("series_id", null)
-        .gt("starts_at", nowIso)
-        .order("starts_at"),
-      supabase
-        .from("booking_series")
-        .select(
-          "id, weekday, start_time, attendee_names, address, mode, onsite_fee_applied_cents, services(title_pt, title_en), profiles(name)"
-        )
-        .eq("status", "pending"),
+  const [
+    { data: pendingBookings },
+    { data: pendingSeries },
+    { data: settings },
+    { data: pendingPacks },
+  ] = await Promise.all([
+    supabase
+      .from("bookings")
+      .select(
+        "id, starts_at, attendee_names, address, price_estimate_cents, mode, onsite_fee_applied_cents, services(title_pt, title_en), profiles(name)"
+      )
+      .eq("status", "pending")
+      .is("series_id", null)
+      .gt("starts_at", nowIso)
+      .order("starts_at"),
+    supabase
+      .from("booking_series")
+      .select(
+        "id, weekday, start_time, attendee_names, address, mode, onsite_fee_applied_cents, services(title_pt, title_en), profiles(name)"
+      )
+      .eq("status", "pending"),
     supabase.from("settings").select("travel_fee_cents").single(),
-    ]);
+    supabase
+      .from("pack_purchases")
+      .select(
+        "id, lessons_total, price_per_lesson_cents, price_paid_cents, validity_months, created_at, services(title_pt), profiles(name)"
+      )
+      .eq("status", "requested")
+      .order("created_at"),
+  ]);
 
   const t = await getTranslations("AdminRequests");
   const tDash = await getTranslations("Dashboard");
@@ -85,13 +100,37 @@ export default async function AdminRequestsPage({
     }),
   ];
 
+  const dateFmt = new Intl.DateTimeFormat(locale === "pt" ? "pt-PT" : "en-GB", {
+    dateStyle: "medium",
+    timeZone: "Europe/Lisbon",
+  });
+  // Pack requests sit above lesson requests: activating one is the act that
+  // starts its validity clock, so it shouldn't queue behind routine approvals.
+  const packItems: PackRequestItem[] = (pendingPacks ?? []).map((p) => {
+    const service = p.services as unknown as { title_pt: string };
+    const profile = p.profiles as unknown as { name: string };
+    return {
+      id: p.id,
+      studentName: profile.name,
+      serviceTitle: service.title_pt,
+      lessons: p.lessons_total,
+      pricePerLesson: euros(p.price_per_lesson_cents),
+      total: euros(p.price_paid_cents),
+      requestedAt: dateFmt.format(new Date(p.created_at)),
+      validityMonths: p.validity_months,
+    };
+  });
+
   return (
     <main>
       <h1 className="mb-6 text-2xl font-bold">{t("title")}</h1>
-      {items.length === 0 ? (
+      {items.length === 0 && packItems.length === 0 ? (
         <p className="text-muted-foreground">{t("empty")}</p>
       ) : (
         <ul className="space-y-4">
+          {packItems.map((item) => (
+            <PackRequestCard key={`pack-${item.id}`} item={item} />
+          ))}
           {items.map((item) => (
             <RequestCard key={`${item.kind}-${item.id}`} item={item} />
           ))}

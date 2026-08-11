@@ -38,6 +38,9 @@ export type BookingPrefill = {
   mode: LessonMode;
 } | null;
 
+/** Mirrors ServicePackBalance from the server-only packs queries. */
+export type PackBalance = { remaining: number; everPurchased: boolean };
+
 function serviceModes(service: BookableService | undefined): LessonMode[] {
   if (!service) return [];
   return [
@@ -51,11 +54,13 @@ export function BookingForm({
   defaultAddress,
   settings,
   prefill = null,
+  packBalances = {},
 }: {
   services: BookableService[];
   defaultAddress: string;
   settings: PublicSettings | null;
   prefill?: BookingPrefill;
+  packBalances?: Record<string, PackBalance>;
 }) {
   const t = useTranslations("BookingForm");
   const locale = useLocale();
@@ -126,6 +131,13 @@ export function BookingForm({
     prefill && prefill.attendees.length > 0 ? prefill.attendees : [""]
   );
   const [recurring, setRecurring] = useState(false);
+
+  // One credit is one lesson, whatever its length — duration still drives
+  // the money estimate for when the pack is NOT used.
+  const packBalance = packBalances[serviceId];
+  const packRemaining = packBalance?.remaining ?? 0;
+  const [wantsPack, setWantsPack] = useState(false);
+  const usePack = wantsPack && packRemaining > 0;
 
   const filledAttendees = attendees.filter((a) => a.trim());
   const base = service
@@ -353,28 +365,71 @@ export function BookingForm({
       )}
 
       <div className="rounded-md border bg-muted/30 p-4 text-sm">
-        <div className="flex justify-between text-muted-foreground">
-          <span>{t("base", { minutes: duration })}</span>
-          <span>{money(base)}</span>
-        </div>
-        {fee > 0 && (
-          <div className="mt-1 flex justify-between text-muted-foreground">
-            <span>{t("travel")}</span>
-            <span>{money(fee)}</span>
+        {usePack && <input type="hidden" name="use_pack" value="on" />}
+        {packRemaining > 0 && (
+          <div className="mb-3 border-b border-border pb-3">
+            <CheckboxField
+              name="use_pack_ui"
+              checked={wantsPack}
+              onChange={(e) => setWantsPack(e.target.checked)}
+              label={t("usePack")}
+            />
+            <p className="mt-1 text-[13px] text-muted-foreground">
+              {t("packBalanceLine", {
+                remaining: packRemaining,
+                after: packRemaining - 1,
+              })}
+            </p>
           </div>
         )}
-        <div className="mt-2 flex justify-between border-t border-border pt-1.5 text-[15px] font-bold">
-          <span>{t("total")}</span>
-          <span>{money(estimate)}</span>
-        </div>
-        <p className="mt-2 text-muted-foreground">{t("estimateNote")}</p>
-        {mode === "onsite" && settings && settings.travel_fee_cents > 0 && (
-          <p className="mt-1 text-muted-foreground">
-            {t("travelFeeNote", {
-              amount: (settings.travel_fee_cents / 100).toFixed(2),
-              km: settings.travel_fee_threshold_km,
-            })}
-          </p>
+        {usePack ? (
+          <>
+            <div className="flex justify-between text-muted-foreground">
+              <span>{t("packBreakdownLabel")}</span>
+              <span>{t("packBreakdownValue")}</span>
+            </div>
+            {mode === "onsite" && (
+              <p className="mt-1 text-muted-foreground">{t("packTravelCovered")}</p>
+            )}
+            <div className="mt-2 flex justify-between border-t border-border pt-1.5 text-[15px] font-bold">
+              <span>{t("packNothingToPay")}</span>
+              <span>{money(0)}</span>
+            </div>
+            {recurring && (
+              <p className="mt-2 text-muted-foreground">
+                {t("packSeriesNote", { remaining: packRemaining })}
+              </p>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="flex justify-between text-muted-foreground">
+              <span>{t("base", { minutes: duration })}</span>
+              <span>{money(base)}</span>
+            </div>
+            {fee > 0 && (
+              <div className="mt-1 flex justify-between text-muted-foreground">
+                <span>{t("travel")}</span>
+                <span>{money(fee)}</span>
+              </div>
+            )}
+            <div className="mt-2 flex justify-between border-t border-border pt-1.5 text-[15px] font-bold">
+              <span>{t("total")}</span>
+              <span>{money(estimate)}</span>
+            </div>
+            {packRemaining === 0 && packBalance?.everPurchased && (
+              <p className="mt-2 text-muted-foreground">{t("packEmptyNote")}</p>
+            )}
+            <p className="mt-2 text-muted-foreground">{t("estimateNote")}</p>
+            {mode === "onsite" && settings && settings.travel_fee_cents > 0 && (
+              <p className="mt-1 text-muted-foreground">
+                {t("travelFeeNote", {
+                  amount: (settings.travel_fee_cents / 100).toFixed(2),
+                  km: settings.travel_fee_threshold_km,
+                })}
+              </p>
+            )}
+          </>
         )}
       </div>
       </div>

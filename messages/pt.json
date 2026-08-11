@@ -78,7 +78,16 @@
       "invalid_locale": "Idioma inválido.",
       "update_failed": "Não foi possível guardar. Tente novamente.",
       "password_too_short": "A palavra-passe deve ter pelo menos 8 caracteres."
-    }
+    },
+    "questionnaireTitle": "Questionário",
+    "questionnaireBody": "As respostas ajudam-me a preparar as aulas e podem ser alteradas a qualquer momento.",
+    "questionnaireCta": "Ver questionário",
+    "questionnaireCtaFor": "Questionário — {name}",
+    "packTitle": "Pack de aulas",
+    "packBalance": "{lessons, plural, one {# aula} other {# aulas}}",
+    "packExpires": "válido até {date}",
+    "packSharing": "As aulas do pack são da conta — todos os educandos podem usá-las.",
+    "packMore": "Pedir mais horas"
   },
   "Admin": {
     "nav": {
@@ -86,6 +95,7 @@
       "bookings": "Aulas",
       "services": "Serviços",
       "availability": "Disponibilidade",
+      "students": "Alunos",
       "content": "Conteúdo",
       "settings": "Definições"
     },
@@ -122,7 +132,7 @@
       "heroPhoto": "Fotografia — retrato",
       "formatsTitle": "Modalidades",
       "formatsNote": "Os cartões desta secção são gerados a partir dos serviços ativos e da taxa ao domicílio em Definições — assim, o valor mostrado é sempre o que entra no cálculo da marcação.",
-      "audiencesTitle": "Com quem trabalho",
+      "audiencesTitle": "Que aulas dou",
       "stepsTitle": "Como funcionam as minhas aulas",
       "stepsHint": "Os passos são numerados automaticamente.",
       "stepsPhoto": "Fotografia da secção",
@@ -172,12 +182,20 @@
       "not_pending": "Este pedido já não está pendente.",
       "in_past": "Este pedido já passou.",
       "forbidden": "Sem permissões.",
-      "save_failed": "Não foi possível guardar. Tente novamente."
+      "save_failed": "Não foi possível guardar. Tente novamente.",
+      "payment_not_confirmed": "Confirme primeiro que recebeu o pagamento.",
+      "not_requested": "Este pedido já foi tratado."
     },
     "modeOnline": "Online",
     "modeOnsite": "Domicílio",
     "onlineAddress": "Link enviado na confirmação",
-    "includesFee": "inclui {fee} de deslocação"
+    "includesFee": "inclui {fee} de deslocação",
+    "packPill": "Pack",
+    "packLine": "{lessons} aulas · {price}/aula",
+    "packActivationNote": "As aulas só ficam disponíveis depois de confirmar o pagamento — a validade de {months} meses começa hoje.",
+    "packActivationNoteNoExpiry": "As aulas só ficam disponíveis depois de confirmar o pagamento. Este pack não tem prazo.",
+    "packPaymentReceived": "Recebi o pagamento",
+    "packActivate": "Ativar pack"
   },
   "AdminBookings": {
     "weekTitle": "Próximos 7 dias",
@@ -193,6 +211,20 @@
       "cancelled_student": "Canceladas pelo aluno",
       "cancelled_admin": "Canceladas por si",
       "skipped_blockout": "Indisponibilidade"
+    },
+    "packCancel": {
+      "title": "Cancelar uma aula paga com pack",
+      "intro": "Não há regra automática: a decisão sobre a aula do pack é caso a caso.",
+      "options": {
+        "refund": "Devolver a aula",
+        "consume": "Consumir a aula",
+        "refund_warning": "Devolver e marcar como aviso"
+      },
+      "confirm": "Registar decisão",
+      "errors": {
+        "already_resolved": "Esta aula já foi decidida.",
+        "save_failed": "Não foi possível guardar. Tente novamente."
+      }
     }
   },
   "AdminServices": {
@@ -222,7 +254,8 @@
       "invalid_cap": "Limite inválido (use -1 para sem limite).",
       "save_failed": "Não foi possível guardar. Tente novamente.",
       "no_mode": "Pelo menos uma modalidade tem de estar ativa.",
-      "invalid_fee": "Taxa de deslocação inválida."
+      "invalid_fee": "Taxa de deslocação inválida.",
+      "invalid_pack": "Reveja os packs: aulas, preço e validade têm de ser válidos."
     },
     "modes": "Modalidades",
     "modeOnline": "Online",
@@ -236,7 +269,17 @@
     "modesOnline": "Só online",
     "modesOnsite": "Só ao domicílio",
     "feePerLesson": "{amount} por aula",
-    "feePerHour": "{amount} por hora"
+    "feePerHour": "{amount} por hora",
+    "packs": "Packs de aulas",
+    "packLessons": "Aulas",
+    "packPricePerLesson": "Preço por aula (€)",
+    "packValidity": "Validade (meses)",
+    "packNoExpiry": "sem prazo",
+    "packRemove": "Remover pack",
+    "packAdd": "Adicionar pack",
+    "packComputed": "Total {total} · poupa {saving} face a aulas de 60 min avulsas",
+    "packsHint": "Uma aula do pack vale uma aula, qualquer que seja a duração. A deslocação está incluída no preço do pack.",
+    "packCount": "{count, plural, one {# pack} other {# packs}}"
   },
   "AdminAvailability": {
     "title": "Disponibilidade semanal",
@@ -351,6 +394,27 @@
       "subject": "Lembrete: aula amanhã",
       "body": "Lembrete da sua aula de {service} em {when}. Morada: {address}.",
       "bodyOnline": "Lembrete da sua aula de {service} em {when}. Aula online — envio o link da videochamada por email."
+    },
+    "questionnaire": {
+      "subject": "Questionário — aulas de português",
+      "intro": "Para preparar melhor a primeira aula, deixei um pequeno questionário: três minutos, tudo opcional, e pode alterar as respostas quando quiser.",
+      "cta": "Preencher o questionário",
+      "ctaFor": "Questionário — {name}",
+      "resendBody": "Aqui está de novo o link para o questionário de {student}. São três minutos, tudo opcional — as respostas ajudam-me a preparar as aulas."
+    },
+    "packRequest": {
+      "subject": "Novo pedido de pack",
+      "body": "{student} pediu um pack de {lessons} aulas de {service} — total {total}. O pagamento é combinado fora do site; ativa o pack quando o receberes.",
+      "cta": "Abrir pedidos"
+    },
+    "packActivated": {
+      "subject": "Pack ativado ✓",
+      "body": "O seu pack de {lessons} aulas de {service} está ativo — já pode usá-lo ao marcar aulas.",
+      "expiry": "As aulas são válidas até {date}."
+    },
+    "packDeclined": {
+      "subject": "Pedido de pack recusado",
+      "body": "Não foi possível ativar o pack de {lessons} aulas de {service}. Se tiver dúvidas, responda a este email."
     }
   },
   "Status": {
@@ -414,7 +478,7 @@
         "caption": "idiomas"
       }
     },
-    "audienceTitle": "Com quem trabalho",
+    "audienceTitle": "Que aulas dou",
     "lessonsTitle": "Como são as minhas aulas",
     "stripNote1": "Cadernos e café em cima da mesa",
     "stripNote2": "Rua de Lisboa com azulejos",
@@ -437,7 +501,15 @@
     "modesOnline": "Apenas online",
     "modesOnsite": "Apenas ao domicílio",
     "onsiteFeePerLesson": "+{amount} de deslocação por aula",
-    "onsiteFeePerHour": "+{amount} de deslocação por hora"
+    "onsiteFeePerHour": "+{amount} de deslocação por hora",
+    "packsEyebrow": "Packs de aulas",
+    "packRow": "{lessons} aulas · {price}€/aula",
+    "packSaving": "Poupa {amount}€",
+    "packTravelIncluded": "Deslocação incluída",
+    "packValidity": "Válido {months} meses",
+    "packCta": "Pedir pack",
+    "packsNote1": "Uma aula do pack é uma aula, qualquer que seja a duração — 60 ou 90 minutos gastam exatamente uma aula.",
+    "packsNote2": "O pagamento é combinado diretamente comigo; as aulas ficam disponíveis assim que eu confirmar que o recebi."
   },
   "ContactPage": {
     "title": "Contacto",
@@ -544,7 +616,8 @@
       "unavailable": "De momento não é possível marcar. Tente mais tarde.",
       "invalid_end_date": "A data de fim tem de ser depois da primeira aula.",
       "save_failed": "Não foi possível enviar o pedido. Tente novamente.",
-      "invalid_mode": "Modalidade inválida para este serviço."
+      "invalid_mode": "Modalidade inválida para este serviço.",
+      "pack_empty": "O pack já não tem aulas disponíveis. Pode pagar esta aula ou pedir outro pack."
     },
     "mode": "Modalidade",
     "online": "Online",
@@ -558,7 +631,15 @@
     "travel": "Taxa de deslocação",
     "total": "Total estimado",
     "link": "Link da videochamada",
-    "linkHint": "Envio o link por email quando a aula for confirmada."
+    "linkHint": "Envio o link por email quando a aula for confirmada.",
+    "usePack": "Usar uma aula do pack",
+    "packBalanceLine": "Tem {remaining, plural, one {# aula} other {# aulas}} no seu pack · {after, plural, =0 {Não ficam aulas} one {Fica # aula} other {Ficam # aulas}} depois desta.",
+    "packBreakdownLabel": "Aulas do pack",
+    "packBreakdownValue": "1 aula",
+    "packTravelCovered": "A deslocação está incluída no pack.",
+    "packNothingToPay": "Nada a pagar nesta aula",
+    "packEmptyNote": "Já não tem aulas no pack para este serviço. Pode pagar esta aula ou pedir outro pack.",
+    "packSeriesNote": "O pack cobre as próximas {remaining, plural, one {# aula} other {# aulas}}; as seguintes são pagas normalmente."
   },
   "Home": {
     "title": "Aulas particulares de Português",
@@ -569,7 +650,7 @@
     "heroPhotoAlt": "Fotografia da professora Maria Martins",
     "heroPhotoNote": "Retrato da Maria — luz natural, ambiente informal",
     "formatsTitle": "Onde dou as aulas",
-    "audienceTitle": "Com quem trabalho",
+    "audienceTitle": "Que aulas dou",
     "audience": {
       "international": {
         "title": "Português para estrangeiros",
@@ -598,12 +679,139 @@
     "howPhotoNote": "Mesa de aula — cadernos, café, duas pessoas a conversar",
     "priceKicker": "Preço simples",
     "priceUnit": "/hora",
-    "priceNote": "Sem subscrições nem pacotes. O pagamento é feito diretamente comigo, aula a aula.",
+    "priceNote": "Sem subscrições nem surpresas. O pagamento é feito diretamente comigo — aula a aula ou em pack.",
     "priceCta": "Ver preços",
     "testimonialQuote": "As aulas com a Maria deram-me confiança para falar português no trabalho. Em poucos meses deixei de ter medo de atender o telefone.",
     "testimonialName": "Ana",
     "testimonialContext": "holandesa",
     "testimonialPlaceholder": "testemunho provisório — substituir por um real antes do lançamento",
     "closeTitle": "Pronto para começar?"
+  },
+  "Questionnaire": {
+    "optional": "Opcional",
+    "title": "Questionário",
+    "intro": "São três minutos, no máximo. Todas as perguntas são opcionais e pode guardar e voltar quando quiser — as respostas ajudam-me a preparar as aulas de {name}.",
+    "sectionCommon": "Sobre quem é a aula",
+    "sectionService": "Sobre as aulas de {service}",
+    "yes": "Sim",
+    "no": "Não",
+    "save": "Guardar respostas",
+    "saving": "A guardar…",
+    "later": "Continuar mais tarde",
+    "footnote": "As respostas ficam guardadas e pode voltar a este link para as alterar quando quiser.",
+    "saved": "Respostas guardadas. Obrigada!",
+    "error": "Não foi possível guardar. Tente novamente."
+  },
+  "AdminStudents": {
+    "title": "Alunos",
+    "builderTitle": "Questionário",
+    "pills": {
+      "list": "Alunos",
+      "builder": "Questionário"
+    },
+    "searchPlaceholder": "Procurar aluno…",
+    "lessonsCount": "{count, plural, =0 {sem aulas} one {# aula} other {# aulas}}",
+    "wardTag": "Educando",
+    "wardOf": "Educando de {name}",
+    "noQuestionnaire": "Sem questionário",
+    "empty": "Ainda não há alunos — as fichas criam-se automaticamente com a primeira marcação.",
+    "contacts": "Contactos",
+    "emailLabel": "Email",
+    "phoneLabel": "Telefone",
+    "guardianLabel": "Encarregado de educação",
+    "questionnaire": "Questionário",
+    "answered": "Respondido",
+    "unanswered": "Por responder",
+    "answeredAt": "Atualizado a {date}",
+    "unansweredHint": "Este aluno ainda não respondeu. O link segue no email de confirmação da primeira aula — posso reenviá-lo ou preencher o questionário com o aluno durante a aula.",
+    "resend": "Reenviar link",
+    "resent": "Link enviado.",
+    "fillIn": "Preencher por ele",
+    "saveFailed": "Não foi possível guardar.",
+    "lessons": "Aulas",
+    "totalLessons": "Total de aulas",
+    "servicesLabel": "Serviços",
+    "usualMode": "Formato habitual",
+    "totalPaid": "Total pago (estimado)",
+    "viewHistory": "Ver histórico completo",
+    "modes": {
+      "online": "Online",
+      "onsite": "Ao domicílio"
+    },
+    "notes": "Notas privadas",
+    "notesHint": "O aluno nunca vê estas notas.",
+    "saveNotes": "Guardar",
+    "notesSaved": "Notas guardadas.",
+    "yes": "Sim",
+    "no": "Não",
+    "builder": {
+      "set": "Conjunto",
+      "common": "Perguntas comuns",
+      "newQuestion": "Nova pergunta",
+      "edit": "Editar",
+      "remove": "Remover",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "type": "Tipo de resposta",
+      "labelPt": "Pergunta (PT)",
+      "labelEn": "Pergunta (EN)",
+      "hintPt": "Dica (PT)",
+      "hintEn": "Dica (EN)",
+      "types": {
+        "short_text": "Texto curto",
+        "long_text": "Texto longo",
+        "multi_choice": "Escolha múltipla",
+        "yes_no": "Sim / não"
+      },
+      "options": "Opções (uma por linha)",
+      "optionsCount": "{count, plural, one {# opção} other {# opções}}",
+      "followUp": "Pergunta de seguimento (mostrada se a resposta for «sim»)",
+      "enFallback": "Os campos EN vazios usam o texto em português.",
+      "emptySet": "Este serviço ainda não tem perguntas próprias — os alunos veem apenas as perguntas comuns.",
+      "lengthNote": "Questionários longos recebem menos respostas — quatro a seis perguntas é o limite prático.",
+      "errors": {
+        "invalid_type": "Tipo de pergunta inválido.",
+        "missing_label": "Escreva a pergunta em português.",
+        "missing_options": "A escolha múltipla precisa de pelo menos duas opções.",
+        "save_failed": "Não foi possível guardar. Tente novamente."
+      }
+    },
+    "pack": {
+      "title": "Pack de aulas",
+      "balance": "{lessons, plural, one {# aula} other {# aulas}}",
+      "ofTotal": "de {total} aulas",
+      "validUntil": "válido até {date}",
+      "accountNote": "O pack é da conta, não do aluno — os educandos partilham o saldo.",
+      "none": "Esta conta não tem pack ativo. Pode atribuir-se um pack combinado fora do site.",
+      "grant": "Atribuir pack",
+      "grantFailed": "Não foi possível atribuir."
+    }
+  },
+  "PacksPage": {
+    "title": "Pedir um pack de aulas",
+    "intro": "Escolha o serviço e o pack. Nada é pago no site — entro em contacto consigo para combinar o pagamento.",
+    "service": "Serviço",
+    "lessons": "{lessons} aulas",
+    "perLesson": "{price}/aula",
+    "saving": "Poupa {amount}",
+    "travelIncluded": "Deslocação incluída",
+    "validity": "Válido {months} meses",
+    "noPacks": "Este serviço não tem packs — as aulas avulsas continuam disponíveis como sempre.",
+    "summaryLessons": "Aulas",
+    "summaryPerLesson": "Preço por aula",
+    "summarySaving": "Poupança",
+    "summaryTotal": "Total",
+    "howTitle": "Como funciona o pagamento",
+    "howBody": "Depois de enviar o pedido, combino consigo o pagamento (dinheiro ou transferência). As aulas ficam disponíveis assim que eu confirmar que o recebi — a validade conta a partir desse momento.",
+    "howSharing": "As aulas do pack são da conta: se tem mais do que um educando, todos usam o mesmo saldo.",
+    "submit": "Enviar pedido",
+    "sentTitle": "Pedido enviado!",
+    "sentBody": "Obrigada! Entro em contacto consigo para combinar o pagamento. As aulas aparecem na sua conta assim que eu o confirmar.",
+    "errors": {
+      "missing_pack": "Escolha um pack primeiro.",
+      "not_authenticated": "Sessão expirada. Inicie sessão novamente.",
+      "unknown_pack": "Este pack já não está disponível.",
+      "save_failed": "Não foi possível enviar o pedido. Tente novamente."
+    }
   }
 }

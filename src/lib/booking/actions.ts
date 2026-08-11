@@ -9,8 +9,10 @@ import {
   notifyRequestReceived,
   notifyStudentCancelled,
 } from "@/lib/email/notifications";
+import { spendablePurchase } from "@/lib/packs/queries";
+import { refundPackCredit } from "@/lib/packs/refund";
 import { syncPendingBookings } from "@/lib/gcal/sync";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { getAvailableSlots } from "./queries";
 import {
   estimatePriceCents,
@@ -100,6 +102,16 @@ export async function createBookingRequest(
     return { error: "slot_taken" };
   }
 
+  // Pack lessons: one credit whatever the duration, money total 0, travel
+  // included. Draw on the soonest-expiring live purchase for this service.
+  const usePack = formData.get("use_pack") === "on";
+  const packPurchase = usePack
+    ? await spendablePurchase(user.id, serviceId)
+    : null;
+  if (usePack && !packPurchase) {
+    return { error: "pack_empty" };
+  }
+
   // Weekly recurring: the series function inserts every occurrence
   // atomically — any slot conflict in the window rejects the whole request.
   if (formData.get("recurring") === "on") {
@@ -116,6 +128,9 @@ export async function createBookingRequest(
         p_mode: mode,
         p_end_date: endDate || null,
         p_window_months: Number(process.env.BOOKING_WINDOW_MONTHS ?? 3),
+        // Credits are spent per occurrence by the hourly job as lessons
+        // happen — never reserved for the whole series up front.
+        p_pack_purchase_id: packPurchase?.id ?? null,
       }
     );
 
@@ -142,7 +157,7 @@ export async function createBookingRequest(
     .rpc("get_public_settings")
     .single<OnsiteFeeSettings>();
   const fee =
-    mode === "onsite"
+    mode === "onsite" && !packPurchase
       ? onsiteFeeCents(service.onsite_fee_override_cents, feeSettings, duration)
       : 0;
 
@@ -160,12 +175,14 @@ export async function createBookingRequest(
       address,
       mode,
       onsite_fee_applied_cents: fee,
-      price_estimate_cents:
-        estimatePriceCents(
-          service.hourly_rate_cents,
-          duration,
-          attendees.length
-        ) + fee,
+      paid_with_pack_purchase_id: packPurchase?.id ?? null,
+      price_estimate_cents: packPurchase
+        ? 0
+        : estimatePriceCents(
+            service.hourly_rate_cents,
+            duration,
+            attendees.length
+          ) + fee,
     })
     .select("id")
     .single();
@@ -173,6 +190,23 @@ export async function createBookingRequest(
   if (error || !created) {
     // 23P01 = exclusion constraint: someone soft-held the slot first.
     return { error: error?.code === "23P01" ? "slot_taken" : "save_failed" };
+  }
+
+  // Single lessons spend their credit at request time — the form's "ficam
+  // N aulas" line is a promise, and the overdraft check on the purchase
+  // makes a concurrent last-credit race an insert failure here.
+  if (packPurchase) {
+    const serviceClient = createServiceClient();
+    const { error: spendError } = await serviceClient.from("pack_ledger").insert({
+      pack_purchase_id: packPurchase.id,
+      booking_id: created.id,
+      delta_lessons: -1,
+      reason: "lesson",
+    });
+    if (spendError) {
+      await serviceClient.from("bookings").delete().eq("id", created.id);
+      return { error: "pack_empty" };
+    }
   }
 
   after(() => notifyRequestReceived("booking", created.id));
@@ -188,9 +222,21 @@ export async function cancelBooking(formData: FormData): Promise<void> {
   if (!id) return;
 
   const supabase = await createClient();
+  // Status before the cancel decides the pack refund: a withdrawn pending
+  // request refunds automatically; a cancelled confirmed lesson waits for
+  // Maria's decision in the admin panel.
+  const { data: before } = await supabase
+    .from("bookings")
+    .select("status, paid_with_pack_purchase_id")
+    .eq("id", id)
+    .maybeSingle();
+
   const { data } = await supabase.rpc("cancel_booking", { p_booking_id: id });
 
   if (data === "ok") {
+    if (before?.status === "pending" && before.paid_with_pack_purchase_id) {
+      await refundPackCredit(id, "pedido retirado antes da confirmação");
+    }
     after(() => notifyStudentCancelled("booking", id));
     after(() => syncPendingBookings());
     revalidatePath("/", "layout");

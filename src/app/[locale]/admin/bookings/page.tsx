@@ -1,5 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { StatusBadge } from "@/components/dashboard/cancel-button";
+import {
+  PackCancelPanel,
+  type PackCancelItem,
+} from "@/components/admin/pack-cancel-panel";
 import { euros, formatLessonDate } from "@/lib/booking/format";
 import { createClient } from "@/lib/supabase/server";
 
@@ -30,16 +34,50 @@ export default async function AdminBookingsPage({
     listQuery = listQuery.eq("status", status);
   }
 
-  const [{ data: week }, { data: list }] = await Promise.all([
-    supabase
-      .from("bookings")
-      .select("id, starts_at, address, attendee_names, services(title_pt), profiles(name)")
-      .eq("status", "confirmed")
-      .gt("starts_at", nowIso)
-      .lte("starts_at", weekEnd)
-      .order("starts_at"),
-    listQuery,
-  ]);
+  const [{ data: week }, { data: list }, { data: cancelledPack }] =
+    await Promise.all([
+      supabase
+        .from("bookings")
+        .select("id, starts_at, address, attendee_names, services(title_pt), profiles(name)")
+        .eq("status", "confirmed")
+        .gt("starts_at", nowIso)
+        .lte("starts_at", weekEnd)
+        .order("starts_at"),
+      listQuery,
+      supabase
+        .from("bookings")
+        .select("id, starts_at, services(title_pt), profiles(name)")
+        .in("status", ["cancelled_student", "cancelled_admin"])
+        .not("paid_with_pack_purchase_id", "is", null)
+        .order("starts_at", { ascending: false })
+        .limit(50),
+    ]);
+
+  // Only cancellations whose credit was actually spent and not yet ruled on
+  // need Maria's decision (pending withdrawals refund automatically).
+  const cancelledIds = (cancelledPack ?? []).map((b) => b.id);
+  const { data: ledgerRows } = cancelledIds.length
+    ? await supabase
+        .from("pack_ledger")
+        .select("booking_id, reason")
+        .in("booking_id", cancelledIds)
+    : { data: [] };
+  const spent = new Set(
+    (ledgerRows ?? []).filter((l) => l.reason === "lesson").map((l) => l.booking_id)
+  );
+  const ruled = new Set(
+    (ledgerRows ?? [])
+      .filter((l) => l.reason === "cancel_refund" || l.reason === "cancel_consume")
+      .map((l) => l.booking_id)
+  );
+  const packCancelItems: PackCancelItem[] = (cancelledPack ?? [])
+    .filter((b) => spent.has(b.id) && !ruled.has(b.id))
+    .map((b) => ({
+      bookingId: b.id,
+      studentName: (b.profiles as unknown as { name: string }).name,
+      serviceTitle: (b.services as unknown as { title_pt: string }).title_pt,
+      when: formatLessonDate(locale, b.starts_at),
+    }));
 
   const t = await getTranslations("AdminBookings");
 
@@ -75,6 +113,7 @@ export default async function AdminBookingsPage({
 
   return (
     <main className="space-y-10">
+      <PackCancelPanel items={packCancelItems} />
       <section>
         <h1 className="mb-4 text-2xl font-bold">{t("weekTitle")}</h1>
         {byDay.size === 0 && (

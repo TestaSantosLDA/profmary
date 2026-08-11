@@ -66,6 +66,42 @@ function parseServiceForm(formData: FormData): ServiceInput | string {
   };
 }
 
+type PackInput = {
+  id: string; // "" for new rows
+  lessons: number;
+  price_per_lesson_cents: number;
+  validity_months: number | null;
+};
+
+function parsePacks(formData: FormData): PackInput[] | string {
+  const ids = formData.getAll("pack_id").map(String);
+  const lessons = formData.getAll("pack_lessons").map(String);
+  const prices = formData.getAll("pack_price_eur").map(String);
+  const validities = formData.getAll("pack_validity_months").map(String);
+
+  const packs: PackInput[] = [];
+  for (let i = 0; i < lessons.length; i++) {
+    const count = Number(lessons[i]);
+    const price = Math.round(Number(prices[i]) * 100);
+    const validityRaw = (validities[i] ?? "").trim();
+    const validity = validityRaw === "" ? null : Number(validityRaw);
+
+    if (!Number.isInteger(count) || count <= 0) return "invalid_pack";
+    if (!Number.isFinite(price) || price < 0) return "invalid_pack";
+    if (validity !== null && (!Number.isInteger(validity) || validity <= 0)) {
+      return "invalid_pack";
+    }
+
+    packs.push({
+      id: ids[i] ?? "",
+      lessons: count,
+      price_per_lesson_cents: price,
+      validity_months: validity,
+    });
+  }
+  return packs;
+}
+
 export async function saveService(
   _prev: AdminActionState,
   formData: FormData
@@ -74,16 +110,62 @@ export async function saveService(
   if (typeof parsed === "string") {
     return { error: parsed, success: false };
   }
+  const packs = parsePacks(formData);
+  if (typeof packs === "string") {
+    return { error: packs, success: false };
+  }
 
   const supabase = await createClient();
   const id = String(formData.get("id") ?? "");
 
-  const { error } = id
-    ? await supabase.from("services").update(parsed).eq("id", id)
-    : await supabase.from("services").insert(parsed);
+  let serviceId = id;
+  if (id) {
+    const { error } = await supabase.from("services").update(parsed).eq("id", id);
+    if (error) {
+      return { error: "save_failed", success: false };
+    }
+  } else {
+    const { data: created, error } = await supabase
+      .from("services")
+      .insert(parsed)
+      .select("id")
+      .single();
+    if (error || !created) {
+      return { error: "save_failed", success: false };
+    }
+    serviceId = created.id;
+  }
 
-  if (error) {
-    return { error: "save_failed", success: false };
+  // Purchases snapshot their pack, so templates are never deleted — a
+  // removed pack goes inactive and existing balances live on untouched.
+  const { data: existing } = await supabase
+    .from("packs")
+    .select("id")
+    .eq("service_id", serviceId)
+    .eq("active", true);
+  const keptIds = new Set(packs.map((p) => p.id).filter(Boolean));
+
+  for (const pack of packs) {
+    const row = {
+      service_id: serviceId,
+      lessons: pack.lessons,
+      price_per_lesson_cents: pack.price_per_lesson_cents,
+      validity_months: pack.validity_months,
+      active: true,
+    };
+    const { error } = pack.id
+      ? await supabase.from("packs").update(row).eq("id", pack.id)
+      : await supabase.from("packs").insert(row);
+    if (error) {
+      return { error: "save_failed", success: false };
+    }
+  }
+  const removed = (existing ?? []).filter((p) => !keptIds.has(p.id));
+  if (removed.length > 0) {
+    await supabase
+      .from("packs")
+      .update({ active: false })
+      .in("id", removed.map((p) => p.id));
   }
 
   revalidatePath("/", "layout");

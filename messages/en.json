@@ -78,7 +78,16 @@
       "invalid_locale": "Invalid language.",
       "update_failed": "Could not save. Please try again.",
       "password_too_short": "Password must be at least 8 characters."
-    }
+    },
+    "questionnaireTitle": "Questionnaire",
+    "questionnaireBody": "Your answers help me prepare the lessons and can be changed at any time.",
+    "questionnaireCta": "View questionnaire",
+    "questionnaireCtaFor": "Questionnaire — {name}",
+    "packTitle": "Lesson pack",
+    "packBalance": "{lessons, plural, one {# lesson} other {# lessons}}",
+    "packExpires": "valid until {date}",
+    "packSharing": "Pack lessons belong to the account — everyone on it can use them.",
+    "packMore": "Request more hours"
   },
   "Admin": {
     "nav": {
@@ -86,6 +95,7 @@
       "bookings": "Lessons",
       "services": "Services",
       "availability": "Availability",
+      "students": "Students",
       "content": "Content",
       "settings": "Settings"
     },
@@ -122,7 +132,7 @@
       "heroPhoto": "Photo — portrait",
       "formatsTitle": "Formats",
       "formatsNote": "This section's cards are generated from the active services and the at-home fee in Settings — so the amount shown is always the one used in the booking calculation.",
-      "audiencesTitle": "Who I work with",
+      "audiencesTitle": "What I teach",
       "stepsTitle": "How my lessons work",
       "stepsHint": "Steps are numbered automatically.",
       "stepsPhoto": "Section photo",
@@ -172,12 +182,20 @@
       "not_pending": "This request is no longer pending.",
       "in_past": "This request is in the past.",
       "forbidden": "No permission.",
-      "save_failed": "Could not save. Please try again."
+      "save_failed": "Could not save. Please try again.",
+      "payment_not_confirmed": "Confirm you received the payment first.",
+      "not_requested": "This request has already been handled."
     },
     "modeOnline": "Online",
     "modeOnsite": "At home",
     "onlineAddress": "Link sent on confirmation",
-    "includesFee": "includes {fee} travel fee"
+    "includesFee": "includes {fee} travel fee",
+    "packPill": "Pack",
+    "packLine": "{lessons} lessons · {price}/lesson",
+    "packActivationNote": "The lessons only become available after you confirm payment — the {months}-month validity starts today.",
+    "packActivationNoteNoExpiry": "The lessons only become available after you confirm payment. This pack has no expiry.",
+    "packPaymentReceived": "I received the payment",
+    "packActivate": "Activate pack"
   },
   "AdminBookings": {
     "weekTitle": "Next 7 days",
@@ -193,6 +211,20 @@
       "cancelled_student": "Cancelled by student",
       "cancelled_admin": "Cancelled by you",
       "skipped_blockout": "Unavailability"
+    },
+    "packCancel": {
+      "title": "Cancel a pack-paid lesson",
+      "intro": "There is no automatic rule: you decide what happens to the pack lesson, case by case.",
+      "options": {
+        "refund": "Return the lesson",
+        "consume": "Consume the lesson",
+        "refund_warning": "Return and mark as a warning"
+      },
+      "confirm": "Record decision",
+      "errors": {
+        "already_resolved": "This lesson has already been decided.",
+        "save_failed": "Could not save. Please try again."
+      }
     }
   },
   "AdminServices": {
@@ -222,7 +254,8 @@
       "invalid_cap": "Invalid cap (use -1 for no cap).",
       "save_failed": "Could not save. Please try again.",
       "no_mode": "At least one format must be active.",
-      "invalid_fee": "Invalid travel fee."
+      "invalid_fee": "Invalid travel fee.",
+      "invalid_pack": "Check the packs: lessons, price and validity must be valid."
     },
     "modes": "Formats",
     "modeOnline": "Online",
@@ -236,7 +269,17 @@
     "modesOnline": "Online only",
     "modesOnsite": "At home only",
     "feePerLesson": "{amount} per lesson",
-    "feePerHour": "{amount} per hour"
+    "feePerHour": "{amount} per hour",
+    "packs": "Lesson packs",
+    "packLessons": "Lessons",
+    "packPricePerLesson": "Price per lesson (€)",
+    "packValidity": "Validity (months)",
+    "packNoExpiry": "no expiry",
+    "packRemove": "Remove pack",
+    "packAdd": "Add pack",
+    "packComputed": "Total {total} · saves {saving} vs single 60-min lessons",
+    "packsHint": "A pack lesson is worth one lesson whatever its length. Travel is included in the pack price.",
+    "packCount": "{count, plural, one {# pack} other {# packs}}"
   },
   "AdminAvailability": {
     "title": "Weekly availability",
@@ -351,6 +394,27 @@
       "subject": "Reminder: lesson tomorrow",
       "body": "Reminder of your {service} lesson on {when}. Address: {address}.",
       "bodyOnline": "Reminder of your {service} lesson on {when}. Online lesson — I'll email the video call link."
+    },
+    "questionnaire": {
+      "subject": "Questionnaire — Portuguese lessons",
+      "intro": "To prepare the first lesson, I've put together a short questionnaire: three minutes, all optional, and you can change your answers at any time.",
+      "cta": "Fill in the questionnaire",
+      "ctaFor": "Questionnaire — {name}",
+      "resendBody": "Here is the link to {student}'s questionnaire again. It takes three minutes, everything is optional — the answers help me prepare the lessons."
+    },
+    "packRequest": {
+      "subject": "New pack request",
+      "body": "{student} requested a pack of {lessons} lessons of {service} — total {total}. Payment is arranged off-site; activate the pack once you receive it.",
+      "cta": "Open requests"
+    },
+    "packActivated": {
+      "subject": "Pack activated ✓",
+      "body": "Your pack of {lessons} lessons of {service} is active — you can use it when booking lessons.",
+      "expiry": "The lessons are valid until {date}."
+    },
+    "packDeclined": {
+      "subject": "Pack request declined",
+      "body": "Your pack of {lessons} lessons of {service} could not be activated. If you have questions, just reply to this email."
     }
   },
   "Status": {
@@ -414,7 +478,7 @@
         "caption": "languages"
       }
     },
-    "audienceTitle": "Who I work with",
+    "audienceTitle": "What I teach",
     "lessonsTitle": "What my lessons look like",
     "stripNote1": "Notebooks and coffee on the table",
     "stripNote2": "Lisbon street with azulejo tiles",
@@ -437,7 +501,15 @@
     "modesOnline": "Online only",
     "modesOnsite": "At your home only",
     "onsiteFeePerLesson": "+{amount} travel fee per lesson",
-    "onsiteFeePerHour": "+{amount} travel fee per hour"
+    "onsiteFeePerHour": "+{amount} travel fee per hour",
+    "packsEyebrow": "Lesson packs",
+    "packRow": "{lessons} lessons · €{price}/lesson",
+    "packSaving": "Save €{amount}",
+    "packTravelIncluded": "Travel included",
+    "packValidity": "Valid {months} months",
+    "packCta": "Request pack",
+    "packsNote1": "A pack lesson is one lesson whatever its length — 60 or 90 minutes both spend exactly one lesson.",
+    "packsNote2": "Payment is arranged directly with me; the lessons become available as soon as I confirm I've received it."
   },
   "ContactPage": {
     "title": "Contact",
@@ -544,7 +616,8 @@
       "unavailable": "Booking is temporarily unavailable. Please try later.",
       "invalid_end_date": "The end date must be after the first lesson.",
       "save_failed": "Could not send the request. Please try again.",
-      "invalid_mode": "Invalid format for this service."
+      "invalid_mode": "Invalid format for this service.",
+      "pack_empty": "The pack has no lessons left. You can pay for this lesson or request another pack."
     },
     "mode": "Format",
     "online": "Online",
@@ -558,7 +631,15 @@
     "travel": "Travel fee",
     "total": "Estimated total",
     "link": "Video call link",
-    "linkHint": "I email the link once the lesson is confirmed."
+    "linkHint": "I email the link once the lesson is confirmed.",
+    "usePack": "Use a pack lesson",
+    "packBalanceLine": "You have {remaining, plural, one {# lesson} other {# lessons}} in your pack · {after, plural, =0 {No lessons} one {# lesson} other {# lessons}} left after this one.",
+    "packBreakdownLabel": "Pack lessons",
+    "packBreakdownValue": "1 lesson",
+    "packTravelCovered": "Travel is included in the pack.",
+    "packNothingToPay": "Nothing to pay for this lesson",
+    "packEmptyNote": "You have no pack lessons left for this service. You can pay for this lesson or request another pack.",
+    "packSeriesNote": "The pack covers the next {remaining, plural, one {# lesson} other {# lessons}}; the ones after are paid normally."
   },
   "Home": {
     "title": "Private Portuguese lessons",
@@ -569,7 +650,7 @@
     "heroPhotoAlt": "Photo of teacher Maria Martins",
     "heroPhotoNote": "Portrait of Maria — natural light, informal setting",
     "formatsTitle": "Where I teach",
-    "audienceTitle": "Who I work with",
+    "audienceTitle": "What I teach",
     "audience": {
       "international": {
         "title": "Portuguese for foreigners",
@@ -598,12 +679,139 @@
     "howPhotoNote": "Lesson table — notebooks, coffee, two people talking",
     "priceKicker": "Simple pricing",
     "priceUnit": "/hour",
-    "priceNote": "No subscriptions, no packages. You pay me directly, lesson by lesson.",
+    "priceNote": "No subscriptions, no surprises. You pay me directly — lesson by lesson or with a pack.",
     "priceCta": "See pricing",
     "testimonialQuote": "Lessons with Maria gave me the confidence to speak Portuguese at work. Within a few months I stopped dreading the phone.",
     "testimonialName": "Ana",
     "testimonialContext": "Dutch",
     "testimonialPlaceholder": "placeholder testimonial — replace with a real one before launch",
     "closeTitle": "Ready to start?"
+  },
+  "Questionnaire": {
+    "optional": "Optional",
+    "title": "Questionnaire",
+    "intro": "Three minutes at most. Every question is optional and you can save and come back whenever you like — your answers help me prepare {name}'s lessons.",
+    "sectionCommon": "About who the lesson is for",
+    "sectionService": "About the {service} lessons",
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save answers",
+    "saving": "Saving…",
+    "later": "Continue later",
+    "footnote": "Your answers are saved, and you can return to this link to change them at any time.",
+    "saved": "Answers saved. Thank you!",
+    "error": "Could not save. Please try again."
+  },
+  "AdminStudents": {
+    "title": "Students",
+    "builderTitle": "Questionnaire",
+    "pills": {
+      "list": "Students",
+      "builder": "Questionnaire"
+    },
+    "searchPlaceholder": "Search students…",
+    "lessonsCount": "{count, plural, =0 {no lessons} one {# lesson} other {# lessons}}",
+    "wardTag": "Ward",
+    "wardOf": "Ward of {name}",
+    "noQuestionnaire": "No questionnaire",
+    "empty": "No students yet — fichas are created automatically with the first booking.",
+    "contacts": "Contacts",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "guardianLabel": "Guardian",
+    "questionnaire": "Questionnaire",
+    "answered": "Answered",
+    "unanswered": "Unanswered",
+    "answeredAt": "Updated on {date}",
+    "unansweredHint": "This student hasn't answered yet. The link goes out with the first lesson's confirmation email — I can resend it or fill in the questionnaire with the student during a lesson.",
+    "resend": "Resend link",
+    "resent": "Link sent.",
+    "fillIn": "Fill in for them",
+    "saveFailed": "Could not save.",
+    "lessons": "Lessons",
+    "totalLessons": "Total lessons",
+    "servicesLabel": "Services",
+    "usualMode": "Usual format",
+    "totalPaid": "Total paid (estimated)",
+    "viewHistory": "View full history",
+    "modes": {
+      "online": "Online",
+      "onsite": "At home"
+    },
+    "notes": "Private notes",
+    "notesHint": "The student never sees these notes.",
+    "saveNotes": "Save",
+    "notesSaved": "Notes saved.",
+    "yes": "Yes",
+    "no": "No",
+    "builder": {
+      "set": "Set",
+      "common": "Common questions",
+      "newQuestion": "New question",
+      "edit": "Edit",
+      "remove": "Remove",
+      "cancel": "Cancel",
+      "save": "Save",
+      "type": "Answer type",
+      "labelPt": "Question (PT)",
+      "labelEn": "Question (EN)",
+      "hintPt": "Hint (PT)",
+      "hintEn": "Hint (EN)",
+      "types": {
+        "short_text": "Short text",
+        "long_text": "Long text",
+        "multi_choice": "Multiple choice",
+        "yes_no": "Yes / no"
+      },
+      "options": "Options (one per line)",
+      "optionsCount": "{count, plural, one {# option} other {# options}}",
+      "followUp": "Follow-up question (shown on a “yes” answer)",
+      "enFallback": "Empty EN fields fall back to the Portuguese text.",
+      "emptySet": "This service has no questions of its own yet — students only see the common questions.",
+      "lengthNote": "Longer questionnaires get fewer answers — four to six questions is the practical ceiling.",
+      "errors": {
+        "invalid_type": "Invalid question type.",
+        "missing_label": "Write the question in Portuguese.",
+        "missing_options": "Multiple choice needs at least two options.",
+        "save_failed": "Could not save. Please try again."
+      }
+    },
+    "pack": {
+      "title": "Lesson pack",
+      "balance": "{lessons, plural, one {# lesson} other {# lessons}}",
+      "ofTotal": "of {total} lessons",
+      "validUntil": "valid until {date}",
+      "accountNote": "The pack belongs to the account, not the student — wards share the balance.",
+      "none": "This account has no active pack. You can grant one agreed offline.",
+      "grant": "Grant pack",
+      "grantFailed": "Could not grant."
+    }
+  },
+  "PacksPage": {
+    "title": "Request a lesson pack",
+    "intro": "Pick the service and the pack. Nothing is paid on the site — I'll get in touch to arrange payment.",
+    "service": "Service",
+    "lessons": "{lessons} lessons",
+    "perLesson": "{price}/lesson",
+    "saving": "Save {amount}",
+    "travelIncluded": "Travel included",
+    "validity": "Valid {months} months",
+    "noPacks": "This service has no packs — single lessons remain available as always.",
+    "summaryLessons": "Lessons",
+    "summaryPerLesson": "Price per lesson",
+    "summarySaving": "Saving",
+    "summaryTotal": "Total",
+    "howTitle": "How payment works",
+    "howBody": "After you send the request, I'll arrange payment with you (cash or bank transfer). The lessons become available once I confirm I've received it — validity counts from that moment.",
+    "howSharing": "Pack lessons belong to the account: if you have more than one child enrolled, they all draw on the same balance.",
+    "submit": "Send request",
+    "sentTitle": "Request sent!",
+    "sentBody": "Thank you! I'll get in touch to arrange payment. The lessons will appear in your account as soon as I confirm it.",
+    "errors": {
+      "missing_pack": "Pick a pack first.",
+      "not_authenticated": "Session expired. Please sign in again.",
+      "unknown_pack": "This pack is no longer available.",
+      "save_failed": "Could not send the request. Please try again."
+    }
   }
 }

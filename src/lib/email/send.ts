@@ -33,6 +33,23 @@ function ctaButton(href: string, label: string): string {
   return `<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#2456A6" style="border-radius:10px;"><a href="${href}" style="display:inline-block;padding:13px 24px;font-family:${FONT};font-size:15px;font-weight:500;color:#ffffff;text-decoration:none;">${label}</a></td></tr></table>`;
 }
 
+// Secondary button — the site's secondary variant (blue tint, blue text).
+// Used when the email already has a primary action (e.g. the questionnaire
+// link inside a confirmation email).
+export function secondaryCtaButton(href: string, label: string): string {
+  return `<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#EAF0F8" style="border-radius:10px;"><a href="${href}" style="display:inline-block;padding:11px 20px;font-family:${FONT};font-size:14px;font-weight:500;color:#2456A6;text-decoration:none;">${label}</a></td></tr></table>`;
+}
+
+// A ruled-off addendum below the main body (context line + buttons).
+export function emailAddendum(intro: string, buttons: string[]): string {
+  const rows = buttons
+    .map(
+      (b) => `<tr><td style="padding-top:12px;">${b}</td></tr>`
+    )
+    .join("");
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:8px 0 0;"><tr><td style="border-top:1px solid #E8E2D9;padding-top:16px;font-family:${FONT};font-size:14px;line-height:1.5;color:#6E7076;">${intro}</td></tr>${rows}</table>`;
+}
+
 // Ivory details box (address/price in confirmation emails).
 function detailsBox(content: string): string {
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 16px;"><tr><td bgcolor="#FAF7F2" style="border:1px solid #E8E2D9;border-radius:12px;padding:14px 18px;font-family:${FONT};font-size:14px;line-height:1.5;color:#6E7076;">${content}</td></tr></table>`;

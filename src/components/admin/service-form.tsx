@@ -30,11 +30,27 @@ export type ServiceRow = {
   onsite_fee_override_cents: number | null;
 };
 
+export type PackFormRow = {
+  id: string;
+  lessons: number;
+  price_per_lesson_cents: number;
+  validity_months: number | null;
+};
+
+type PackDraft = {
+  id: string; // "" for new rows
+  lessons: string;
+  priceEur: string;
+  validityMonths: string;
+};
+
 export function ServiceForm({
   service,
+  packs = [],
   globalFeeLabel,
 }: {
   service?: ServiceRow;
+  packs?: PackFormRow[];
   /** Preformatted global travel fee ("5,00€ por aula") for the override hint. */
   globalFeeLabel: string;
 }) {
@@ -42,6 +58,23 @@ export function ServiceForm({
   const [state, formAction, pending] = useActionState(saveService, initialState);
   const [allowsOnline, setAllowsOnline] = useState(service?.allows_online ?? true);
   const [allowsOnsite, setAllowsOnsite] = useState(service?.allows_onsite ?? true);
+  // Mirrors the rate field so the pack boxes can compute the saving live.
+  const [rateEur, setRateEur] = useState(
+    service ? (service.hourly_rate_cents / 100).toFixed(2) : "15.00"
+  );
+  const [packDrafts, setPackDrafts] = useState<PackDraft[]>(
+    packs.map((p) => ({
+      id: p.id,
+      lessons: String(p.lessons),
+      priceEur: (p.price_per_lesson_cents / 100).toFixed(2),
+      validityMonths: p.validity_months === null ? "" : String(p.validity_months),
+    }))
+  );
+
+  const patchPack = (i: number, patch: Partial<PackDraft>) =>
+    setPackDrafts((prev) => prev.map((p, j) => (j === i ? { ...p, ...patch } : p)));
+
+  const money = (cents: number) => `${(cents / 100).toFixed(2).replace(".", ",")}€`;
 
   return (
     <form
@@ -79,7 +112,8 @@ export function ServiceForm({
             type="number"
             step="0.01"
             min="0"
-            defaultValue={service ? (service.hourly_rate_cents / 100).toFixed(2) : "15.00"}
+            value={rateEur}
+            onChange={(e) => setRateEur(e.target.value)}
             required
           />
         </div>
@@ -120,6 +154,95 @@ export function ServiceForm({
           required
         />
         <p className="text-xs text-muted-foreground">{t("attendeeCapHint")}</p>
+      </div>
+
+      <div className="space-y-2">
+        <Label>{t("packs")}</Label>
+        {packDrafts.map((pack, i) => {
+          const lessons = Number(pack.lessons);
+          const priceCents = Math.round(Number(pack.priceEur) * 100);
+          const rateCents = Math.round(Number(rateEur) * 100);
+          const valid =
+            Number.isInteger(lessons) && lessons > 0 && Number.isFinite(priceCents);
+          const saving = valid ? (rateCents - priceCents) * lessons : 0;
+          return (
+            <div key={i} className="space-y-2 rounded-xl border border-border p-3">
+              <input type="hidden" name="pack_id" value={pack.id} />
+              <div className="flex items-start gap-2">
+                <div className="grid flex-1 gap-2 [grid-template-columns:repeat(auto-fit,minmax(110px,1fr))]">
+                  <div className="space-y-1">
+                    <Label className="text-xs">{t("packLessons")}</Label>
+                    <Input
+                      name="pack_lessons"
+                      type="number"
+                      min="1"
+                      value={pack.lessons}
+                      onChange={(e) => patchPack(i, { lessons: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">{t("packPricePerLesson")}</Label>
+                    <Input
+                      name="pack_price_eur"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={pack.priceEur}
+                      onChange={(e) => patchPack(i, { priceEur: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">{t("packValidity")}</Label>
+                    <Input
+                      name="pack_validity_months"
+                      type="number"
+                      min="1"
+                      value={pack.validityMonths}
+                      onChange={(e) =>
+                        patchPack(i, { validityMonths: e.target.value })
+                      }
+                      placeholder={t("packNoExpiry")}
+                    />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  aria-label={t("packRemove")}
+                  onClick={() =>
+                    setPackDrafts((prev) => prev.filter((_, j) => j !== i))
+                  }
+                  className="mt-5 flex size-8 shrink-0 items-center justify-center rounded-[10px] border border-border text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  ×
+                </button>
+              </div>
+              {valid && (
+                <p className="text-xs text-muted-foreground">
+                  {t("packComputed", {
+                    total: money(lessons * priceCents),
+                    saving: money(Math.max(saving, 0)),
+                  })}
+                </p>
+              )}
+            </div>
+          );
+        })}
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() =>
+            setPackDrafts((prev) => [
+              ...prev,
+              { id: "", lessons: "10", priceEur: rateEur, validityMonths: "6" },
+            ])
+          }
+        >
+          {t("packAdd")}
+        </Button>
+        <p className="text-xs text-muted-foreground">{t("packsHint")}</p>
       </div>
 
       <div className="space-y-2">

@@ -27,6 +27,12 @@ export async function POST(request: NextRequest) {
   // Push freshly materialized occurrences and retry earlier failures.
   const gcal = await syncPendingBookings();
 
+  // Packs: expire first so a lapsed balance can't fund a due lesson, then
+  // spend a credit for each confirmed pack lesson whose start has passed
+  // (series occurrences are never reserved up front).
+  const { data: packsExpired } = await supabase.rpc("pack_expire");
+  const { data: packsSpent } = await supabase.rpc("pack_spend_due");
+
   // 24h reminders: claim rows first (sets reminder_sent_at) so a rerun can
   // never double-send, then send. A send failure after claiming is accepted
   // rather than risking duplicates.
@@ -49,5 +55,7 @@ export async function POST(request: NextRequest) {
     materialized,
     reminders: (claimed ?? []).length,
     gcal,
+    packsExpired,
+    packsSpent,
   });
 }

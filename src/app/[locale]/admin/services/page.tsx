@@ -10,11 +10,19 @@ export default async function AdminServicesPage({
   setRequestLocale(locale);
 
   const supabase = await createClient();
-  const { data: services } = await supabase
-    .from("services")
-    .select("id, title_pt, title_en, hourly_rate_cents, min_duration_minutes, max_duration_minutes, attendee_cap, active, allows_online, allows_onsite")
-    .order("sort_order")
-    .order("created_at");
+  const [{ data: services }, { data: packRows }] = await Promise.all([
+    supabase
+      .from("services")
+      .select("id, title_pt, title_en, hourly_rate_cents, min_duration_minutes, max_duration_minutes, attendee_cap, active, allows_online, allows_onsite")
+      .order("sort_order")
+      .order("created_at"),
+    supabase.from("packs").select("service_id").eq("active", true),
+  ]);
+
+  const packCounts = new Map<string, number>();
+  for (const p of packRows ?? []) {
+    packCounts.set(p.service_id, (packCounts.get(p.service_id) ?? 0) + 1);
+  }
 
   const modesLabel = (s: { allows_online: boolean; allows_onsite: boolean }) =>
     s.allows_online && s.allows_onsite
@@ -59,6 +67,8 @@ export default async function AdminServicesPage({
                 </p>
                 <p className="text-xs font-semibold text-accent">
                   {t(modesLabel(s))}
+                  {(packCounts.get(s.id) ?? 0) > 0 &&
+                    ` · ${t("packCount", { count: packCounts.get(s.id) ?? 0 })}`}
                 </p>
               </div>
             </Link>

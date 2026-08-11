@@ -35,6 +35,28 @@ que depende deles está pronto ou anotado.
 - [ ] Rever copy PT em `messages/pt.json` (o EN é espelhado depois).
 - [ ] Rever a política de privacidade (`/pt/privacy`) — rascunho feito pelo
       Claude; deve ser validada por um humano antes do lançamento.
+- [ ] **Questionário** (`/pt/admin/students` → separador Questionário): as
+      quatro perguntas comuns iniciais foram criadas pelo Claude como ponto
+      de partida — a Maria deve revê-las/editá-las no construtor. Quatro a
+      seis perguntas é o limite prático.
+
+## Base de dados (cloud)
+
+- [ ] Correr `supabase db push` para aplicar as migrações
+      `20260811220000_students_questionnaire.sql` (alunos + questionário) e
+      `20260811230000_packs.sql` (packs de aulas) no projeto Supabase cloud —
+      ambas testadas no stack local; o push foi bloqueado pelas permissões
+      do Claude. Sem elas, os separadores Alunos/packs dão erro em produção.
+
+## Packs (Maria)
+
+- [ ] Criar os packs reais em `/pt/admin/services` (por serviço: nº de
+      aulas, preço por aula, validade em meses). Regra assumida: uma aula
+      do pack vale uma aula, independentemente da duração.
+- [ ] Fora deste passe de design (fazem-se juntos mais tarde, sobre o
+      ledger): histórico do pack para o aluno, lista de movimentos e o
+      diálogo "Ajustar aulas" na ficha — os botões correspondentes ainda
+      não aparecem na interface.
 
 ## Lançamento
 

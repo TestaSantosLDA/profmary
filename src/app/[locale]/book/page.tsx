@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { BookingForm } from "@/components/booking/booking-form";
+import { accountPurchases, packBalancesByService } from "@/lib/packs/queries";
 import { createClient } from "@/lib/supabase/server";
 import type { BookableService } from "@/lib/booking/queries";
 
@@ -69,6 +70,8 @@ export default async function BookPage({
     }
   }
 
+  const packBalances = packBalancesByService(await accountPurchases(user.id));
+
   const t = await getTranslations("BookingForm");
 
   return (
@@ -83,6 +86,7 @@ export default async function BookPage({
           defaultAddress={prefill?.address ?? profile?.default_address ?? ""}
           settings={settings ?? null}
           prefill={prefill}
+          packBalances={packBalances}
         />
       )}
     </main>
