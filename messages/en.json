@@ -358,38 +358,35 @@
     "modeOnsite": "At home"
   },
   "AboutPage": {
-    "title": "About the teacher",
+    "kicker": "About me",
     "photoAlt": "Photo of teacher Maria Martins",
-    "taglineFallback": "Portuguese Teacher",
-    "introFallback": "I'm Maria, a Portuguese teacher. I give private lessons at your home — for people learning Portuguese as a foreign language, and for students preparing for the national exams.",
-    "audienceTitle": "Who I work with",
-    "audience": {
-      "international": {
-        "title": "Portuguese for foreigners",
-        "body": "Practical conversation and grammar lessons for people living in Portugal who want everyday confidence."
-      },
-      "exam": {
-        "title": "Exam preparation",
-        "body": "Focused coaching for the Portuguese national exam, with writing and reading practice."
-      }
-    },
-    "howTitle": "How lessons work",
-    "steps": {
+    "portraitNote": "Portrait of Maria — natural light",
+    "taglineFallback": "Portuguese teacher",
+    "introFallback1": "I'm Maria. I've been teaching Portuguese for over ten years — to adults who moved to Portugal and to students preparing for the national exams.",
+    "introFallback2": "Lessons are one-to-one or in small groups, at your home or online. I speak English and Spanish, so we start wherever you're comfortable — and end up in Portuguese.",
+    "facts": {
       "1": {
-        "title": "Request online",
-        "body": "Pick the service, day, and time that suit you."
+        "value": "10+",
+        "caption": "years teaching"
       },
       "2": {
-        "title": "The teacher confirms",
-        "body": "You get an email as soon as your lesson is confirmed."
+        "value": "1-to-1",
+        "caption": "or small groups"
       },
       "3": {
-        "title": "The lesson is at your home",
-        "body": "The teacher comes to you. Payment is made directly."
+        "value": "PT · EN · ES",
+        "caption": "languages"
       }
     },
-    "ctaTitle": "Ready to start?",
-    "cta": "Book a lesson"
+    "audienceTitle": "Who I work with",
+    "lessonsTitle": "What lessons look like",
+    "stripNote1": "Notebooks and coffee on the table",
+    "stripNote2": "Lisbon street with azulejo tiles",
+    "stripNote3": "Portuguese books",
+    "lessonsClosing": "Lessons are conversations, with pen and paper on the table. We work on what you need — daily life, work, the exam — at your own pace.",
+    "cta": "Book your first lesson",
+    "ctaSecondary": "Talk to me first",
+    "draftNote": "draft copy — for Maria to review before publishing"
   },
   "PricingPage": {
     "title": "Pricing",
@@ -529,8 +526,48 @@
   },
   "Home": {
     "title": "Private Portuguese lessons",
-    "subtitle": "With Maria Martins — at your home, for every level",
+    "lede": "I'm Maria. I teach at your home or online — for people living in Portugal who want to speak Portuguese with confidence, and for students preparing for the national exams.",
     "ctaPrimary": "Book your first lesson",
-    "ctaSecondary": "See pricing"
+    "ctaSecondary": "See pricing",
+    "replyLine": "I usually reply the same day.",
+    "heroPhotoAlt": "Photo of teacher Maria Martins",
+    "heroPhotoNote": "Portrait of Maria — natural light, informal setting",
+    "formatsTitle": "Where lessons happen",
+    "audienceTitle": "Who I work with",
+    "audience": {
+      "international": {
+        "title": "Portuguese for foreigners",
+        "body": "Practical conversation and grammar lessons for people living in Portugal who want everyday confidence."
+      },
+      "exam": {
+        "title": "Exam preparation",
+        "body": "Focused support for the national Portuguese exam, with writing and reading practice."
+      }
+    },
+    "howTitle": "How lessons work",
+    "steps": {
+      "1": {
+        "title": "Request online",
+        "body": "Choose the service, day and time that suit you."
+      },
+      "2": {
+        "title": "I confirm",
+        "body": "You get an email from me as soon as the lesson is confirmed."
+      },
+      "3": {
+        "title": "We meet",
+        "body": "At your home or by video call. Payment is made directly with me."
+      }
+    },
+    "howPhotoNote": "Lesson table — notebooks, coffee, two people talking",
+    "priceKicker": "Simple pricing",
+    "priceUnit": "/hour",
+    "priceNote": "No subscriptions, no packages. You pay me directly, lesson by lesson.",
+    "priceCta": "See pricing",
+    "testimonialQuote": "Lessons with Maria gave me the confidence to speak Portuguese at work. Within a few months I stopped dreading the phone.",
+    "testimonialName": "Ana",
+    "testimonialContext": "Dutch",
+    "testimonialPlaceholder": "placeholder testimonial — replace with a real one before launch",
+    "closeTitle": "Ready to start?"
   }
 }

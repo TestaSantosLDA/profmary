@@ -358,38 +358,35 @@
     "modeOnsite": "Domicílio"
   },
   "AboutPage": {
-    "title": "Sobre a professora",
+    "kicker": "Sobre mim",
     "photoAlt": "Fotografia da professora Maria Martins",
+    "portraitNote": "Retrato da Maria — luz natural",
     "taglineFallback": "Professora de Português",
-    "introFallback": "Sou a Maria, professora de Português. Dou aulas particulares ao domicílio — para quem está a aprender português como língua estrangeira e para estudantes que se preparam para os exames nacionais.",
-    "audienceTitle": "Com quem trabalho",
-    "audience": {
-      "international": {
-        "title": "Português para estrangeiros",
-        "body": "Aulas práticas de conversação e gramática para quem vive em Portugal e quer ganhar confiança no dia a dia."
-      },
-      "exam": {
-        "title": "Preparação para exames",
-        "body": "Acompanhamento focado no exame nacional de Português, com prática de escrita e interpretação."
-      }
-    },
-    "howTitle": "Como funcionam as aulas",
-    "steps": {
+    "introFallback1": "Sou a Maria. Há mais de dez anos que ensino português — a adultos que vieram viver para Portugal e a estudantes que se preparam para os exames nacionais.",
+    "introFallback2": "As aulas são individuais ou em grupos pequenos, em sua casa ou online. Falo inglês e espanhol, por isso começamos onde for confortável — e acabamos em português.",
+    "facts": {
       "1": {
-        "title": "Faça o pedido online",
-        "body": "Escolha o serviço, o dia e a hora que lhe convém."
+        "value": "10+",
+        "caption": "anos a ensinar"
       },
       "2": {
-        "title": "A professora confirma",
-        "body": "Recebe um email assim que a aula for confirmada."
+        "value": "1 para 1",
+        "caption": "ou grupos pequenos"
       },
       "3": {
-        "title": "A aula é em sua casa",
-        "body": "A professora desloca-se até si. O pagamento é feito diretamente."
+        "value": "PT · EN · ES",
+        "caption": "idiomas"
       }
     },
-    "ctaTitle": "Pronto para começar?",
-    "cta": "Marcar aula"
+    "audienceTitle": "Com quem trabalho",
+    "lessonsTitle": "Como são as aulas",
+    "stripNote1": "Cadernos e café em cima da mesa",
+    "stripNote2": "Rua de Lisboa com azulejos",
+    "stripNote3": "Livros de português",
+    "lessonsClosing": "As aulas são a conversar, com papel e caneta em cima da mesa. Trabalhamos sobre o que precisa — o dia a dia, o trabalho, o exame — ao ritmo de cada um.",
+    "cta": "Marcar a primeira aula",
+    "ctaSecondary": "Falar comigo primeiro",
+    "draftNote": "texto provisório — a rever pela Maria antes de publicar"
   },
   "PricingPage": {
     "title": "Preços",
@@ -529,8 +526,48 @@
   },
   "Home": {
     "title": "Aulas particulares de Português",
-    "subtitle": "Com a professora Maria Martins — ao domicílio, para todos os níveis",
+    "lede": "Sou a Maria. Dou aulas em sua casa ou online — a quem vive em Portugal e quer falar português com confiança, e a estudantes que preparam os exames nacionais.",
     "ctaPrimary": "Marcar a primeira aula",
-    "ctaSecondary": "Ver preços"
+    "ctaSecondary": "Ver preços",
+    "replyLine": "Respondo normalmente no próprio dia.",
+    "heroPhotoAlt": "Fotografia da professora Maria Martins",
+    "heroPhotoNote": "Retrato da Maria — luz natural, ambiente informal",
+    "formatsTitle": "Onde decorrem as aulas",
+    "audienceTitle": "Com quem trabalho",
+    "audience": {
+      "international": {
+        "title": "Português para estrangeiros",
+        "body": "Aulas práticas de conversação e gramática para quem vive em Portugal e quer ganhar confiança no dia a dia."
+      },
+      "exam": {
+        "title": "Preparação para exames",
+        "body": "Acompanhamento focado no exame nacional de Português, com prática de escrita e interpretação."
+      }
+    },
+    "howTitle": "Como funcionam as aulas",
+    "steps": {
+      "1": {
+        "title": "Faça o pedido online",
+        "body": "Escolha o serviço, o dia e a hora que lhe convêm."
+      },
+      "2": {
+        "title": "Eu confirmo",
+        "body": "Recebe um email meu assim que a aula ficar confirmada."
+      },
+      "3": {
+        "title": "Temos aula",
+        "body": "Em sua casa ou por videochamada. O pagamento é feito diretamente comigo."
+      }
+    },
+    "howPhotoNote": "Mesa de aula — cadernos, café, duas pessoas a conversar",
+    "priceKicker": "Preço simples",
+    "priceUnit": "/hora",
+    "priceNote": "Sem subscrições nem pacotes. O pagamento é feito diretamente comigo, aula a aula.",
+    "priceCta": "Ver preços",
+    "testimonialQuote": "As aulas com a Maria deram-me confiança para falar português no trabalho. Em poucos meses deixei de ter medo de atender o telefone.",
+    "testimonialName": "Ana",
+    "testimonialContext": "holandesa",
+    "testimonialPlaceholder": "testemunho provisório — substituir por um real antes do lançamento",
+    "closeTitle": "Pronto para começar?"
   }
 }
