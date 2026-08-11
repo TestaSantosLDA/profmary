@@ -1,17 +1,42 @@
 "use client";
 
-import { CalendarDays, Euro, House, Mail, UserRound } from "lucide-react";
+import {
+  CalendarDays,
+  Euro,
+  House,
+  Inbox,
+  Mail,
+  UserRound,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 
-const ITEMS = [
-  { href: "/", key: "home", Icon: House },
-  { href: "/pricing", key: "pricing", Icon: Euro },
-  { href: "/about", key: "about", Icon: UserRound },
-  { href: "/contact", key: "contact", Icon: Mail },
-] as const;
+export type SessionRole = "guest" | "client" | "admin";
 
-export function BottomNav({ loggedIn }: { loggedIn: boolean }) {
+// The tab set swaps with the session instead of growing past 4 tabs:
+// guests get the marketing pages, signed-in users their own areas.
+const TABS = {
+  guest: [
+    { href: "/", key: "home", Icon: House },
+    { href: "/pricing", key: "pricing", Icon: Euro },
+    { href: "/about", key: "about", Icon: UserRound },
+    { href: "/contact", key: "contact", Icon: Mail },
+  ],
+  client: [
+    { href: "/", key: "home", Icon: House },
+    { href: "/dashboard", key: "dashboardShort", Icon: CalendarDays },
+    { href: "/pricing", key: "pricing", Icon: Euro },
+    { href: "/profile", key: "profileShort", Icon: UserRound },
+  ],
+  admin: [
+    { href: "/", key: "home", Icon: House },
+    { href: "/admin", key: "adminShort", Icon: Inbox },
+    { href: "/pricing", key: "pricing", Icon: Euro },
+    { href: "/profile", key: "profileShort", Icon: UserRound },
+  ],
+} as const;
+
+export function BottomNav({ role }: { role: SessionRole }) {
   const t = useTranslations("Nav");
   const pathname = usePathname();
 
@@ -20,16 +45,9 @@ export function BottomNav({ loggedIn }: { loggedIn: boolean }) {
     return null;
   }
 
-  const items = loggedIn
-    ? [
-        ...ITEMS,
-        { href: "/dashboard", key: "dashboardShort", Icon: CalendarDays } as const,
-      ]
-    : ITEMS;
-
   return (
     <nav className="sticky bottom-0 z-20 flex justify-around border-t border-border bg-card pb-[env(safe-area-inset-bottom)] min-[720px]:hidden">
-      {items.map(({ href, key, Icon }) => {
+      {TABS[role].map(({ href, key, Icon }) => {
         const active = pathname === href;
         return (
           <Link

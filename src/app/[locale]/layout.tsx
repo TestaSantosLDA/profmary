@@ -3,7 +3,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Geist_Mono, Lora, Source_Sans_3 } from "next/font/google";
 import { notFound } from "next/navigation";
-import { BottomNav } from "@/components/layout/bottom-nav";
+import { BottomNav, type SessionRole } from "@/components/layout/bottom-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { routing } from "@/i18n/routing";
@@ -46,13 +46,22 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
-  // Session drives the header entry and the mobile nav's "Lessons" tab.
+  // Session role drives the header entries and the mobile tab set.
   // Reading cookies here makes the public pages render dynamically — fine
   // at this scale, per the design handoff.
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  let role: SessionRole = "guest";
+  if (user) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("is_admin")
+      .eq("id", user.id)
+      .single();
+    role = profile?.is_admin ? "admin" : "client";
+  }
 
   return (
     <html
@@ -61,9 +70,9 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider>
-          <SiteHeader loggedIn={!!user} />
+          <SiteHeader role={role} />
           {children}
-          <BottomNav loggedIn={!!user} />
+          <BottomNav role={role} />
           <SiteFooter />
         </NextIntlClientProvider>
       </body>

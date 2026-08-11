@@ -12,7 +12,11 @@
     "pricing": "Pricing",
     "contact": "Contact",
     "dashboard": "My lessons",
-    "dashboardShort": "Lessons"
+    "dashboardShort": "Lessons",
+    "profileShort": "Profile",
+    "adminShort": "Requests",
+    "profile": "My profile",
+    "admin": "Admin"
   },
   "Footer": {
     "privacyPolicy": "Privacy Policy",

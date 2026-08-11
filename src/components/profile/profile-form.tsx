@@ -5,6 +5,13 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {
   changePassword,
@@ -22,7 +29,13 @@ type Profile = {
   default_address: string | null;
 };
 
-export function ProfileForm({ profile }: { profile: Profile }) {
+export function ProfileForm({
+  profile,
+  isAdmin,
+}: {
+  profile: Profile;
+  isAdmin: boolean;
+}) {
   const t = useTranslations("Profile");
   const [state, formAction, pending] = useActionState(
     updateProfile,
@@ -34,8 +47,11 @@ export function ProfileForm({ profile }: { profile: Profile }) {
   );
 
   return (
-    <div className="space-y-10">
-      <form action={formAction} className="space-y-4">
+    <div className="space-y-6">
+      <form
+        action={formAction}
+        className="space-y-4 rounded-xl border border-border bg-card p-5"
+      >
         <div className="space-y-2">
           <Label htmlFor="name">{t("name")}</Label>
           <Input id="name" name="name" defaultValue={profile.name} required />
@@ -51,41 +67,49 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         </div>
         <div className="space-y-2">
           <Label htmlFor="locale">{t("language")}</Label>
-          <select
-            id="locale"
-            name="locale"
-            defaultValue={profile.locale}
-            className="border-input h-9 w-full rounded-md border bg-transparent px-3 text-sm"
-          >
-            {routing.locales.map((l) => (
-              <option key={l} value={l}>
-                {t(`locales.${l}`)}
-              </option>
-            ))}
-          </select>
+          <Select name="locale" defaultValue={profile.locale}>
+            <SelectTrigger id="locale" className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {routing.locales.map((l) => (
+                <SelectItem key={l} value={l}>
+                  {t(`locales.${l}`)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="default_address">{t("defaultAddress")}</Label>
-          <Textarea
-            id="default_address"
-            name="default_address"
-            defaultValue={profile.default_address ?? ""}
-            placeholder={t("defaultAddressHint")}
-          />
-        </div>
+        {/* The teacher has no lesson address of her own. */}
+        {!isAdmin && (
+          <div className="space-y-2">
+            <Label htmlFor="default_address">{t("defaultAddress")}</Label>
+            <Textarea
+              id="default_address"
+              name="default_address"
+              defaultValue={profile.default_address ?? ""}
+            />
+            <p className="text-xs text-muted-foreground">
+              {t("defaultAddressHint")}
+            </p>
+          </div>
+        )}
         {state.error && (
           <p className="text-sm text-destructive">{t(`errors.${state.error}`)}</p>
         )}
-        {state.success && (
-          <p className="text-sm text-positive">{t("saved")}</p>
-        )}
+        {state.success && <p className="text-sm text-positive">{t("saved")}</p>}
         <Button type="submit" disabled={pending}>
           {t("save")}
         </Button>
       </form>
 
-      <form action={pwAction} className="space-y-4 border-t pt-8">
-        <h2 className="text-lg font-semibold">{t("changePassword")}</h2>
+      <form
+        action={pwAction}
+        className="space-y-4 rounded-xl border border-border bg-card p-5"
+      >
+        <h2 className="font-heading text-[1.15rem] font-semibold">
+          {t("changePassword")}
+        </h2>
         <div className="space-y-2">
           <Label htmlFor="password">{t("newPassword")}</Label>
           <Input

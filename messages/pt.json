@@ -12,7 +12,11 @@
     "pricing": "Preços",
     "contact": "Contacto",
     "dashboard": "As minhas aulas",
-    "dashboardShort": "Aulas"
+    "dashboardShort": "Aulas",
+    "profileShort": "Perfil",
+    "adminShort": "Pedidos",
+    "profile": "O meu perfil",
+    "admin": "Administração"
   },
   "Footer": {
     "privacyPolicy": "Política de Privacidade",

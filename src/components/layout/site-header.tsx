@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
+import type { SessionRole } from "./bottom-nav";
 import { LanguageSwitcher } from "./language-switcher";
 import { NavLink } from "./nav-link";
 
@@ -11,7 +12,7 @@ const NAV_ITEMS = [
   { href: "/contact", key: "contact" },
 ] as const;
 
-export function SiteHeader({ loggedIn }: { loggedIn: boolean }) {
+export function SiteHeader({ role }: { role: SessionRole }) {
   const t = useTranslations("Nav");
   const tCommon = useTranslations("Common");
   const tAuth = useTranslations("Auth");
@@ -33,12 +34,17 @@ export function SiteHeader({ loggedIn }: { loggedIn: boolean }) {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          {/* On mobile the BottomNav covers the session entry. */}
-          <span className="hidden text-sm min-[720px]:inline">
-            {loggedIn ? (
-              <NavLink href="/dashboard">{t("dashboard")}</NavLink>
-            ) : (
+          {/* On mobile the BottomNav covers the session entries. */}
+          <span className="hidden items-center gap-4 text-sm min-[720px]:flex">
+            {role === "guest" && (
               <NavLink href="/login">{tAuth("signIn")}</NavLink>
+            )}
+            {role === "client" && (
+              <NavLink href="/dashboard">{t("dashboard")}</NavLink>
+            )}
+            {role === "admin" && <NavLink href="/admin">{t("admin")}</NavLink>}
+            {role !== "guest" && (
+              <NavLink href="/profile">{t("profile")}</NavLink>
             )}
           </span>
           <LanguageSwitcher />
