@@ -246,17 +246,58 @@
       "4": "Thursday", "5": "Friday", "6": "Saturday"
     }
   },
-  "About": {
+  "AboutPage": {
     "title": "About the teacher",
-    "placeholder": "Content coming soon."
+    "photoAlt": "Photo of teacher Maria Martins",
+    "taglineFallback": "Portuguese Teacher",
+    "introFallback": "I'm Maria, a Portuguese teacher. I give private lessons at your home — for people learning Portuguese as a foreign language, and for students preparing for the national exams.",
+    "audienceTitle": "Who I work with",
+    "audience": {
+      "international": {
+        "title": "Portuguese for foreigners",
+        "body": "Practical conversation and grammar lessons for people living in Portugal who want everyday confidence."
+      },
+      "exam": {
+        "title": "Exam preparation",
+        "body": "Focused coaching for the Portuguese national exam, with writing and reading practice."
+      }
+    },
+    "howTitle": "How lessons work",
+    "steps": {
+      "1": { "title": "Request online", "body": "Pick the service, day, and time that suit you." },
+      "2": { "title": "The teacher confirms", "body": "You get an email as soon as your lesson is confirmed." },
+      "3": { "title": "The lesson is at your home", "body": "The teacher comes to you. Payment is made directly." }
+    },
+    "ctaTitle": "Ready to start?",
+    "cta": "Book a lesson"
   },
-  "Pricing": {
+  "PricingPage": {
     "title": "Pricing",
-    "placeholder": "Content coming soon."
+    "subtitle": "Priced per hour and per person — no subscriptions, no surprises. Payment is made directly with the teacher.",
+    "perHourPerPerson": "/h per person",
+    "durationRange": "{min}–{max} minutes",
+    "maxAttendees": "max {cap} attendees",
+    "cta": "Book a lesson",
+    "empty": "Services will be published soon.",
+    "travelFeeNote": "Addresses beyond {km} km may carry a €{amount} travel fee."
   },
-  "Contact": {
+  "ContactPage": {
     "title": "Contact",
-    "placeholder": "Content coming soon."
+    "intro": "Have a question before booking? Send a message.",
+    "emailCard": "Email",
+    "phoneCard": "Phone / WhatsApp",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "messageHint": "Tell us what you're looking for — level, goal, availability.",
+    "send": "Send message",
+    "sent": "Message sent! We'll reply soon.",
+    "emailSubject": "Nova mensagem de contacto de {name}",
+    "errors": {
+      "missing_fields": "Please fill in all fields.",
+      "too_long": "The message is too long.",
+      "send_failed": "Could not send. Please try again."
+    }
   },
   "Privacy": {
     "title": "Privacy Policy",

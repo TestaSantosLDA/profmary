@@ -18,8 +18,8 @@ export function LanguageSwitcher() {
           onClick={() => router.replace(pathname, { locale: l })}
           className={
             l === locale
-              ? "rounded px-2 py-1 font-semibold underline underline-offset-4"
-              : "rounded px-2 py-1 text-muted-foreground hover:text-foreground"
+              ? "px-1.5 py-1 font-semibold text-foreground underline underline-offset-4"
+              : "px-1.5 py-1 text-muted-foreground hover:text-foreground"
           }
           aria-current={l === locale ? "true" : undefined}
         >

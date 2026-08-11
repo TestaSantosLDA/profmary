@@ -246,17 +246,58 @@
       "4": "Quinta", "5": "Sexta", "6": "Sábado"
     }
   },
-  "About": {
+  "AboutPage": {
     "title": "Sobre a professora",
-    "placeholder": "Conteúdo em preparação."
+    "photoAlt": "Fotografia da professora Maria Martins",
+    "taglineFallback": "Professora de Português",
+    "introFallback": "Sou a Maria, professora de Português. Dou aulas particulares ao domicílio — para quem está a aprender português como língua estrangeira e para estudantes que se preparam para os exames nacionais.",
+    "audienceTitle": "Com quem trabalho",
+    "audience": {
+      "international": {
+        "title": "Português para estrangeiros",
+        "body": "Aulas práticas de conversação e gramática para quem vive em Portugal e quer ganhar confiança no dia a dia."
+      },
+      "exam": {
+        "title": "Preparação para exames",
+        "body": "Acompanhamento focado no exame nacional de Português, com prática de escrita e interpretação."
+      }
+    },
+    "howTitle": "Como funcionam as aulas",
+    "steps": {
+      "1": { "title": "Faça o pedido online", "body": "Escolha o serviço, o dia e a hora que lhe convém." },
+      "2": { "title": "A professora confirma", "body": "Recebe um email assim que a aula for confirmada." },
+      "3": { "title": "A aula é em sua casa", "body": "A professora desloca-se até si. O pagamento é feito diretamente." }
+    },
+    "ctaTitle": "Pronto para começar?",
+    "cta": "Marcar aula"
   },
-  "Pricing": {
+  "PricingPage": {
     "title": "Preços",
-    "placeholder": "Conteúdo em preparação."
+    "subtitle": "Preço por hora e por pessoa, sem subscrições nem surpresas. O pagamento é feito diretamente com a professora.",
+    "perHourPerPerson": "/h por pessoa",
+    "durationRange": "{min}–{max} minutos",
+    "maxAttendees": "máx. {cap} participantes",
+    "cta": "Marcar aula",
+    "empty": "Os serviços serão publicados em breve.",
+    "travelFeeNote": "Para moradas a mais de {km} km pode acrescer uma taxa de deslocação de {amount}€."
   },
-  "Contact": {
+  "ContactPage": {
     "title": "Contacto",
-    "placeholder": "Conteúdo em preparação."
+    "intro": "Tem uma dúvida antes de marcar? Envie uma mensagem.",
+    "emailCard": "Email",
+    "phoneCard": "Telefone / WhatsApp",
+    "name": "Nome",
+    "email": "Email",
+    "message": "Mensagem",
+    "messageHint": "Diga-nos o que procura — nível, objetivo, disponibilidade.",
+    "send": "Enviar mensagem",
+    "sent": "Mensagem enviada! Responderemos em breve.",
+    "emailSubject": "Nova mensagem de contacto de {name}",
+    "errors": {
+      "missing_fields": "Preencha todos os campos.",
+      "too_long": "A mensagem é demasiado longa.",
+      "send_failed": "Não foi possível enviar. Tente novamente."
+    }
   },
   "Privacy": {
     "title": "Política de Privacidade",
