@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AdminTabs } from "@/components/admin/admin-tabs";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { signOut } from "@/lib/auth/actions";
 import { requireAdmin } from "@/lib/auth/require-admin";
 
@@ -19,10 +20,17 @@ export default async function AdminLayout({
 }: LayoutProps<"/[locale]/admin">) {
   const { locale } = await params;
   setRequestLocale(locale);
-  await requireAdmin(locale);
+  const { supabase } = await requireAdmin(locale);
 
   const t = await getTranslations("Admin.nav");
   const tCommon = await getTranslations("Common");
+  const tAdmin = await getTranslations("Admin");
+
+  // Set by the sync engine when Google revoked the calendar grant.
+  const { data: settings } = await supabase
+    .from("settings")
+    .select("gcal_sync_error")
+    .single();
 
   return (
     <div className="mx-auto w-full max-w-[1040px] flex-1 px-4 py-8">
@@ -41,6 +49,14 @@ export default async function AdminLayout({
           items={ADMIN_NAV.map(({ href, key }) => ({ href, label: t(key) }))}
         />
       </div>
+      {settings?.gcal_sync_error && (
+        <div className="mb-6 rounded-xl bg-warning-tint px-4 py-3 text-sm text-warning">
+          {tAdmin("gcalBanner")}{" "}
+          <Link href="/admin/settings" className="font-medium underline underline-offset-4">
+            {tAdmin("gcalBannerCta")}
+          </Link>
+        </div>
+      )}
       {children}
     </div>
   );

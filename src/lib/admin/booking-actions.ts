@@ -6,6 +6,7 @@ import {
   notifyAdminCancelled,
   notifyDecision,
 } from "@/lib/email/notifications";
+import { syncPendingBookings } from "@/lib/gcal/sync";
 import { createClient } from "@/lib/supabase/server";
 import type { AdminActionState } from "./services-actions";
 
@@ -58,7 +59,7 @@ export async function approveBooking(
   }
 
   after(() => notifyDecision("booking", id, "confirmed"));
-  // TODO(group 8): push event to Google Calendar.
+  after(() => syncPendingBookings());
 
   revalidatePath("/", "layout");
   return { error: null, success: true };
@@ -105,7 +106,7 @@ export async function approveSeries(
   }
 
   after(() => notifyDecision("series", id, "confirmed"));
-  // TODO(group 8): calendar events are created by the sync job (gcal_sync_pending).
+  after(() => syncPendingBookings());
 
   revalidatePath("/", "layout");
   return { error: null, success: true };
@@ -165,7 +166,7 @@ export async function adminCancelBooking(
   }
 
   after(() => notifyAdminCancelled(id));
-  // TODO(group 8): delete Google Calendar event.
+  after(() => syncPendingBookings());
 
   revalidatePath("/", "layout");
   return { error: null, success: true };

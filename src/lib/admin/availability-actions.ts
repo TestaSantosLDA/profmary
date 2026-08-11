@@ -1,6 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
+import { syncPendingBookings } from "@/lib/gcal/sync";
 import { createClient } from "@/lib/supabase/server";
 import type { AdminActionState } from "./services-actions";
 
@@ -118,7 +120,9 @@ export async function addBlockout(
     return { error: "save_failed", success: false };
   }
 
-  // Overlapping series occurrences are skipped by the blockouts DB trigger.
+  // Overlapping series occurrences are skipped by the blockouts DB trigger;
+  // the sync pass then removes their calendar events.
+  after(() => syncPendingBookings());
   revalidatePath("/", "layout");
   return { error: null, success: true };
 }

@@ -1,11 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { sendReminder } from "@/lib/email/notifications";
+import { syncPendingBookings } from "@/lib/gcal/sync";
 import { createServiceClient } from "@/lib/supabase/server";
 
 // Hourly scheduled work, invoked by the GitHub Actions cron workflow.
 // Idempotent by design: materialization starts after the latest existing
-// occurrence; reminders (group 7) and calendar sync retries (group 8) will
-// hang off this same endpoint.
+// occurrence, reminders claim rows first, and the calendar sync pass is
+// the retry path for pushes that failed after a booking transition.
 export async function POST(request: NextRequest) {
   const auth = request.headers.get("authorization");
   if (!process.env.CRON_SECRET || auth !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -22,6 +23,9 @@ export async function POST(request: NextRequest) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  // Push freshly materialized occurrences and retry earlier failures.
+  const gcal = await syncPendingBookings();
 
   // 24h reminders: claim rows first (sets reminder_sent_at) so a rerun can
   // never double-send, then send. A send failure after claiming is accepted
@@ -44,5 +48,6 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({
     materialized,
     reminders: (claimed ?? []).length,
+    gcal,
   });
 }

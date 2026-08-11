@@ -9,6 +9,7 @@ import {
   notifyRequestReceived,
   notifyStudentCancelled,
 } from "@/lib/email/notifications";
+import { syncPendingBookings } from "@/lib/gcal/sync";
 import { createClient } from "@/lib/supabase/server";
 import { getAvailableSlots } from "./queries";
 import { estimatePriceCents, LESSON_TIMEZONE, type DaySlots } from "./slots";
@@ -157,6 +158,7 @@ export async function cancelBooking(formData: FormData): Promise<void> {
 
   if (data === "ok") {
     after(() => notifyStudentCancelled("booking", id));
+    after(() => syncPendingBookings());
     revalidatePath("/", "layout");
   }
 }
@@ -170,6 +172,7 @@ export async function cancelSeries(formData: FormData): Promise<void> {
 
   if (data === "ok") {
     after(() => notifyStudentCancelled("series", id));
+    after(() => syncPendingBookings());
     revalidatePath("/", "layout");
   }
 }

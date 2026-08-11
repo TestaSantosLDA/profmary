@@ -40,7 +40,10 @@
     "name": "Nome",
     "phone": "Telefone",
     "language": "Idioma",
-    "locales": { "pt": "Português", "en": "Inglês" },
+    "locales": {
+      "pt": "Português",
+      "en": "Inglês"
+    },
     "defaultAddress": "Morada das aulas",
     "defaultAddressHint": "Morada onde as aulas decorrem habitualmente",
     "save": "Guardar",
@@ -64,7 +67,9 @@
       "availability": "Disponibilidade",
       "about": "Página Sobre",
       "settings": "Definições"
-    }
+    },
+    "gcalBanner": "A sincronização com o Google Calendar está desligada — as aulas novas não entram no calendário.",
+    "gcalBannerCta": "Voltar a ligar"
   },
   "AdminAbout": {
     "title": "Página Sobre",
@@ -193,6 +198,20 @@
     "errors": {
       "invalid_values": "Valores inválidos.",
       "save_failed": "Não foi possível guardar. Tente novamente."
+    },
+    "gcal": {
+      "title": "Google Calendar",
+      "connected": "Ligado",
+      "notConnected": "Ainda não ligado — as aulas confirmadas não aparecem em nenhum calendário.",
+      "connectedHint": "As aulas confirmadas entram automaticamente no calendário da conta ligada; cancelamentos removem o evento.",
+      "connect": "Ligar Google Calendar",
+      "disconnect": "Desligar",
+      "justConnected": "Google Calendar ligado.",
+      "expired": "A ligação expirou ou foi revogada — volte a ligar.",
+      "errors": {
+        "missing_key": "Falta configurar a chave de encriptação (GCAL_TOKEN_KEY) no servidor.",
+        "connect_failed": "Não foi possível ligar ao Google Calendar. Tente novamente."
+      }
     }
   },
   "Email": {
@@ -259,8 +278,13 @@
     "cancelSeries": "Cancelar série",
     "attendees": "{count, plural, =1 {1 participante} other {# participantes}}",
     "weekdays": {
-      "0": "Domingo", "1": "Segunda", "2": "Terça", "3": "Quarta",
-      "4": "Quinta", "5": "Sexta", "6": "Sábado"
+      "0": "Domingo",
+      "1": "Segunda",
+      "2": "Terça",
+      "3": "Quarta",
+      "4": "Quinta",
+      "5": "Sexta",
+      "6": "Sábado"
     }
   },
   "AboutPage": {
@@ -281,9 +305,18 @@
     },
     "howTitle": "Como funcionam as aulas",
     "steps": {
-      "1": { "title": "Faça o pedido online", "body": "Escolha o serviço, o dia e a hora que lhe convém." },
-      "2": { "title": "A professora confirma", "body": "Recebe um email assim que a aula for confirmada." },
-      "3": { "title": "A aula é em sua casa", "body": "A professora desloca-se até si. O pagamento é feito diretamente." }
+      "1": {
+        "title": "Faça o pedido online",
+        "body": "Escolha o serviço, o dia e a hora que lhe convém."
+      },
+      "2": {
+        "title": "A professora confirma",
+        "body": "Recebe um email assim que a aula for confirmada."
+      },
+      "3": {
+        "title": "A aula é em sua casa",
+        "body": "A professora desloca-se até si. O pagamento é feito diretamente."
+      }
     },
     "ctaTitle": "Pronto para começar?",
     "cta": "Marcar aula"
