@@ -123,7 +123,7 @@
       "formatsTitle": "Modalidades",
       "formatsNote": "Os cartões desta secção são gerados a partir dos serviços ativos e da taxa ao domicílio em Definições — assim, o valor mostrado é sempre o que entra no cálculo da marcação.",
       "audiencesTitle": "Com quem trabalho",
-      "stepsTitle": "Como funcionam as aulas",
+      "stepsTitle": "Como funcionam as minhas aulas",
       "stepsHint": "Os passos são numerados automaticamente.",
       "stepsPhoto": "Fotografia da secção",
       "priceTitle": "Preço em destaque",
@@ -152,7 +152,7 @@
       "factsMax": "A página está desenhada para 3 números (máximo 4).",
       "factValue": "Valor",
       "factCaption": "Legenda",
-      "lessonsTitle": "Como são as aulas",
+      "lessonsTitle": "Como são as minhas aulas",
       "photoN": "Fotografia {n}",
       "closingField": "Frase final",
       "closeTitle": "Fecho",
@@ -191,7 +191,7 @@
       "pending": "Pendentes",
       "confirmed": "Confirmadas",
       "cancelled_student": "Canceladas pelo aluno",
-      "cancelled_admin": "Canceladas pela professora",
+      "cancelled_admin": "Canceladas por si",
       "skipped_blockout": "Indisponibilidade"
     }
   },
@@ -228,7 +228,7 @@
     "modeOnline": "Online",
     "modeOnlineHint": "Aula por videochamada. O link é enviado na confirmação.",
     "modeOnsite": "Ao domicílio",
-    "modeOnsiteHint": "A professora desloca-se à morada do aluno.",
+    "modeOnsiteHint": "Desloca-se à morada do aluno.",
     "onsiteFee": "Taxa de deslocação (€)",
     "onsiteFeeHint": "Deixar vazio usa a taxa predefinida em Definições ({fee}).",
     "modesHint": "O aluno escolhe entre as modalidades ativas ao marcar. Pelo menos uma tem de estar ativa.",
@@ -282,7 +282,7 @@
     },
     "hints": {
       "buffer_minutes": "Tempo de deslocação entre aulas consecutivas.",
-      "cancellation_cutoff_hours": "Depois deste limite, os alunos têm de contactar diretamente.",
+      "cancellation_cutoff_hours": "Depois deste limite, os alunos têm de falar diretamente consigo.",
       "booking_notice_hours": "Os pedidos têm de ser feitos com esta antecedência.",
       "travel_fee": "Para moradas mais distantes, aplicada manualmente ao aprovar o pedido."
     },
@@ -318,11 +318,11 @@
   },
   "Email": {
     "greeting": "Olá {name},",
-    "notePrefix": "Nota da professora",
+    "notePrefix": "Nota da Maria",
     "requestReceived": {
-      "subject": "Recebemos o seu pedido de aula",
-      "body": "O seu pedido de {service} para {when} foi recebido e aguarda confirmação da professora.",
-      "next": "Receberá um email assim que o pedido for confirmado."
+      "subject": "Recebi o seu pedido de aula",
+      "body": "O seu pedido de {service} para {when} chegou — confirmo assim que possível.",
+      "next": "Recebe um email meu assim que o pedido estiver confirmado."
     },
     "adminNewRequest": {
       "subject": "Novo pedido de aula",
@@ -333,11 +333,11 @@
       "subject": "Aula confirmada ✓",
       "body": "A sua aula de {service} em {when} está confirmada.",
       "details": "Morada: {address} · Valor estimado: {price} (pagamento em dinheiro ou transferência).",
-      "detailsOnline": "Aula online — enviamos o link da videochamada por email antes da aula · Valor estimado: {price} (pagamento em dinheiro ou transferência)."
+      "detailsOnline": "Aula online — envio o link da videochamada por email antes da aula · Valor estimado: {price} (pagamento em dinheiro ou transferência)."
     },
     "declined": {
       "subject": "Pedido de aula não aceite",
-      "body": "Infelizmente o seu pedido de {service} para {when} não pôde ser aceite."
+      "body": "Infelizmente não consigo aceitar o seu pedido de {service} para {when}."
     },
     "adminCancelled": {
       "subject": "Aula cancelada por um aluno",
@@ -345,12 +345,12 @@
     },
     "cancelledByTeacher": {
       "subject": "Aula cancelada",
-      "body": "A sua aula de {service} em {when} foi cancelada pela professora."
+      "body": "Tive de cancelar a sua aula de {service} em {when}. Peço desculpa pelo incómodo."
     },
     "reminder": {
       "subject": "Lembrete: aula amanhã",
       "body": "Lembrete da sua aula de {service} em {when}. Morada: {address}.",
-      "bodyOnline": "Lembrete da sua aula de {service} em {when}. Aula online — enviamos o link da videochamada por email."
+      "bodyOnline": "Lembrete da sua aula de {service} em {when}. Aula online — envio o link da videochamada por email."
     }
   },
   "Status": {
@@ -358,8 +358,8 @@
     "confirmed": "Confirmada",
     "declined": "Não aceite",
     "cancelled_student": "Cancelada por si",
-    "cancelled_admin": "Cancelada pela professora",
-    "skipped_blockout": "Cancelada — professora indisponível"
+    "cancelled_admin": "Cancelada pela Maria",
+    "skipped_blockout": "Cancelada — Maria indisponível"
   },
   "Dashboard": {
     "title": "As minhas aulas",
@@ -374,7 +374,7 @@
     "cancel": "Cancelar",
     "cancelConfirm": "Cancelar esta aula?",
     "cancelSeriesConfirm": "Cancelar a série toda? As aulas futuras serão canceladas.",
-    "insideCutoff": "Para cancelar esta aula contacte diretamente a professora.",
+    "insideCutoff": "Para cancelar esta aula fale diretamente comigo.",
     "seriesLabel": "{weekday} às {time}, semanalmente",
     "seriesUntil": "até {date}",
     "seriesOpenEnded": "sem data de fim",
@@ -399,7 +399,7 @@
     "portraitNote": "Retrato da Maria — luz natural",
     "taglineFallback": "Professora de Português",
     "introFallback1": "Sou a Maria. Há mais de dez anos que ensino português — a adultos que vieram viver para Portugal e a estudantes que se preparam para os exames nacionais.",
-    "introFallback2": "As aulas são individuais ou em grupos pequenos, em sua casa ou online. Falo inglês e espanhol, por isso começamos onde for confortável — e acabamos em português.",
+    "introFallback2": "As minhas aulas são individuais ou em grupos pequenos, em sua casa ou online. Falo inglês e espanhol, por isso começamos onde for confortável — e acabamos em português.",
     "facts": {
       "1": {
         "value": "10+",
@@ -415,18 +415,18 @@
       }
     },
     "audienceTitle": "Com quem trabalho",
-    "lessonsTitle": "Como são as aulas",
+    "lessonsTitle": "Como são as minhas aulas",
     "stripNote1": "Cadernos e café em cima da mesa",
     "stripNote2": "Rua de Lisboa com azulejos",
     "stripNote3": "Livros de português",
-    "lessonsClosing": "As aulas são a conversar, com papel e caneta em cima da mesa. Trabalhamos sobre o que precisa — o dia a dia, o trabalho, o exame — ao ritmo de cada um.",
+    "lessonsClosing": "As minhas aulas são a conversar, com papel e caneta em cima da mesa. Trabalhamos sobre o que precisa — o dia a dia, o trabalho, o exame — ao ritmo de cada um.",
     "cta": "Marcar a primeira aula",
     "ctaSecondary": "Falar comigo primeiro",
     "draftNote": "texto provisório — a rever pela Maria antes de publicar"
   },
   "PricingPage": {
     "title": "Preços",
-    "subtitle": "Preço por hora e por pessoa, sem subscrições nem surpresas. O pagamento é feito diretamente com a professora.",
+    "subtitle": "Preço por hora e por pessoa, sem subscrições nem surpresas. O pagamento é feito diretamente comigo.",
     "perHourPerPerson": "/h por pessoa",
     "durationRange": "{min}–{max} minutos",
     "maxAttendees": "máx. {cap} participantes",
@@ -441,15 +441,15 @@
   },
   "ContactPage": {
     "title": "Contacto",
-    "intro": "Tem uma dúvida antes de marcar? Envie uma mensagem.",
+    "intro": "Tem uma dúvida antes de marcar? Escreva-me — respondo normalmente no próprio dia.",
     "emailCard": "Email",
     "phoneCard": "Telefone / WhatsApp",
     "name": "Nome",
     "email": "Email",
     "message": "Mensagem",
-    "messageHint": "Diga-nos o que procura — nível, objetivo, disponibilidade.",
+    "messageHint": "Diga-me o que procura — nível, objetivo, disponibilidade.",
     "send": "Enviar mensagem",
-    "sent": "Mensagem enviada! Responderemos em breve.",
+    "sent": "Mensagem enviada! Respondo em breve.",
     "emailSubject": "Nova mensagem de contacto de {name}",
     "errors": {
       "missing_fields": "Preencha todos os campos.",
@@ -510,7 +510,7 @@
   },
   "BookingForm": {
     "title": "Marcar aula",
-    "subtitle": "Escolha o serviço, o horário e quem participa. O pedido fica pendente até ser confirmado pela professora.",
+    "subtitle": "Escolha o serviço, o horário e quem participa. O pedido fica pendente até eu o confirmar.",
     "service": "Serviço",
     "duration": "Duração",
     "minutes": "{minutes} minutos",
@@ -524,12 +524,12 @@
     "address": "Morada da aula",
     "addressHint": "Morada onde a aula decorre",
     "estimate": "Estimativa: {amount}€",
-    "estimateNote": "Pagamento em dinheiro ou transferência, diretamente com a professora.",
+    "estimateNote": "Pagamento em dinheiro ou transferência, diretamente comigo.",
     "travelFeeNote": "Para moradas a mais de {km} km pode acrescer uma taxa de deslocação de {amount}€.",
     "submit": "Enviar pedido",
     "noServices": "Não há serviços disponíveis de momento.",
     "recurring": "Repetir semanalmente",
-    "recurringHint": "A mesma aula, todas as semanas no mesmo dia e hora. A professora confirma a série toda de uma vez.",
+    "recurringHint": "A mesma aula, todas as semanas no mesmo dia e hora. Confirmo a série toda de uma vez.",
     "recurringEnd": "Data de fim (opcional)",
     "recurringEndHint": "Sem data de fim, a série continua até ser cancelada.",
     "errors": {
@@ -548,9 +548,9 @@
     },
     "mode": "Modalidade",
     "online": "Online",
-    "onlineDesc": "Videochamada. O link é enviado na confirmação.",
+    "onlineDesc": "Videochamada. Envio o link na confirmação.",
     "onsite": "Ao domicílio",
-    "onsiteDesc": "A professora desloca-se à sua morada.",
+    "onsiteDesc": "Desloco-me à sua morada.",
     "included": "Incluído",
     "onlyOnsite": "Este serviço é dado apenas ao domicílio.",
     "onlyOnline": "Este serviço é dado apenas online.",
@@ -558,7 +558,7 @@
     "travel": "Taxa de deslocação",
     "total": "Total estimado",
     "link": "Link da videochamada",
-    "linkHint": "Enviamos o link por email quando a aula for confirmada."
+    "linkHint": "Envio o link por email quando a aula for confirmada."
   },
   "Home": {
     "title": "Aulas particulares de Português",
@@ -568,7 +568,7 @@
     "replyLine": "Respondo normalmente no próprio dia.",
     "heroPhotoAlt": "Fotografia da professora Maria Martins",
     "heroPhotoNote": "Retrato da Maria — luz natural, ambiente informal",
-    "formatsTitle": "Onde decorrem as aulas",
+    "formatsTitle": "Onde dou as aulas",
     "audienceTitle": "Com quem trabalho",
     "audience": {
       "international": {
@@ -580,7 +580,7 @@
         "body": "Acompanhamento focado no exame nacional de Português, com prática de escrita e interpretação."
       }
     },
-    "howTitle": "Como funcionam as aulas",
+    "howTitle": "Como funcionam as minhas aulas",
     "steps": {
       "1": {
         "title": "Faça o pedido online",

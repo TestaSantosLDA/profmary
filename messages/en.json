@@ -123,7 +123,7 @@
       "formatsTitle": "Formats",
       "formatsNote": "This section's cards are generated from the active services and the at-home fee in Settings — so the amount shown is always the one used in the booking calculation.",
       "audiencesTitle": "Who I work with",
-      "stepsTitle": "How lessons work",
+      "stepsTitle": "How my lessons work",
       "stepsHint": "Steps are numbered automatically.",
       "stepsPhoto": "Section photo",
       "priceTitle": "Featured price",
@@ -152,7 +152,7 @@
       "factsMax": "The page is designed for 3 numbers (maximum 4).",
       "factValue": "Value",
       "factCaption": "Caption",
-      "lessonsTitle": "What lessons look like",
+      "lessonsTitle": "What my lessons look like",
       "photoN": "Photo {n}",
       "closingField": "Closing sentence",
       "closeTitle": "Closing",
@@ -191,7 +191,7 @@
       "pending": "Pending",
       "confirmed": "Confirmed",
       "cancelled_student": "Cancelled by student",
-      "cancelled_admin": "Cancelled by teacher",
+      "cancelled_admin": "Cancelled by you",
       "skipped_blockout": "Unavailability"
     }
   },
@@ -228,7 +228,7 @@
     "modeOnline": "Online",
     "modeOnlineHint": "Video call lesson. The link is sent on confirmation.",
     "modeOnsite": "At the student's home",
-    "modeOnsiteHint": "The teacher travels to the student's address.",
+    "modeOnsiteHint": "You travel to the student's address.",
     "onsiteFee": "Travel fee (€)",
     "onsiteFeeHint": "Leave empty to use the default fee from Settings ({fee}).",
     "modesHint": "Students choose between the active formats when booking. At least one must be active.",
@@ -282,7 +282,7 @@
     },
     "hints": {
       "buffer_minutes": "Travel time between consecutive lessons.",
-      "cancellation_cutoff_hours": "Past this limit, students must contact you directly.",
+      "cancellation_cutoff_hours": "After this cutoff, students must contact you directly.",
       "booking_notice_hours": "Requests must be made at least this far ahead.",
       "travel_fee": "For farther addresses, applied manually when approving the request."
     },
@@ -318,11 +318,11 @@
   },
   "Email": {
     "greeting": "Hi {name},",
-    "notePrefix": "Note from the teacher",
+    "notePrefix": "Note from Maria",
     "requestReceived": {
-      "subject": "We received your lesson request",
-      "body": "Your request for {service} on {when} was received and awaits the teacher's confirmation.",
-      "next": "You'll get an email as soon as it's confirmed."
+      "subject": "I received your lesson request",
+      "body": "Your request for {service} on {when} has arrived — I'll confirm it as soon as I can.",
+      "next": "You'll get an email from me once it's confirmed."
     },
     "adminNewRequest": {
       "subject": "Novo pedido de aula",
@@ -333,11 +333,11 @@
       "subject": "Lesson confirmed ✓",
       "body": "Your {service} lesson on {when} is confirmed.",
       "details": "Address: {address} · Estimated price: {price} (paid in cash or bank transfer).",
-      "detailsOnline": "Online lesson — we'll email the video call link before the lesson · Estimated price: {price} (paid in cash or bank transfer)."
+      "detailsOnline": "Online lesson — I'll email the video call link before the lesson · Estimated price: {price} (paid in cash or bank transfer)."
     },
     "declined": {
       "subject": "Lesson request not accepted",
-      "body": "Unfortunately your request for {service} on {when} could not be accepted."
+      "body": "Unfortunately I can't take your request for {service} on {when}."
     },
     "adminCancelled": {
       "subject": "Aula cancelada por um aluno",
@@ -345,12 +345,12 @@
     },
     "cancelledByTeacher": {
       "subject": "Lesson cancelled",
-      "body": "Your {service} lesson on {when} was cancelled by the teacher."
+      "body": "I had to cancel your {service} lesson on {when}. Sorry for the inconvenience."
     },
     "reminder": {
       "subject": "Reminder: lesson tomorrow",
       "body": "Reminder of your {service} lesson on {when}. Address: {address}.",
-      "bodyOnline": "Reminder of your {service} lesson on {when}. Online lesson — we'll email the video call link."
+      "bodyOnline": "Reminder of your {service} lesson on {when}. Online lesson — I'll email the video call link."
     }
   },
   "Status": {
@@ -358,8 +358,8 @@
     "confirmed": "Confirmed",
     "declined": "Not accepted",
     "cancelled_student": "Cancelled by you",
-    "cancelled_admin": "Cancelled by the teacher",
-    "skipped_blockout": "Cancelled — teacher unavailable"
+    "cancelled_admin": "Cancelled by Maria",
+    "skipped_blockout": "Cancelled — Maria unavailable"
   },
   "Dashboard": {
     "title": "My lessons",
@@ -374,7 +374,7 @@
     "cancel": "Cancel",
     "cancelConfirm": "Cancel this lesson?",
     "cancelSeriesConfirm": "Cancel the whole series? Future lessons will be cancelled.",
-    "insideCutoff": "To cancel this lesson, contact the teacher directly.",
+    "insideCutoff": "To cancel this lesson, contact me directly.",
     "seriesLabel": "{weekday} at {time}, weekly",
     "seriesUntil": "until {date}",
     "seriesOpenEnded": "open-ended",
@@ -399,7 +399,7 @@
     "portraitNote": "Portrait of Maria — natural light",
     "taglineFallback": "Portuguese teacher",
     "introFallback1": "I'm Maria. I've been teaching Portuguese for over ten years — to adults who moved to Portugal and to students preparing for the national exams.",
-    "introFallback2": "Lessons are one-to-one or in small groups, at your home or online. I speak English and Spanish, so we start wherever you're comfortable — and end up in Portuguese.",
+    "introFallback2": "My lessons are one-to-one or in small groups, at your home or online. I speak English and Spanish, so we start wherever you're comfortable — and end up in Portuguese.",
     "facts": {
       "1": {
         "value": "10+",
@@ -415,18 +415,18 @@
       }
     },
     "audienceTitle": "Who I work with",
-    "lessonsTitle": "What lessons look like",
+    "lessonsTitle": "What my lessons look like",
     "stripNote1": "Notebooks and coffee on the table",
     "stripNote2": "Lisbon street with azulejo tiles",
     "stripNote3": "Portuguese books",
-    "lessonsClosing": "Lessons are conversations, with pen and paper on the table. We work on what you need — daily life, work, the exam — at your own pace.",
+    "lessonsClosing": "My lessons are conversations, with pen and paper on the table. We work on what you need — daily life, work, the exam — at your own pace.",
     "cta": "Book your first lesson",
     "ctaSecondary": "Talk to me first",
     "draftNote": "draft copy — for Maria to review before publishing"
   },
   "PricingPage": {
     "title": "Pricing",
-    "subtitle": "Priced per hour and per person — no subscriptions, no surprises. Payment is made directly with the teacher.",
+    "subtitle": "Priced per hour and per person — no subscriptions, no surprises. You pay me directly.",
     "perHourPerPerson": "/h per person",
     "durationRange": "{min}–{max} minutes",
     "maxAttendees": "max {cap} attendees",
@@ -441,15 +441,15 @@
   },
   "ContactPage": {
     "title": "Contact",
-    "intro": "Have a question before booking? Send a message.",
+    "intro": "Have a question before booking? Write to me — I usually reply the same day.",
     "emailCard": "Email",
     "phoneCard": "Phone / WhatsApp",
     "name": "Name",
     "email": "Email",
     "message": "Message",
-    "messageHint": "Tell us what you're looking for — level, goal, availability.",
+    "messageHint": "Tell me what you're looking for — level, goal, availability.",
     "send": "Send message",
-    "sent": "Message sent! We'll reply soon.",
+    "sent": "Message sent! I'll reply soon.",
     "emailSubject": "Nova mensagem de contacto de {name}",
     "errors": {
       "missing_fields": "Please fill in all fields.",
@@ -510,7 +510,7 @@
   },
   "BookingForm": {
     "title": "Book a lesson",
-    "subtitle": "Choose the service, time, and who attends. Your request stays pending until the teacher confirms it.",
+    "subtitle": "Choose the service, time, and who attends. Your request stays pending until I confirm it.",
     "service": "Service",
     "duration": "Duration",
     "minutes": "{minutes} minutes",
@@ -524,12 +524,12 @@
     "address": "Lesson address",
     "addressHint": "Address where the lesson takes place",
     "estimate": "Estimate: €{amount}",
-    "estimateNote": "Paid in cash or bank transfer, directly with the teacher.",
+    "estimateNote": "Paid in cash or bank transfer, directly with me.",
     "travelFeeNote": "Addresses beyond {km} km may carry a €{amount} travel fee.",
     "submit": "Send request",
     "noServices": "No services available right now.",
     "recurring": "Repeat weekly",
-    "recurringHint": "The same lesson every week at the same day and time. The teacher confirms the whole series at once.",
+    "recurringHint": "The same lesson every week at the same day and time. I confirm the whole series at once.",
     "recurringEnd": "End date (optional)",
     "recurringEndHint": "Without an end date, the series continues until cancelled.",
     "errors": {
@@ -548,9 +548,9 @@
     },
     "mode": "Format",
     "online": "Online",
-    "onlineDesc": "Video call. The link is sent on confirmation.",
+    "onlineDesc": "Video call. I send the link on confirmation.",
     "onsite": "At your home",
-    "onsiteDesc": "The teacher travels to your address.",
+    "onsiteDesc": "I travel to your address.",
     "included": "Included",
     "onlyOnsite": "This service is taught at your home only.",
     "onlyOnline": "This service is taught online only.",
@@ -558,7 +558,7 @@
     "travel": "Travel fee",
     "total": "Estimated total",
     "link": "Video call link",
-    "linkHint": "We email the link once the lesson is confirmed."
+    "linkHint": "I email the link once the lesson is confirmed."
   },
   "Home": {
     "title": "Private Portuguese lessons",
@@ -568,7 +568,7 @@
     "replyLine": "I usually reply the same day.",
     "heroPhotoAlt": "Photo of teacher Maria Martins",
     "heroPhotoNote": "Portrait of Maria — natural light, informal setting",
-    "formatsTitle": "Where lessons happen",
+    "formatsTitle": "Where I teach",
     "audienceTitle": "Who I work with",
     "audience": {
       "international": {
@@ -580,7 +580,7 @@
         "body": "Focused support for the national Portuguese exam, with writing and reading practice."
       }
     },
-    "howTitle": "How lessons work",
+    "howTitle": "How my lessons work",
     "steps": {
       "1": {
         "title": "Request online",
