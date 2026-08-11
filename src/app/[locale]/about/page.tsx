@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import type { ContentItem } from "@/components/admin/about-editor";
 import { Button } from "@/components/ui/button";
 import { createServiceClient } from "@/lib/supabase/server";
 
@@ -14,17 +15,30 @@ export default async function AboutPage({
   const supabase = createServiceClient();
   const { data: content } = await supabase
     .from("site_content")
-    .select("photo_url, tagline_pt, tagline_en, intro_pt, intro_en")
+    .select(
+      "photo_url, display_name, tagline_pt, tagline_en, intro_pt, intro_en, highlights, steps"
+    )
     .eq("key", "about")
     .single();
 
   const t = await getTranslations("AboutPage");
+  // Each field falls back to the other locale, then to the i18n copy.
+  const pick = (pt: string, en: string) => (locale === "pt" ? pt || en : en || pt);
   const tagline =
-    (locale === "pt" ? content?.tagline_pt : content?.tagline_en) ||
+    pick(content?.tagline_pt ?? "", content?.tagline_en ?? "") ||
     t("taglineFallback");
   const intro =
-    (locale === "pt" ? content?.intro_pt : content?.intro_en) ||
-    t("introFallback");
+    pick(content?.intro_pt ?? "", content?.intro_en ?? "") || t("introFallback");
+
+  const highlights = (content?.highlights ?? []) as ContentItem[];
+  const steps: { title: string; body: string }[] = (
+    (content?.steps ?? []) as ContentItem[]
+  ).map((s) => ({ title: pick(s.title_pt, s.title_en), body: pick(s.body_pt, s.body_en) }));
+  if (steps.length === 0) {
+    for (const n of [1, 2, 3] as const) {
+      steps.push({ title: t(`steps.${n}.title`), body: t(`steps.${n}.body`) });
+    }
+  }
 
   return (
     <main className="mx-auto w-full max-w-[640px] flex-1 px-4 py-12">
@@ -45,7 +59,9 @@ export default async function AboutPage({
           />
         )}
         <div>
-          <p className="font-heading text-xl font-semibold">Maria Martins</p>
+          <p className="font-heading text-xl font-semibold">
+            {content?.display_name || "Maria Martins"}
+          </p>
           <p className="text-primary">{tagline}</p>
         </div>
       </div>
@@ -54,30 +70,39 @@ export default async function AboutPage({
 
       <h2 className="mt-12 text-xl">{t("audienceTitle")}</h2>
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        {(["international", "exam"] as const).map((k) => (
-          <div key={k} className="rounded-xl border border-border bg-card p-5">
-            <h3 className="font-heading text-base font-semibold">
-              {t(`audience.${k}.title`)}
-            </h3>
-            <p className="mt-1.5 text-sm text-muted-foreground">
-              {t(`audience.${k}.body`)}
-            </p>
-          </div>
-        ))}
+        {highlights.length > 0
+          ? highlights.map((item, i) => (
+              <div key={i} className="rounded-xl border border-border bg-card p-5">
+                <h3 className="font-heading text-base font-semibold">
+                  {pick(item.title_pt, item.title_en)}
+                </h3>
+                <p className="mt-1.5 text-sm text-muted-foreground">
+                  {pick(item.body_pt, item.body_en)}
+                </p>
+              </div>
+            ))
+          : (["international", "exam"] as const).map((k) => (
+              <div key={k} className="rounded-xl border border-border bg-card p-5">
+                <h3 className="font-heading text-base font-semibold">
+                  {t(`audience.${k}.title`)}
+                </h3>
+                <p className="mt-1.5 text-sm text-muted-foreground">
+                  {t(`audience.${k}.body`)}
+                </p>
+              </div>
+            ))}
       </div>
 
       <h2 className="mt-12 text-xl">{t("howTitle")}</h2>
       <ol className="mt-4 space-y-4">
-        {([1, 2, 3] as const).map((n) => (
-          <li key={n} className="flex items-start gap-4">
+        {steps.map((step, i) => (
+          <li key={i} className="flex items-start gap-4">
             <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-secondary font-heading font-semibold text-primary">
-              {n}
+              {i + 1}
             </span>
             <div>
-              <p className="font-medium">{t(`steps.${n}.title`)}</p>
-              <p className="text-sm text-muted-foreground">
-                {t(`steps.${n}.body`)}
-              </p>
+              <p className="font-medium">{step.title}</p>
+              <p className="text-sm text-muted-foreground">{step.body}</p>
             </div>
           </li>
         ))}

@@ -14,7 +14,9 @@ export default async function AdminAboutPage({
   const supabase = await createClient();
   const { data: content } = await supabase
     .from("site_content")
-    .select("photo_url, tagline_pt, tagline_en, intro_pt, intro_en")
+    .select(
+      "photo_url, display_name, tagline_pt, tagline_en, intro_pt, intro_en, highlights, steps"
+    )
     .eq("key", "about")
     .single<SiteContent>();
 
