@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { CheckboxField } from "@/components/ui/checkbox-field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -106,15 +107,11 @@ export function ServiceForm({ service }: { service?: ServiceRow }) {
         <p className="text-xs text-muted-foreground">{t("attendeeCapHint")}</p>
       </div>
 
-      <label className="flex items-center gap-2 text-sm">
-        <input
-          type="checkbox"
-          name="active"
-          defaultChecked={service?.active ?? true}
-          className="h-4 w-4"
-        />
-        {t("active")}
-      </label>
+      <CheckboxField
+        name="active"
+        defaultChecked={service?.active ?? true}
+        label={t("active")}
+      />
 
       {state.error && (
         <p className="text-sm text-destructive">{t(`errors.${state.error}`)}</p>

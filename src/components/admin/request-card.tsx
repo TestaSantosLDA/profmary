@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { CheckboxField } from "@/components/ui/checkbox-field";
 import { Input } from "@/components/ui/input";
 import {
   approveBooking,
@@ -47,7 +48,7 @@ export function RequestCard({ item }: { item: RequestItem }) {
         <p className="font-medium">
           {item.studentName} · {item.serviceTitle}
           {item.kind === "series" && (
-            <span className="ml-2 rounded bg-violet-100 px-1.5 py-0.5 text-xs font-medium text-violet-900">
+            <span className="ml-2 rounded-full bg-secondary px-3 py-1 text-[13px] font-medium text-primary">
               {t("weekly")}
             </span>
           )}
@@ -70,10 +71,7 @@ export function RequestCard({ item }: { item: RequestItem }) {
           <input type="hidden" name="id" value={item.id} />
           <input type="hidden" name="note" value={note} />
           {item.kind === "booking" && (
-            <label className="flex items-center gap-1.5 text-sm">
-              <input type="checkbox" name="travel_fee" className="h-4 w-4" />
-              {t("travelFee")}
-            </label>
+            <CheckboxField name="travel_fee" label={t("travelFee")} />
           )}
           <Button type="submit" size="sm" disabled={approving || declining}>
             {t("approve")}

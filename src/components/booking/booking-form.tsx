@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useMemo, useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { CheckboxField } from "@/components/ui/checkbox-field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -247,18 +248,14 @@ export function BookingForm({
         )}
       </div>
 
-      <div className="space-y-2 rounded-md border p-4">
-        <label className="flex items-center gap-2 text-sm font-medium">
-          <input
-            type="checkbox"
-            name="recurring"
-            checked={recurring}
-            onChange={(e) => setRecurring(e.target.checked)}
-            className="h-4 w-4"
-          />
-          {t("recurring")}
-        </label>
-        <p className="text-xs text-muted-foreground">{t("recurringHint")}</p>
+      <div className="space-y-2 rounded-xl border p-4">
+        <CheckboxField
+          name="recurring"
+          checked={recurring}
+          onChange={(e) => setRecurring(e.target.checked)}
+          label={t("recurring")}
+          hint={t("recurringHint")}
+        />
         {recurring && (
           <div className="space-y-1 pt-2">
             <Label htmlFor="end_date">{t("recurringEnd")}</Label>

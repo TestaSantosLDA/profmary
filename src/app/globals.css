@@ -153,3 +153,11 @@
     @apply text-primary-deep underline underline-offset-3;
   }
 }
+
+@utility card-hover {
+  transition-property: box-shadow;
+  transition-duration: 150ms;
+  &:hover {
+    box-shadow: 0 6px 20px rgba(34, 37, 43, 0.08);
+  }
+}
