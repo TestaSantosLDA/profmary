@@ -524,6 +524,91 @@ export async function sendQuestionnaireLink(studentId: string): Promise<void> {
   }
 }
 
+const escapeHtml = (s: string) =>
+  s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+/**
+ * New chat message (handoff 16). Per message, not digested — the whole worry
+ * is latency — but debounced to one email per conversation side per 15
+ * minutes, and skipped when the recipient already read it.
+ */
+export async function notifyNewMessage(messageId: string): Promise<void> {
+  try {
+    const supabase = createServiceClient();
+    const { data: message } = await supabase
+      .from("messages")
+      .select(
+        "id, body, kind, sender_type, read_at, conversations(id, last_email_student_at, last_email_teacher_at, profiles(name, email, locale))"
+      )
+      .eq("id", messageId)
+      .single();
+    if (!message || message.kind === "event" || message.read_at) return;
+
+    const conversation = message.conversations as unknown as {
+      id: string;
+      last_email_student_at: string | null;
+      last_email_teacher_at: string | null;
+      profiles: Recipient;
+    };
+    const account = conversation.profiles;
+    const toStudent = message.sender_type === "teacher";
+
+    const lastEmailAt = toStudent
+      ? conversation.last_email_student_at
+      : conversation.last_email_teacher_at;
+    if (
+      lastEmailAt &&
+      Date.now() - new Date(lastEmailAt).getTime() < 15 * 60_000
+    ) {
+      return;
+    }
+
+    const preview = escapeHtml((message.body ?? "").slice(0, 300));
+
+    if (toStudent) {
+      const ts = await t(account.locale);
+      await sendEmail(
+        account.email,
+        ts("newMessage.subjectToStudent"),
+        emailLayout(
+          `<p>${ts("greeting", { name: account.name })}</p>
+           <p>${ts("newMessage.bodyToStudent")}</p>
+           <p><em>${preview}</em></p>
+           <p><a href="${SITE()}/${account.locale}/messages">${ts("newMessage.cta")}</a></p>`
+        )
+      );
+    } else {
+      const ts = await t("pt");
+      for (const email of await adminEmails()) {
+        await sendEmail(
+          email,
+          ts("newMessage.subjectToAdmin", { name: account.name }),
+          emailLayout(
+            `<p>${ts("newMessage.bodyToAdmin", { name: strong(escapeHtml(account.name)) })}</p>
+             <p><em>${preview}</em></p>
+             <p><a href="${SITE()}/pt/admin/messages/${conversation.id}">${ts("newMessage.ctaAdmin")}</a></p>`
+          )
+        );
+      }
+    }
+
+    await supabase
+      .from("conversations")
+      .update(
+        toStudent
+          ? { last_email_student_at: new Date().toISOString() }
+          : { last_email_teacher_at: new Date().toISOString() }
+      )
+      .eq("id", conversation.id);
+  } catch (err) {
+    console.error("[email] notifyNewMessage failed:", err);
+  }
+}
+
 /** 24h reminder for one confirmed booking. */
 export async function sendReminder(bookingId: string): Promise<void> {
   try {

@@ -11,6 +11,7 @@ const ADMIN_NAV = [
   { href: "/admin/services", key: "services" },
   { href: "/admin/availability", key: "availability" },
   { href: "/admin/students", key: "students" },
+  { href: "/admin/messages", key: "messages" },
   { href: "/admin/content", key: "content" },
   { href: "/admin/settings", key: "settings" },
 ] as const;

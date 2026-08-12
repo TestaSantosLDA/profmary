@@ -1,3 +1,4 @@
+import { MessageSquare } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,13 @@ const NAV_ITEMS = [
   { href: "/contact", key: "contact" },
 ] as const;
 
-export function SiteHeader({ role }: { role: SessionRole }) {
+export function SiteHeader({
+  role,
+  messagesUnread = 0,
+}: {
+  role: SessionRole;
+  messagesUnread?: number;
+}) {
   const t = useTranslations("Nav");
   const tCommon = useTranslations("Common");
   const tAuth = useTranslations("Auth");
@@ -50,6 +57,20 @@ export function SiteHeader({ role }: { role: SessionRole }) {
               <NavLink href="/profile">{t("profile")}</NavLink>
             )}
           </span>
+          {role !== "guest" && (
+            <Link
+              href={role === "admin" ? "/admin/messages" : "/messages"}
+              aria-label={t("messages")}
+              className="relative flex size-[38px] items-center justify-center rounded-[10px] border border-border text-foreground no-underline transition-colors hover:text-primary"
+            >
+              <MessageSquare className="size-5" strokeWidth={1.6} />
+              {messagesUnread > 0 && (
+                <span className="absolute -right-[5px] -top-[5px] flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-primary px-1 text-[11px] font-semibold text-primary-foreground">
+                  {messagesUnread}
+                </span>
+              )}
+            </Link>
+          )}
           <LanguageSwitcher />
           <Button asChild size="sm">
             <Link href="/book" className="no-underline hover:no-underline">

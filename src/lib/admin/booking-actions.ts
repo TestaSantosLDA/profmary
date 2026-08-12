@@ -7,6 +7,7 @@ import {
   notifyDecision,
 } from "@/lib/email/notifications";
 import { syncPendingBookings } from "@/lib/gcal/sync";
+import { emitBookingEvent } from "@/lib/messages/events";
 import { refundPackCredit } from "@/lib/packs/refund";
 import { createClient } from "@/lib/supabase/server";
 import type { AdminActionState } from "./services-actions";
@@ -61,6 +62,7 @@ export async function approveBooking(
   }
 
   after(() => notifyDecision("booking", id, "confirmed"));
+  after(() => emitBookingEvent("booking_confirmed", id));
   after(() => syncPendingBookings());
 
   revalidatePath("/", "layout");
@@ -93,6 +95,7 @@ export async function declineBooking(
   }
 
   after(() => notifyDecision("booking", id, "declined"));
+  after(() => emitBookingEvent("booking_declined", id));
 
   revalidatePath("/", "layout");
   return { error: null, success: true };
@@ -180,6 +183,7 @@ export async function adminCancelBooking(
   }
 
   after(() => notifyAdminCancelled(id));
+  after(() => emitBookingEvent("booking_cancelled", id));
   after(() => syncPendingBookings());
 
   revalidatePath("/", "layout");

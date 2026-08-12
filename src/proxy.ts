@@ -6,7 +6,13 @@ import { routing } from "./i18n/routing";
 const intlMiddleware = createMiddleware(routing);
 
 // Path prefixes (locale stripped) that require an authenticated session.
-const PROTECTED_PREFIXES = ["/dashboard", "/profile", "/book", "/admin"];
+const PROTECTED_PREFIXES = [
+  "/dashboard",
+  "/profile",
+  "/book",
+  "/admin",
+  "/messages",
+];
 
 function stripLocale(pathname: string): string {
   for (const locale of routing.locales) {

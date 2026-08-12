@@ -16,7 +16,8 @@
     "profileShort": "Profile",
     "adminShort": "Requests",
     "profile": "My profile",
-    "admin": "Admin"
+    "admin": "Admin",
+    "messages": "Messages"
   },
   "Footer": {
     "privacyPolicy": "Privacy Policy",
@@ -97,7 +98,8 @@
       "availability": "Availability",
       "students": "Students",
       "content": "Content",
-      "settings": "Settings"
+      "settings": "Settings",
+      "messages": "Messages"
     },
     "gcalBanner": "Google Calendar sync is disconnected — new lessons aren't reaching the calendar.",
     "gcalBannerCta": "Reconnect"
@@ -415,6 +417,14 @@
     "packDeclined": {
       "subject": "Pack request declined",
       "body": "Your pack of {lessons} lessons of {service} could not be activated. If you have questions, just reply to this email."
+    },
+    "newMessage": {
+      "subjectToStudent": "New message from Maria",
+      "bodyToStudent": "I replied to you in messages:",
+      "cta": "View message",
+      "subjectToAdmin": "New message from {name}",
+      "bodyToAdmin": "{name} sent a message:",
+      "ctaAdmin": "Reply"
     }
   },
   "Status": {
@@ -813,5 +823,59 @@
       "unknown_pack": "This pack is no longer available.",
       "save_failed": "Could not send the request. Please try again."
     }
+  },
+  "Messages": {
+    "mariaName": "Maria",
+    "replySoon": "Usually replies the same day",
+    "empty": "Write the first message. Maria replies right here.",
+    "sharedWithGuardian": "This conversation is shared with the guardian.",
+    "composerPlaceholder": "Write a message",
+    "send": "Send",
+    "editHint": "You can edit a message up to 5 minutes after sending.",
+    "edit": "Edit",
+    "editingNotice": "Editing message",
+    "cancelEdit": "Cancel",
+    "edited": "edited",
+    "read": "read",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "mode": {
+      "online": "online",
+      "onsite": "at home"
+    },
+    "events": {
+      "booking_requested": "Lesson requested — {when}",
+      "booking_confirmed": "Lesson booked — {when}",
+      "booking_declined": "Lesson declined — {when}",
+      "booking_cancelled": "Lesson cancelled — {when}",
+      "booking_rescheduled": "Lesson rescheduled — {when}",
+      "pack_activated": "Pack activated — {lessons} lessons"
+    },
+    "errors": {
+      "empty": "Write a message before sending.",
+      "too_long": "The message is too long.",
+      "not_authenticated": "Your session expired. Reload the page.",
+      "save_failed": "Could not send. Please try again.",
+      "window_closed": "More than 5 minutes have passed — the message is now fixed.",
+      "not_editable": "This message cannot be edited.",
+      "not_allowed": "This message cannot be edited."
+    }
+  },
+  "AdminMessages": {
+    "title": "Messages",
+    "note": "One conversation per account. On guardian accounts, the student writes in the same thread.",
+    "overdueAlert": "{count, plural, one {# conversation waiting for more than 24 hours} other {# conversations waiting for more than 24 hours}}",
+    "overdueAlertHint": "Marked red in the list. It only clears once you reply.",
+    "empty": "No conversations yet. When a student writes, it shows up here.",
+    "threadEmpty": "No messages in this conversation yet.",
+    "ward": "student",
+    "mariaPrefix": "Maria: ",
+    "waiting": "No reply for {hours}h",
+    "accountLine": "Student account",
+    "viewFicha": "View record",
+    "fichaTitle": "Messages",
+    "fichaOverdue": "Unanswered for {hours}h",
+    "fichaReply": "Reply",
+    "fichaEmpty": "No messages from this account yet."
   }
 }

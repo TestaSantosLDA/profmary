@@ -3,6 +3,7 @@
 import { after } from "next/server";
 import { revalidatePath } from "next/cache";
 import { notifyPackDecision } from "@/lib/email/notifications";
+import { emitPackActivated } from "@/lib/messages/events";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import type { AdminActionState } from "./services-actions";
 
@@ -64,6 +65,7 @@ export async function activatePackPurchase(
   }
 
   after(() => notifyPackDecision(id, "active"));
+  after(() => emitPackActivated(id));
 
   revalidatePath("/", "layout");
   return { error: null, success: true };
@@ -155,6 +157,8 @@ export async function grantPack(
     reason: "purchase",
     note: "atribuído na ficha",
   });
+
+  after(() => emitPackActivated(created.id));
 
   revalidatePath("/", "layout");
   return { error: null, success: true };

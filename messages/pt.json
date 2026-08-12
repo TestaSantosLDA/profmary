@@ -16,7 +16,8 @@
     "profileShort": "Perfil",
     "adminShort": "Pedidos",
     "profile": "O meu perfil",
-    "admin": "Administração"
+    "admin": "Administração",
+    "messages": "Mensagens"
   },
   "Footer": {
     "privacyPolicy": "Política de Privacidade",
@@ -97,7 +98,8 @@
       "availability": "Disponibilidade",
       "students": "Alunos",
       "content": "Conteúdo",
-      "settings": "Definições"
+      "settings": "Definições",
+      "messages": "Mensagens"
     },
     "gcalBanner": "A sincronização com o Google Calendar está desligada — as aulas novas não entram no calendário.",
     "gcalBannerCta": "Voltar a ligar"
@@ -415,6 +417,14 @@
     "packDeclined": {
       "subject": "Pedido de pack recusado",
       "body": "Não foi possível ativar o pack de {lessons} aulas de {service}. Se tiver dúvidas, responda a este email."
+    },
+    "newMessage": {
+      "subjectToStudent": "Nova mensagem da Maria",
+      "bodyToStudent": "Respondi-lhe nas mensagens:",
+      "cta": "Ver mensagem",
+      "subjectToAdmin": "Nova mensagem de {name}",
+      "bodyToAdmin": "{name} enviou uma mensagem:",
+      "ctaAdmin": "Responder"
     }
   },
   "Status": {
@@ -813,5 +823,59 @@
       "unknown_pack": "Este pack já não está disponível.",
       "save_failed": "Não foi possível enviar o pedido. Tente novamente."
     }
+  },
+  "Messages": {
+    "mariaName": "Maria",
+    "replySoon": "Responde normalmente no mesmo dia",
+    "empty": "Escreva a primeira mensagem. A Maria responde por aqui.",
+    "sharedWithGuardian": "Esta conversa é partilhada com o encarregado de educação.",
+    "composerPlaceholder": "Escreva uma mensagem",
+    "send": "Enviar",
+    "editHint": "Pode editar uma mensagem até 5 minutos depois de a enviar.",
+    "edit": "Editar",
+    "editingNotice": "A editar a mensagem",
+    "cancelEdit": "Cancelar",
+    "edited": "editada",
+    "read": "lida",
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "mode": {
+      "online": "online",
+      "onsite": "ao domicílio"
+    },
+    "events": {
+      "booking_requested": "Aula pedida — {when}",
+      "booking_confirmed": "Aula marcada — {when}",
+      "booking_declined": "Aula recusada — {when}",
+      "booking_cancelled": "Aula cancelada — {when}",
+      "booking_rescheduled": "Aula remarcada — {when}",
+      "pack_activated": "Pack ativado — {lessons} aulas"
+    },
+    "errors": {
+      "empty": "Escreva uma mensagem antes de enviar.",
+      "too_long": "A mensagem é demasiado longa.",
+      "not_authenticated": "A sessão expirou. Recarregue a página.",
+      "save_failed": "Não foi possível enviar. Tente novamente.",
+      "window_closed": "Já passaram mais de 5 minutos — a mensagem ficou fixa.",
+      "not_editable": "Esta mensagem não pode ser editada.",
+      "not_allowed": "Esta mensagem não pode ser editada."
+    }
+  },
+  "AdminMessages": {
+    "title": "Mensagens",
+    "note": "Uma conversa por conta. Nas contas de encarregado, o educando escreve no mesmo fio.",
+    "overdueAlert": "{count, plural, one {# conversa à espera há mais de 24 horas} other {# conversas à espera há mais de 24 horas}}",
+    "overdueAlertHint": "Marcadas a vermelho na lista. Só some quando responder.",
+    "empty": "Ainda sem conversas. Quando um aluno escrever, aparece aqui.",
+    "threadEmpty": "Ainda sem mensagens nesta conversa.",
+    "ward": "educando",
+    "mariaPrefix": "Maria: ",
+    "waiting": "Sem resposta há {hours}h",
+    "accountLine": "Conta de aluno",
+    "viewFicha": "Ver ficha",
+    "fichaTitle": "Mensagens",
+    "fichaOverdue": "Por responder há {hours}h",
+    "fichaReply": "Responder",
+    "fichaEmpty": "Ainda sem mensagens desta conta."
   }
 }

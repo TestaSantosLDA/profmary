@@ -8,6 +8,7 @@ import { ResendQuestionnaireButton } from "@/components/admin/resend-questionnai
 import { StudentNotesForm } from "@/components/admin/student-notes-form";
 import { Link } from "@/i18n/navigation";
 import { euros } from "@/lib/booking/format";
+import { getLastMessageForAccount, OVERDUE_HOURS } from "@/lib/messages/queries";
 import type { AnswerValue, QuestionRow } from "@/lib/questionnaire/types";
 import { createClient } from "@/lib/supabase/server";
 
@@ -141,6 +142,8 @@ export default async function AdminStudentPage({
     ]);
 
   const t = await getTranslations("AdminStudents");
+  const tMessages = await getTranslations("AdminMessages");
+  const lastMessage = await getLastMessageForAccount(student.account_id);
 
   const isWard =
     student.name.trim().toLowerCase() !==
@@ -318,7 +321,7 @@ export default async function AdminStudentPage({
           </FichaCard>
         </div>
 
-        <div className="order-2 md:order-5">
+        <div className="order-2 md:order-6">
           <FichaCard title={t("notes")}>
             <p className="mb-3 text-[13px] text-muted-foreground">
               {t("notesHint")}
@@ -389,6 +392,52 @@ export default async function AdminStudentPage({
                   packs={grantablePacks}
                 />
               </div>
+            )}
+          </FichaCard>
+        </div>
+
+        {/* A window onto the account's single thread — never a second inbox. */}
+        <div className="order-6 md:order-5">
+          <FichaCard
+            title={tMessages("fichaTitle")}
+            tag={
+              lastMessage?.waitingHours != null &&
+              lastMessage.waitingHours >= OVERDUE_HOURS ? (
+                <span className="rounded-full bg-warning-tint px-3 py-1 text-[13px] font-medium text-warning">
+                  {tMessages("fichaOverdue", { hours: lastMessage.waitingHours })}
+                </span>
+              ) : undefined
+            }
+          >
+            <p className="text-[13px] text-muted-foreground">
+              {tMessages("note")}
+            </p>
+            {lastMessage ? (
+              <div className="mt-3 border-t border-border pt-3">
+                <p className="text-[13px] text-muted-foreground">
+                  {new Intl.DateTimeFormat("pt-PT", {
+                    timeZone: "Europe/Lisbon",
+                    day: "numeric",
+                    month: "short",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }).format(new Date(lastMessage.createdAt))}{" "}
+                  · {lastMessage.senderName}
+                </p>
+                <p className="mt-1 text-[15px]">
+                  “{lastMessage.body}”
+                </p>
+                <Link
+                  href={`/admin/messages/${lastMessage.conversationId}`}
+                  className="mt-3 inline-block text-sm font-medium text-primary no-underline hover:underline"
+                >
+                  {tMessages("fichaReply")}
+                </Link>
+              </div>
+            ) : (
+              <p className="mt-3 border-t border-border pt-3 text-sm text-muted-foreground">
+                {tMessages("fichaEmpty")}
+              </p>
             )}
           </FichaCard>
         </div>

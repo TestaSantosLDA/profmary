@@ -9,6 +9,7 @@ import {
   notifyRequestReceived,
   notifyStudentCancelled,
 } from "@/lib/email/notifications";
+import { emitBookingEvent } from "@/lib/messages/events";
 import { spendablePurchase } from "@/lib/packs/queries";
 import { refundPackCredit } from "@/lib/packs/refund";
 import { syncPendingBookings } from "@/lib/gcal/sync";
@@ -210,6 +211,7 @@ export async function createBookingRequest(
   }
 
   after(() => notifyRequestReceived("booking", created.id));
+  after(() => emitBookingEvent("booking_requested", created.id));
 
   revalidatePath("/", "layout");
   const locale = await getLocale();
@@ -238,6 +240,7 @@ export async function cancelBooking(formData: FormData): Promise<void> {
       await refundPackCredit(id, "pedido retirado antes da confirmação");
     }
     after(() => notifyStudentCancelled("booking", id));
+    after(() => emitBookingEvent("booking_cancelled", id));
     after(() => syncPendingBookings());
     revalidatePath("/", "layout");
   }

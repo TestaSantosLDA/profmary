@@ -7,6 +7,7 @@ import { BottomNav, type SessionRole } from "@/components/layout/bottom-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { routing } from "@/i18n/routing";
+import { unreadCount } from "@/lib/messages/queries";
 import { createClient } from "@/lib/supabase/server";
 
 const lora = Lora({
@@ -54,6 +55,7 @@ export default async function LocaleLayout({
     data: { user },
   } = await supabase.auth.getUser();
   let role: SessionRole = "guest";
+  let messagesUnread = 0;
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
@@ -61,6 +63,7 @@ export default async function LocaleLayout({
       .eq("id", user.id)
       .single();
     role = profile?.is_admin ? "admin" : "client";
+    messagesUnread = await unreadCount(user.id, role === "admin");
   }
 
   return (
@@ -70,7 +73,7 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider>
-          <SiteHeader role={role} />
+          <SiteHeader role={role} messagesUnread={messagesUnread} />
           {children}
           <BottomNav role={role} />
           <SiteFooter />
